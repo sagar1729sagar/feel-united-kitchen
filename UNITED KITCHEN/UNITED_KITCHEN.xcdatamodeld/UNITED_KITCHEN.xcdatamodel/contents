@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11232" systemVersion="16A323" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Cart" syncable="YES">
+        <attribute name="addedDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="deliveryTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="itemName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="itemQuantity" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="FeedBack" syncable="YES">
+        <attribute name="anonymous" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="feedbackId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="feedbackText" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="partNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rating" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="totalParts" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updated" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+    </entity>
+    <entity name="MenuItems" syncable="YES">
+        <attribute name="availableFriday" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="availableMonday" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="availableSaturday" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="availableSunday" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="availableThrusday" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="availableTuesday" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="availableWednesday" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="displayOrder" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="foodType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="itemCategeory" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="itemDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="itemId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="itemName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="itemUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="priceLater" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="priceToday" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="priceTomorrow" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updated" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+    </entity>
+    <entity name="Misc" syncable="YES">
+        <attribute name="index" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="menuRefreshDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="selectedDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+    </entity>
+    <entity name="OrderDetails" syncable="YES">
+        <attribute name="addressType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="customerName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="deliveryAddress" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="deliveryDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="deliveryTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="giftedBy" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isDelivered" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isGifted" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="locationTrackingChannel" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="orderId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phoneNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updated" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OrderItems" inverseName="items" inverseEntity="OrderItems" syncable="YES"/>
+    </entity>
+    <entity name="OrderItems" syncable="YES">
+        <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="orderId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="price" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="quantity" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updated" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="items" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OrderDetails" inverseName="items" inverseEntity="OrderDetails" syncable="YES"/>
+    </entity>
+    <entity name="Profile" syncable="YES">
+        <attribute name="accountType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="emailAddress" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="orderCount" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="personName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phoneNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updated" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Cart" positionX="-63" positionY="135" width="128" height="105"/>
+        <element name="FeedBack" positionX="-360" positionY="135" width="128" height="195"/>
+        <element name="MenuItems" positionX="-405" positionY="27" width="128" height="345"/>
+        <element name="Misc" positionX="-63" positionY="135" width="128" height="90"/>
+        <element name="OrderDetails" positionX="-63" positionY="-18" width="128" height="330"/>
+        <element name="OrderItems" positionX="-245" positionY="117" width="128" height="165"/>
+        <element name="Profile" positionX="-567" positionY="-0" width="128" height="180"/>
+    </elements>
+</model>
