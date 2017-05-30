@@ -207,6 +207,8 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
             }
         }
         
+        
+        
         let datesMenu = BTNavigationDropdownMenu(navigationController: self.navigationController, containerView: (self.navigationController?.view)!, title: dateTitleString, items: days as [AnyObject])
         datesMenu.shouldKeepSelectedCellColor = true
         datesMenu.arrowTintColor = UIColor.blue
@@ -530,6 +532,8 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         }
         return false
     }
+    
+    
     func loadlist(notification : Notification) {
         print("Notification detected for new menu")
         if CartData().deleteCart(){
@@ -562,6 +566,8 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         }
 
     }
+    
+    
     
    func getMenuData(){
     

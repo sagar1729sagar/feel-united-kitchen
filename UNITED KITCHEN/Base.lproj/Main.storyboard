@@ -100,7 +100,7 @@
                                         <rect key="frame" x="0.0" y="92" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hnw-O0-s7U" id="NuS-3d-pyI">
-                                            <frame key="frameInset" width="414" height="43.666666666666664"/>
+                                            <frame key="frameInset" width="414" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -108,7 +108,7 @@
                                         <rect key="frame" x="0.0" y="136" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Vvc-9R-rd4" id="sRm-4G-7vO">
-                                            <frame key="frameInset" width="414" height="43.666666666666664"/>
+                                            <frame key="frameInset" width="414" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -116,7 +116,7 @@
                                         <rect key="frame" x="0.0" y="180" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cUf-jZ-luN" id="ioo-Xx-ENX">
-                                            <frame key="frameInset" width="414" height="43.666666666666664"/>
+                                            <frame key="frameInset" width="414" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -124,7 +124,7 @@
                                         <rect key="frame" x="0.0" y="224" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BkB-2L-ybt" id="kna-9D-RGb">
-                                            <frame key="frameInset" width="414" height="43.666666666666664"/>
+                                            <frame key="frameInset" width="414" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -132,7 +132,7 @@
                                         <rect key="frame" x="0.0" y="268" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vM7-Qt-gLv" id="DFf-lH-mht">
-                                            <frame key="frameInset" width="414" height="43.666666666666664"/>
+                                            <frame key="frameInset" width="414" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -140,7 +140,7 @@
                                         <rect key="frame" x="0.0" y="312" width="414" height="145"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uKZ-BU-qHF" id="afX-Vj-nyu">
-                                            <frame key="frameInset" width="414" height="144.66666666666666"/>
+                                            <frame key="frameInset" width="414" height="144"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -239,7 +239,7 @@
                                         <rect key="frame" x="0.0" y="92" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5u6-4p-Js3" id="fRA-Pi-cQB">
-                                            <frame key="frameInset" width="414" height="43.666666666666664"/>
+                                            <frame key="frameInset" width="414" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -329,7 +329,7 @@
                                 <rect key="frame" x="0.0" y="92" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="d6h-AZ-7Ep" id="a6i-42-aFy">
-                                    <frame key="frameInset" width="414" height="43.666666666666664"/>
+                                    <frame key="frameInset" width="414" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>

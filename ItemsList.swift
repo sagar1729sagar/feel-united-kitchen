@@ -30,6 +30,7 @@ class ItemsList: UIViewController , UITableViewDelegate , UITableViewDataSource 
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+      //  print(1)
         
         navbarIndicator.hidesWhenStopped = true
         navbarIndicator.color = UIColor.red
@@ -37,10 +38,11 @@ class ItemsList: UIViewController , UITableViewDelegate , UITableViewDataSource 
         let spinner = UIBarButtonItem(customView: navbarIndicator)
         self.navigationItem.setLeftBarButton(nil, animated: true)
         self.navigationItem.setLeftBarButtonItems([left!,spinner], animated: true)
+       // print(2)
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
+      //  print(3)
         orders.removeAll()
         lunchDates.removeAll()
         dinnerDates.removeAll()
@@ -54,6 +56,7 @@ class ItemsList: UIViewController , UITableViewDelegate , UITableViewDataSource 
         quantityEntries.removeAll()
         orders = OrderData().getOrders()
         // Create dates list
+       // print(4)
         for order in orders {
             if order.deliveryTime == "0" {
                 //lunch
@@ -74,7 +77,7 @@ class ItemsList: UIViewController , UITableViewDelegate , UITableViewDataSource 
                 }
             }
         }
-        
+       // print(5)
         for date in allDates {
             if lunchDates.contains(date) {
                 sectionHeaders.append(date+" (Lunch)")
@@ -88,23 +91,34 @@ class ItemsList: UIViewController , UITableViewDelegate , UITableViewDataSource 
                 times.append("1")
             }
         }
+      //  print(6)
         
-        
+        print(dates.count)
+        if dates.count != 0 {
         for i in 0...(dates.count - 1){
+           // print(7)
             items.removeAll()
             qunatities.removeAll()
             for order in orders {
+                //print(8)
                 if order.deliveryTime == times[i] {
+                   // print(9)
                     if DateHandler().dateToString(date: order.deliveryDate!) == dates[i] {
+                       // print(10)
                         for item in order.items! {
+                         //   print(11)
                             if items.contains(item.name!) {
+                            //    print(13)
                                 for j in 0...(items.count - 1){
+                                 //   print(14)
                                     if items[j] == item.name! {
+                                     //   print(15)
                                         qunatities[j] = qunatities[j] + Int(item.quantity!)!
                                         
                                     }
                                 }
                             } else {
+                              //  print(16)
                                 items.append(item.name!)
                                 qunatities.append(Int(item.quantity!)!)
                             }
@@ -112,18 +126,23 @@ class ItemsList: UIViewController , UITableViewDelegate , UITableViewDataSource 
                     }
                 }
             }
-            
+           // print(17)
             itemEntries.append(items)
             quantityEntries.append(qunatities)
         }
+        }
+       // print(7)
         
         
     table.reloadData()
+      //  print(8)
     
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         print("section called")
+        print(lunchDates.count)
+        print(dinnerDates.count)
         return lunchDates.count + dinnerDates.count
     }
     
@@ -153,23 +172,23 @@ class ItemsList: UIViewController , UITableViewDelegate , UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("cell called")
+       // print("cell called")
         let cell = UITableViewCell()
         cell.textLabel?.text = itemEntries[indexPath.section][indexPath.row]
         let qL = UILabel(frame: CGRect(x: 2*UIScreen.main.bounds.width/3, y: (cell.textLabel?.frame.origin.y)! + 10, width: UIScreen.main.bounds.width/3 - 30, height: 20))
         qL.textAlignment = .right
         qL.text = String(quantityEntries[indexPath.section][indexPath.row])
         cell.addSubview(qL)
-        print("quantity \(qL.text)")
-        print(cell.textLabel?.frame.origin.y)
-        print(cell.textLabel?.frame.height)
+       // print("quantity \(qL.text)")
+      //  print(cell.textLabel?.frame.origin.y)
+      //  print(cell.textLabel?.frame.height)
         return cell
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        print(sectionHeaders[section])
-        print(dates[section])
-        print(times[section])
+      //  print(sectionHeaders[section])
+        //print(dates[section])
+        //print(times[section])
         return sectionHeaders[section]
     }
    
@@ -193,7 +212,7 @@ class ItemsList: UIViewController , UITableViewDelegate , UITableViewDataSource 
         navbarIndicator.startAnimating()
         // check and register for admin
         backendless?.messaging.getRegistrationAsync({ (response) in
-            print("reg details \(response)")
+         //   print("reg details \(response)")
             if (response?.channels.contains("admin"))!{
                 self.refreshItems()
             } else {
@@ -201,7 +220,7 @@ class ItemsList: UIViewController , UITableViewDelegate , UITableViewDataSource 
             }
             }, error: { (fault) in
                 self.navbarIndicator.stopAnimating()
-                print("canot fetch reg details \(fault)")
+               // print("canot fetch reg details \(fault)")
                 SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(fault?.message)")
         })
     }
@@ -213,8 +232,8 @@ class ItemsList: UIViewController , UITableViewDelegate , UITableViewDataSource 
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy"
         let dateString = dateFormatter.string(from: Date())
-        print("date exp \(dateString)")
-        print(dateString)
+     //   print("date exp \(dateString)")
+       // print(dateString)
         // let whereClause = "isDelivered = '0'"
         let queryBuilder = DataQueryBuilder()
         queryBuilder?.setPageSize(100)
@@ -226,16 +245,16 @@ class ItemsList: UIViewController , UITableViewDelegate , UITableViewDataSource 
         if OrderData().deleteOrders(){
             backendless?.data.of(OrderDetails.ofClass()).find(queryBuilder, response: { (data) in
                 self.navbarIndicator.stopAnimating()
-                print("data recieved \(data?.count)")
+              //  print("data recieved \(data?.count)")
                 if data?.count == 0 {
-                    print("count zero")
+                  //  print("count zero")
                     if OrderData().deleteOrders(){
                      //   self.orderDetails.removeAll()
                         
                         self.viewDidAppear(true)
                     }
                 }
-                print(data?.count)
+              //  print(data?.count)
                 for item in data! {
                     if let order = item as? OrderDetails {
                         self.getItemsFromServer(data: order)
@@ -244,24 +263,24 @@ class ItemsList: UIViewController , UITableViewDelegate , UITableViewDataSource 
                 }, error: { (fault) in
                     self.navbarIndicator.stopAnimating()
                     print("canot fetch \(fault)")
-                    SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(fault?.message)")
+                  //  SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(fault?.message)")
             })
         }
     }
     
     func registerForAdmin() {
         backendless?.messaging.registerDevice(["admin"], response: { (response) in
-            print("registered to admin")
+          //  print("registered to admin")
             self.refreshItems()
             }, error: { (fault) in
                 self.navbarIndicator.stopAnimating()
-                print("canot fetch reg details \(fault)")
+              //  print("canot fetch reg details \(fault)")
                 SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(fault?.message)")
                 
         })
     }
     func getItemsFromServer( data :OrderDetails) {
-        print("getting items from server")
+       // print("getting items from server")
         navbarIndicator.startAnimating()
         let whereClause = "orderId = "+data.orderId!
         let queryBuilder = DataQueryBuilder()
@@ -269,7 +288,7 @@ class ItemsList: UIViewController , UITableViewDelegate , UITableViewDataSource 
         queryBuilder?.setWhereClause(whereClause)
         backendless?.data.of(OrderItems.ofClass()).find(queryBuilder, response: { (items) in
             self.navbarIndicator.stopAnimating()
-            print("items found for \(data.orderId)")
+          //  print("items found for \(data.orderId)")
             for item in items! {
                 if let orderitem = item as? OrderItems {
                     data.items?.append(orderitem)
@@ -277,7 +296,7 @@ class ItemsList: UIViewController , UITableViewDelegate , UITableViewDataSource 
                 }
             }
             if OrderData().addOrder(orderDetails: data) {
-                print("order added")
+              //  print("order added")
                 //  print(self.i)
                 // self.i += 1
                 // print("reload table")
