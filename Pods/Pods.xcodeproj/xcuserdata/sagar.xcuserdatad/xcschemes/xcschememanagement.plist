@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Bolts.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Cosmos.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -35,6 +40,11 @@
 			<false/>
 		</dict>
 		<key>M13Checkbox.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Parse.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -77,32 +87,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0C83BBBFE5ED65150ACA2966168D9F3A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>18A59F9C62D526548D87D3E51364F80E</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>20A9DD9ABBF08BC57372A26C35327BF1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>258C4F526EF7453AE6E380C1B017E27E</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>44879DD18CCF06F4FC3F8302C4482914</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>4DC059E04CBA98AEDDB5C34E02D551E9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4DFC8200F2C2D4952AC4CDBD9FAB0F61</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -117,12 +112,32 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5D34CFBB28F856DDC8C3CEC4467189B2</key>
+		<key>5FA4B1B37BE6254E3D4A78861F0870B0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6B2ADFF8DA7CDB7404B9760F731C326E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6EE458AB7C9239893E5C6E840C0BF9B5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>763F1B38E882A6E23E6A8A8A2B34DA1A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>7891E2B724C54EF58FB1692B34F1455C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7D9924A03F017FEA3B59620924AFB817</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -142,7 +157,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FA534847036C1C7638CA8B75753618DD</key>
+		<key>D10E9E172A6CF7110AAFFC8E41D17139</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F957EABCA56BD8F5B626798CC7B344D3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
