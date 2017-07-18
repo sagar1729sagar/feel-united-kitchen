@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import IQKeyboardManagerSwift
 import UserNotifications
+import Firebase
 
 @available(iOS 10.0, *)
 @UIApplicationMain
@@ -37,6 +38,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UNUserNotificationCenter
         
         //IQKeyboard enable
         IQKeyboardManager.sharedManager().enable = true
+        
+        
+        // Initialzing firebase
+        
+        FIRApp.configure()
+        
+        var ref : FIRDatabaseReference
+        ref = FIRDatabase.database().reference()
 
         backendless?.messaging.registerForRemoteNotifications()
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.badge,.sound]) { (accepted, error) in
@@ -45,6 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UNUserNotificationCenter
             } else {
                 print("not accepted")
             }
+            
         }
         
         

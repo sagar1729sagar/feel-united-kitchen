@@ -988,5 +988,20 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
         }
     }
     
+    
+    @IBAction func testParse(_ sender: AnyObject) {
+        print("test pressed")
+//        navbarIndicator.startAnimating()
+//        var query = PFQuery(className: "OrderTimes")
+//        query.whereKey("objectId", equalTo: "eWYWGMDa6o")
+//        query.findObjectsInBackground { (object, error) in
+//            self.navbarIndicator.stopAnimating()
+//            if error == nil {
+//            print("object retieved \(object)")
+//            } else {
+//            print("error in retrieval \(error)")
+//            }
+//        }
+    }
 
 }

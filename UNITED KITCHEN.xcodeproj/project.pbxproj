@@ -51,6 +51,7 @@
 		1BE315531E9EA4C9008EB2B2 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE315521E9EA4C9008EB2B2 /* Profile.swift */; };
 		1BE315561E9EA8DC008EB2B2 /* ProfileData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE315551E9EA8DC008EB2B2 /* ProfileData.swift */; };
 		1BEE552A1EB4D998001E1E01 /* AddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BEE55291EB4D998001E1E01 /* AddressCell.swift */; };
+		1BEE84951F1EA4170040AC26 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1BEE84941F1EA4170040AC26 /* GoogleService-Info.plist */; };
 		1BF1284D1EA2B55A00DD2AA5 /* BackendlessErroHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF1284C1EA2B55A00DD2AA5 /* BackendlessErroHandler.swift */; };
 		1BF128511EA2E41B00DD2AA5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BF128501EA2E41B00DD2AA5 /* Assets.xcassets */; };
 		1BFB88BE1EA9251F00A4B091 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BFB88BD1EA9251F00A4B091 /* UserNotifications.framework */; };
@@ -111,6 +112,7 @@
 		1BE315521E9EA4C9008EB2B2 /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		1BE315551E9EA8DC008EB2B2 /* ProfileData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileData.swift; sourceTree = "<group>"; };
 		1BEE55291EB4D998001E1E01 /* AddressCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressCell.swift; sourceTree = "<group>"; };
+		1BEE84941F1EA4170040AC26 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1BF1284C1EA2B55A00DD2AA5 /* BackendlessErroHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BackendlessErroHandler.swift; path = "UNITED KITCHEN/BackendlessErroHandler.swift"; sourceTree = "<group>"; };
 		1BF128501EA2E41B00DD2AA5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1BF128521EA38A2700DD2AA5 /* UNITED KITCHEN.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "UNITED KITCHEN.entitlements"; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 				1BA6D0A71E96880A000CBDF5 /* Main.storyboard */,
 				1BA6D0AF1E96880A000CBDF5 /* LaunchScreen.storyboard */,
 				1BA6D0B21E96880A000CBDF5 /* Info.plist */,
+				1BEE84941F1EA4170040AC26 /* GoogleService-Info.plist */,
 				1BA6D0AA1E96880A000CBDF5 /* UNITED_KITCHEN.xcdatamodeld */,
 				1BE3154F1E9EA00C008EB2B2 /* ProfilePage.swift */,
 				1BF128501EA2E41B00DD2AA5 /* Assets.xcassets */,
@@ -329,7 +332,7 @@
 					1BA6D09F1E968808000CBDF5 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = Q4DV8LF38Q;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -364,6 +367,7 @@
 				1B88C7C61EABDFB0000938C0 /* Admin.storyboard in Resources */,
 				1BE2C5791EC1E1C90047C70F /* food.png in Resources */,
 				1BA6D0B11E96880A000CBDF5 /* LaunchScreen.storyboard in Resources */,
+				1BEE84951F1EA4170040AC26 /* GoogleService-Info.plist in Resources */,
 				1BF128511EA2E41B00DD2AA5 /* Assets.xcassets in Resources */,
 				1BA608241EC20BAA00D3838C /* Delivery.storyboard in Resources */,
 				1BA6D0A91E96880A000CBDF5 /* Main.storyboard in Resources */,
@@ -599,15 +603,15 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "UNITED KITCHEN/UNITED KITCHEN.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: VIDYA SAGAR (Q4DV8LF38Q)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				DEVELOPMENT_TEAM = Q4DV8LF38Q;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "UNITED KITCHEN/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ssapps.UNITED-KITCHEN";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "10317a5f-3b4f-4ebf-95a4-a54f0fadf7d0";
-				PROVISIONING_PROFILE_SPECIFIER = "XC iOS Ad Hoc: com.ssapps.UNITED-KITCHEN";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Pods/Backendless/SDK/ios/backendless/include/Backendless-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
@@ -621,15 +625,15 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "UNITED KITCHEN/UNITED KITCHEN.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: VIDYA SAGAR (Q4DV8LF38Q)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				DEVELOPMENT_TEAM = Q4DV8LF38Q;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "UNITED KITCHEN/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ssapps.UNITED-KITCHEN";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "10317a5f-3b4f-4ebf-95a4-a54f0fadf7d0";
-				PROVISIONING_PROFILE_SPECIFIER = "XC iOS Ad Hoc: com.ssapps.UNITED-KITCHEN";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Pods/Backendless/SDK/ios/backendless/include/Backendless-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
