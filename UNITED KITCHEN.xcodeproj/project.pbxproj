@@ -17,6 +17,7 @@
 		1B0BD8601EBB2A3A00213CB9 /* GiftedPersonDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0BD85F1EBB2A3A00213CB9 /* GiftedPersonDetailsCell.swift */; };
 		1B1AB54C1EAA7C1600FE3A8E /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1AB54B1EAA7C1600FE3A8E /* TestViewController.swift */; };
 		1B393E891EBF27BD00258512 /* OrderDisplayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B393E881EBF27BD00258512 /* OrderDisplayCell.swift */; };
+		1B3AB06E1F2240B7005A0DFC /* CloseTimesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AB06D1F2240B6005A0DFC /* CloseTimesController.swift */; };
 		1B3F2F871EC0F2AC009C62FE /* OrderMainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3F2F861EC0F2AC009C62FE /* OrderMainCell.swift */; };
 		1B7C4AF71EB665A600A9D6BF /* AddressSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C4AF61EB665A500A9D6BF /* AddressSelectionCell.swift */; };
 		1B7C4AF91EB66E9400A9D6BF /* LocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C4AF81EB66E9400A9D6BF /* LocationCell.swift */; };
@@ -75,6 +76,7 @@
 		1B0BD85F1EBB2A3A00213CB9 /* GiftedPersonDetailsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiftedPersonDetailsCell.swift; sourceTree = "<group>"; };
 		1B1AB54B1EAA7C1600FE3A8E /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		1B393E881EBF27BD00258512 /* OrderDisplayCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderDisplayCell.swift; sourceTree = "<group>"; };
+		1B3AB06D1F2240B6005A0DFC /* CloseTimesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloseTimesController.swift; sourceTree = "<group>"; };
 		1B3F2F861EC0F2AC009C62FE /* OrderMainCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderMainCell.swift; sourceTree = "<group>"; };
 		1B7C4AF61EB665A500A9D6BF /* AddressSelectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressSelectionCell.swift; sourceTree = "<group>"; };
 		1B7C4AF81EB66E9400A9D6BF /* LocationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationCell.swift; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 				1BFE3EDE1EC331F700356D34 /* DeliveryOrderAdmin.swift */,
 				1BFE3EE01EC371BD00356D34 /* TodayOrders.swift */,
 				1BFE3EE21EC3795A00356D34 /* ItemsList.swift */,
+				1B3AB06D1F2240B6005A0DFC /* CloseTimesController.swift */,
 			);
 			name = Administrator;
 			sourceTree = "<group>";
@@ -445,6 +448,7 @@
 				1BE2C5751EC1D6FD0047C70F /* LocationTracking.swift in Sources */,
 				1B1AB54C1EAA7C1600FE3A8E /* TestViewController.swift in Sources */,
 				1B0BD8601EBB2A3A00213CB9 /* GiftedPersonDetailsCell.swift in Sources */,
+				1B3AB06E1F2240B7005A0DFC /* CloseTimesController.swift in Sources */,
 				1BA47D861EAC9BC700EB781E /* Misc.swift in Sources */,
 				1B08198A1EBB992800436BF0 /* Order.swift in Sources */,
 				1BFE3EE31EC3795A00356D34 /* ItemsList.swift in Sources */,
