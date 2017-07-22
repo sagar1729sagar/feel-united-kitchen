@@ -23,8 +23,8 @@ pod "FlexibleSteppedProgressBar"
 pod ‘Cosmos’, ‘~> 8.0’
 #pod 'Gecco'
 #pod 'Instructions', :git => 'https://github.com/ephread/Instructions.git'
-
-
-
+#pod 'Parse'
+pod 'Firebase/Core'
+pod 'Firebase/Database'
 
 end

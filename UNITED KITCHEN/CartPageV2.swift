@@ -9,8 +9,13 @@
 import UIKit
 import SCLAlertView
 import DCAnimationKit
+import Firebase
 
 class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource {
+    
+    
+    var ref : FIRDatabaseReference!
+    
 
     @IBOutlet weak var table: UITableView!
     var navbarIndicator = UIActivityIndicatorView()
@@ -59,6 +64,8 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        ref = FIRDatabase.database().reference()
         
         navbarIndicator.hidesWhenStopped = true
         navbarIndicator.color = UIColor.red
@@ -478,10 +485,12 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
             SCLAlertView().showError("No selection found!!", subTitle: "Please select the type of address you want us to use for delivery")
         } else if splCell.b1.checkState.rawValue == "Checked" && splCell.b2.checkState.rawValue == "Unchecked" {
             print("Address is used")
-            checkForDate(addressType: 0)
+           // checkForDate(addressType: 0)
+            checkForDateFireBase(addressType: 0)
         } else if splCell.b1.checkState.rawValue == "Unchecked" && splCell.b2.checkState.rawValue == "Checked" {
             print("Location is used")
-            checkForDate(addressType: 1)
+            //checkForDate(addressType: 1)
+            checkForDateFireBase(addressType: 1)
         } else if splCell.b1.checkState.rawValue == "Checked" && splCell.b2.checkState.rawValue == "Checked" {
             // splCell.orderButton.isEnabled = true
             //splCell.giftButton.isEnabled = true
@@ -489,6 +498,175 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
             print("Both are used")
             SCLAlertView().showError("Invalid selection found!!", subTitle: "Please select only one type of address you want us to use for delivery")
         }
+    }
+    
+    
+    func checkForDateFireBase(addressType : Int){
+    
+        self.navigationItem.leftBarButtonItems?[0].isEnabled = false
+        self.navigationItem.rightBarButtonItems?[0].isEnabled = false
+        navbarIndicator.startAnimating()
+        giftCell.proceedButton.isEnabled = false
+        splCell.orderButton.isEnabled = false
+        splCell.giftButton.isEnabled = false
+        
+        allDates.removeAll()
+        allTimes.removeAll()
+        statusArray.removeAll()
+        tobeRemovedItems.removeAll()
+        
+        
+        for item in CartData().getItems().0 {
+            allDates.append(item.addedDate!)
+            allTimes.append(item.deliveryTime!)
+        }
+        
+        ref.child("orderTimes").observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            self.navigationItem.leftBarButtonItems?[0].isEnabled = true
+            self.navigationItem.rightBarButtonItems?[0].isEnabled = true
+            self.navbarIndicator.stopAnimating()
+            self.giftCell.proceedButton.isEnabled = true
+            self.splCell.orderButton.isEnabled = true
+            self.splCell.giftButton.isEnabled = true
+            print("data found")
+            
+            let value = snapshot.value as? NSDictionary
+            let mondayLunch = value?["mondayLunch"] as? Int
+            let tuesdayLunch = value?["tuesdayLunch"] as? Int
+            let wednesdayLunch = value?["wednesdayLunch"] as? Int
+            let thrusdayLunch = value?["thrusdayLunch"] as? Int
+            let fridayLunch = value?["fridayLunch"] as? Int
+            let saturdayLunch = value?["saturdayLunch"] as? Int
+            let sundayLunch = value?["sundayLunch"] as? Int
+            
+            let mondayDinner = value?["mondayDinner"] as? Int
+            let tuesdayDinner = value?["tuesdayDinner"] as? Int
+            let wednesdayDinner = value?["wednesdayDinner"] as? Int
+            let thrusdayDinner = value?["thrusdayDinner"] as? Int
+            let fridayDinner = value?["fridayDinner"] as? Int
+            let saturdayDinner = value?["saturdayDinner"] as? Int
+            let sundayDinner = value?["sundayDinner"] as? Int
+            
+            let minAmount = value?["minAmount"] as? Int
+            
+            let fetchedTimes = OrderTimes()
+            fetchedTimes.mondayLunch = String(mondayLunch!)
+            fetchedTimes.mondayDinner = String(mondayDinner!)
+            fetchedTimes.tuesdayLunch = String(tuesdayLunch!)
+            fetchedTimes.tuesdayDinner = String(tuesdayDinner!)
+            fetchedTimes.wednesdayLunch = String(wednesdayLunch!)
+            fetchedTimes.wednesdayDinner = String(wednesdayDinner!)
+            fetchedTimes.thrusdayLunch = String(thrusdayLunch!)
+            fetchedTimes.thrusdayDinner = String(thrusdayDinner!)
+            fetchedTimes.fridayLunch = String(fridayLunch!)
+            fetchedTimes.fridayDinner = String(fridayDinner!)
+            fetchedTimes.saturdayLunch = String(saturdayLunch!)
+            fetchedTimes.saturdayDinner = String(saturdayDinner!)
+            fetchedTimes.sundayLunch = String(sundayLunch!)
+            fetchedTimes.sundayDinner = String(sundayDinner!)
+            fetchedTimes.minAmount = String(minAmount!)
+            
+            let hour = Calendar.current.component(.hour, from: Date())
+            
+            for i in 0...(self.allDates.count - 1){
+                let ppf = DateHandler().isPastPresenFuture(date: self.allDates[i])
+                if ppf == 0 {
+                    // pastDate
+                    self.statusArray.append(false)
+                } else if ppf == 1 {
+                    // present
+                    
+                    let endTimes = self.closeTimes(weekday: DateHandler().getDayofweekfor(date: self.allDates[i]), data: fetchedTimes)
+                    if self.allTimes[i] == "Lunch" {
+                        if hour < endTimes.0 {
+                            self.statusArray.append(true)
+                        } else {
+                            self.statusArray.append(false)
+                        }
+                    } else if self.allTimes[i] == "Dinner" {
+                        if hour < endTimes.1 {
+                            self.statusArray.append(true)
+                        } else {
+                            self.statusArray.append(false)
+                        }
+                    }
+                } else if ppf == 2 {
+                    // future
+                    
+                    let endTimes = self.closeTimes(weekday: DateHandler().getDayofweekfor(date: self.allDates[i]), data: fetchedTimes)
+                    if self.allTimes[i] == "Lunch" {
+                        if endTimes.0 == 0 {
+                            self.statusArray.append(false)
+                        } else {
+                            self.statusArray.append(true)
+                        }
+                    } else if self.allTimes[i] == "Dinner" {
+                        if endTimes.1 == 0 {
+                            self.statusArray.append(false)
+                        } else {
+                            self.statusArray.append(true)
+                        }
+                    }
+                }
+                
+            }
+            
+            //strings to be removed
+            for i in 0...(self.statusArray.count - 1) {
+                
+                if !self.statusArray[i] {
+                    let removedString = DateHandler().dateToString(date: self.allDates[i])+" ("+self.allTimes[i]+")"
+                    // self.tobeRemovedItems.append(DateHandler().dateToString(date: self.allDates[i])+" ("+self.allTimes[i]+")")
+                    if !self.tobeRemovedItems.contains(removedString) {
+                        
+                        self.tobeRemovedItems.append(removedString)
+                    }
+                }
+            }
+            
+            if self.tobeRemovedItems.count == 0 {
+                
+                // proceed to palcing order
+                // check for total order price
+                // to-do
+                // let finalTotal = getTotal()
+                //  let amt = Double(self.getTotal())
+                //  print("fetched mina mount \(amt!)")
+                if Double(self.getTotal())! >= Double(fetchedTimes.minAmount!)! {
+                    print("reched next step")
+                    self.placeOrder(addressType : addressType)
+                    
+                } else {
+                    SCLAlertView().showWarning("Min. amout required", subTitle: "The minimun amount required to place an ordr is $\(fetchedTimes.minAmount!) \n Plese add more item \n P.S You can place order for future dates also to meet the min amount requirement")
+                }
+                
+            } else {
+                // display popup
+                print("popup reached")
+                
+                self.askForDelete(items : self.tobeRemovedItems)
+            }
+            
+            
+            
+        }) { (error) in
+            
+            
+            self.splCell.orderButton.isEnabled = true
+            self.splCell.giftButton.isEnabled = true
+            self.giftCell.proceedButton.isEnabled = true
+            print("data not found \(error)")
+            self.navigationItem.leftBarButtonItems?[0].isEnabled = true
+            self.navigationItem.rightBarButtonItems?[0].isEnabled = true
+            self.navbarIndicator.stopAnimating()
+            SCLAlertView().showError("Cannot connect", subTitle: "Cannot connect to kitchen with error : \(error). Please check your internet connection and try again")
+            
+        }
+        
+        
+        
+    
     }
     
     
@@ -986,5 +1164,38 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
         }
     }
     
+    
+    @IBAction func testParse(_ sender: AnyObject) {
+        print("test pressed")
+        navbarIndicator.startAnimating()
+      //  let userID = Auth.auth().currentUser?.uid
+        ref.child("orderTimes").observeSingleEvent(of: .value, with: { (snapshot) in
+            // Get user value
+            self.navbarIndicator.stopAnimating()
+            let value = snapshot.value as? NSDictionary
+//            let username = value?["username"] as? String ?? ""
+//            let user = User.init(username: username)
+           // let value = snapshot.value as? NSDictionary
+            let amount = value?["minAmount"] as? Int
+            print(amount)
+            
+            // ...
+        }) { (error) in
+            self.navbarIndicator.stopAnimating()
+            print("firebase error \(error.localizedDescription)")
+        }
+     //   self.ref.child("united-kitchen").setValue(["username": "test"])
+//        navbarIndicator.startAnimating()
+//        var query = PFQuery(className: "OrderTimes")
+//        query.whereKey("objectId", equalTo: "eWYWGMDa6o")
+//        query.findObjectsInBackground { (object, error) in
+//            self.navbarIndicator.stopAnimating()
+//            if error == nil {
+//            print("object retieved \(object)")
+//            } else {
+//            print("error in retrieval \(error)")
+//            }
+//        }
+    }
 
 }

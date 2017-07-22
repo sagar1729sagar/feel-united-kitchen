@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>467986288382-t7ikn5sfu5da168gc2piq9clkr9omga5.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.467986288382-t7ikn5sfu5da168gc2piq9clkr9omga5</string>
+	<key>API_KEY</key>
+	<string>AIzaSyADUU5FVj-shUeVsAxV281udTYmj_PCeSo</string>
+	<key>GCM_SENDER_ID</key>
+	<string>467986288382</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.ssapps.UNITED-KITCHEN</string>
+	<key>PROJECT_ID</key>
+	<string>united-kitchen</string>
+	<key>STORAGE_BUCKET</key>
+	<string>united-kitchen.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:467986288382:ios:7350c5c8d7523f44</string>
+	<key>DATABASE_URL</key>
+	<string>https://united-kitchen.firebaseio.com</string>
+</dict>
+</plist>

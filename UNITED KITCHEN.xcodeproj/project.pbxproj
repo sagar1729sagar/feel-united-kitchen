@@ -17,6 +17,7 @@
 		1B0BD8601EBB2A3A00213CB9 /* GiftedPersonDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0BD85F1EBB2A3A00213CB9 /* GiftedPersonDetailsCell.swift */; };
 		1B1AB54C1EAA7C1600FE3A8E /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1AB54B1EAA7C1600FE3A8E /* TestViewController.swift */; };
 		1B393E891EBF27BD00258512 /* OrderDisplayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B393E881EBF27BD00258512 /* OrderDisplayCell.swift */; };
+		1B3AB06E1F2240B7005A0DFC /* CloseTimesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AB06D1F2240B6005A0DFC /* CloseTimesController.swift */; };
 		1B3F2F871EC0F2AC009C62FE /* OrderMainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3F2F861EC0F2AC009C62FE /* OrderMainCell.swift */; };
 		1B7C4AF71EB665A600A9D6BF /* AddressSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C4AF61EB665A500A9D6BF /* AddressSelectionCell.swift */; };
 		1B7C4AF91EB66E9400A9D6BF /* LocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C4AF81EB66E9400A9D6BF /* LocationCell.swift */; };
@@ -51,6 +52,7 @@
 		1BE315531E9EA4C9008EB2B2 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE315521E9EA4C9008EB2B2 /* Profile.swift */; };
 		1BE315561E9EA8DC008EB2B2 /* ProfileData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE315551E9EA8DC008EB2B2 /* ProfileData.swift */; };
 		1BEE552A1EB4D998001E1E01 /* AddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BEE55291EB4D998001E1E01 /* AddressCell.swift */; };
+		1BEE84951F1EA4170040AC26 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1BEE84941F1EA4170040AC26 /* GoogleService-Info.plist */; };
 		1BF1284D1EA2B55A00DD2AA5 /* BackendlessErroHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF1284C1EA2B55A00DD2AA5 /* BackendlessErroHandler.swift */; };
 		1BF128511EA2E41B00DD2AA5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BF128501EA2E41B00DD2AA5 /* Assets.xcassets */; };
 		1BFB88BE1EA9251F00A4B091 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BFB88BD1EA9251F00A4B091 /* UserNotifications.framework */; };
@@ -74,6 +76,7 @@
 		1B0BD85F1EBB2A3A00213CB9 /* GiftedPersonDetailsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiftedPersonDetailsCell.swift; sourceTree = "<group>"; };
 		1B1AB54B1EAA7C1600FE3A8E /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		1B393E881EBF27BD00258512 /* OrderDisplayCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderDisplayCell.swift; sourceTree = "<group>"; };
+		1B3AB06D1F2240B6005A0DFC /* CloseTimesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloseTimesController.swift; sourceTree = "<group>"; };
 		1B3F2F861EC0F2AC009C62FE /* OrderMainCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderMainCell.swift; sourceTree = "<group>"; };
 		1B7C4AF61EB665A500A9D6BF /* AddressSelectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressSelectionCell.swift; sourceTree = "<group>"; };
 		1B7C4AF81EB66E9400A9D6BF /* LocationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationCell.swift; sourceTree = "<group>"; };
@@ -111,6 +114,7 @@
 		1BE315521E9EA4C9008EB2B2 /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		1BE315551E9EA8DC008EB2B2 /* ProfileData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileData.swift; sourceTree = "<group>"; };
 		1BEE55291EB4D998001E1E01 /* AddressCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressCell.swift; sourceTree = "<group>"; };
+		1BEE84941F1EA4170040AC26 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1BF1284C1EA2B55A00DD2AA5 /* BackendlessErroHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BackendlessErroHandler.swift; path = "UNITED KITCHEN/BackendlessErroHandler.swift"; sourceTree = "<group>"; };
 		1BF128501EA2E41B00DD2AA5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1BF128521EA38A2700DD2AA5 /* UNITED KITCHEN.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "UNITED KITCHEN.entitlements"; sourceTree = "<group>"; };
@@ -217,6 +221,7 @@
 				1BA6D0A71E96880A000CBDF5 /* Main.storyboard */,
 				1BA6D0AF1E96880A000CBDF5 /* LaunchScreen.storyboard */,
 				1BA6D0B21E96880A000CBDF5 /* Info.plist */,
+				1BEE84941F1EA4170040AC26 /* GoogleService-Info.plist */,
 				1BA6D0AA1E96880A000CBDF5 /* UNITED_KITCHEN.xcdatamodeld */,
 				1BE3154F1E9EA00C008EB2B2 /* ProfilePage.swift */,
 				1BF128501EA2E41B00DD2AA5 /* Assets.xcassets */,
@@ -242,6 +247,7 @@
 				1BFE3EDE1EC331F700356D34 /* DeliveryOrderAdmin.swift */,
 				1BFE3EE01EC371BD00356D34 /* TodayOrders.swift */,
 				1BFE3EE21EC3795A00356D34 /* ItemsList.swift */,
+				1B3AB06D1F2240B6005A0DFC /* CloseTimesController.swift */,
 			);
 			name = Administrator;
 			sourceTree = "<group>";
@@ -329,7 +335,7 @@
 					1BA6D09F1E968808000CBDF5 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = Q4DV8LF38Q;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -364,6 +370,7 @@
 				1B88C7C61EABDFB0000938C0 /* Admin.storyboard in Resources */,
 				1BE2C5791EC1E1C90047C70F /* food.png in Resources */,
 				1BA6D0B11E96880A000CBDF5 /* LaunchScreen.storyboard in Resources */,
+				1BEE84951F1EA4170040AC26 /* GoogleService-Info.plist in Resources */,
 				1BF128511EA2E41B00DD2AA5 /* Assets.xcassets in Resources */,
 				1BA608241EC20BAA00D3838C /* Delivery.storyboard in Resources */,
 				1BA6D0A91E96880A000CBDF5 /* Main.storyboard in Resources */,
@@ -441,6 +448,7 @@
 				1BE2C5751EC1D6FD0047C70F /* LocationTracking.swift in Sources */,
 				1B1AB54C1EAA7C1600FE3A8E /* TestViewController.swift in Sources */,
 				1B0BD8601EBB2A3A00213CB9 /* GiftedPersonDetailsCell.swift in Sources */,
+				1B3AB06E1F2240B7005A0DFC /* CloseTimesController.swift in Sources */,
 				1BA47D861EAC9BC700EB781E /* Misc.swift in Sources */,
 				1B08198A1EBB992800436BF0 /* Order.swift in Sources */,
 				1BFE3EE31EC3795A00356D34 /* ItemsList.swift in Sources */,
@@ -599,15 +607,15 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "UNITED KITCHEN/UNITED KITCHEN.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: VIDYA SAGAR (Q4DV8LF38Q)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				DEVELOPMENT_TEAM = Q4DV8LF38Q;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "UNITED KITCHEN/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ssapps.UNITED-KITCHEN";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "10317a5f-3b4f-4ebf-95a4-a54f0fadf7d0";
-				PROVISIONING_PROFILE_SPECIFIER = "XC iOS Ad Hoc: com.ssapps.UNITED-KITCHEN";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Pods/Backendless/SDK/ios/backendless/include/Backendless-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
@@ -621,15 +629,15 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "UNITED KITCHEN/UNITED KITCHEN.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: VIDYA SAGAR (Q4DV8LF38Q)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				DEVELOPMENT_TEAM = Q4DV8LF38Q;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "UNITED KITCHEN/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ssapps.UNITED-KITCHEN";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "10317a5f-3b4f-4ebf-95a4-a54f0fadf7d0";
-				PROVISIONING_PROFILE_SPECIFIER = "XC iOS Ad Hoc: com.ssapps.UNITED-KITCHEN";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Pods/Backendless/SDK/ios/backendless/include/Backendless-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};

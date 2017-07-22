@@ -23,10 +23,10 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ordercell1" id="NPU-f1-4gW" customClass="OrderDisplayCell" customModule="UNITED_KITCHEN" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="92" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="92" width="1000" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NPU-f1-4gW" id="Kr7-Gk-z3H">
-                                            <frame key="frameInset" width="375" height="44"/>
+                                            <frame key="frameInset" width="1000" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -95,10 +95,10 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="deliverycell" id="EGH-NK-dYm" customClass="OrderDisplayCell" customModule="UNITED_KITCHEN" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="92" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="92" width="1000" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EGH-NK-dYm" id="aaB-gh-z3m">
-                                            <frame key="frameInset" width="375" height="43"/>
+                                            <frame key="frameInset" width="1000" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -151,7 +151,7 @@
                                         <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lLB-08-w8F" id="Vpr-rS-UTF">
-                                            <frame key="frameInset" width="375" height="43"/>
+                                            <frame key="frameInset" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -267,6 +267,38 @@
             </objects>
             <point key="canvasLocation" x="2423" y="2383"/>
         </scene>
+        <!--Close times-->
+        <scene sceneID="pfu-Ay-LVp">
+            <objects>
+                <viewController id="rdu-5x-8ac" customClass="CloseTimesController" customModule="UNITED_KITCHEN" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ZoB-el-d4l"/>
+                        <viewControllerLayoutGuide type="bottom" id="vcx-9P-aDb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="pp9-ay-yXj">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Close times" id="iWd-yh-Fb3">
+                        <leftBarButtonItems>
+                            <barButtonItem image="upload" id="9Wr-9g-p1U">
+                                <connections>
+                                    <action selector="uploadData:" destination="rdu-5x-8ac" id="bMU-a7-WOp"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="download" id="Cgg-pw-BYY">
+                                <connections>
+                                    <action selector="downloadData:" destination="rdu-5x-8ac" id="EJe-9J-y0x"/>
+                                </connections>
+                            </barButtonItem>
+                        </leftBarButtonItems>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kpe-Cb-8wb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2455.1999999999998" y="3049.0254872563719"/>
+        </scene>
         <!--Item Description-->
         <scene sceneID="F9Q-9D-UFr">
             <objects>
@@ -290,6 +322,7 @@
             <objects>
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="DTb-G0-cpV" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="cOz-3x-esB"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="9vT-mO-fvO">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -302,6 +335,7 @@
                         <segue destination="29i-zP-wNm" kind="relationship" relationship="viewControllers" id="iU0-VB-o9x"/>
                         <segue destination="hZ0-IZ-kgf" kind="relationship" relationship="viewControllers" id="mIl-iC-24o"/>
                         <segue destination="eEq-0K-Jdl" kind="relationship" relationship="viewControllers" id="qp1-oK-vNB"/>
+                        <segue destination="xZ4-k1-kVd" kind="relationship" relationship="viewControllers" id="8Z0-n8-EZZ"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B2C-Dy-sah" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -468,14 +502,36 @@
             </objects>
             <point key="canvasLocation" x="1498.4000000000001" y="1538.6806596701651"/>
         </scene>
+        <!--Close times-->
+        <scene sceneID="73F-Ux-aKX">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xZ4-k1-kVd" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Close times" image="time" id="9EX-98-hVx"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="bbT-Sb-Llj">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="rdu-5x-8ac" kind="relationship" relationship="rootViewController" id="mci-Po-TBl"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FEr-9d-nAd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1516" y="3049"/>
+        </scene>
     </scenes>
     <resources>
         <image name="UKB" width="2918" height="3015"/>
         <image name="desc" width="24" height="24"/>
+        <image name="download" width="36" height="36"/>
         <image name="edit" width="36" height="36"/>
         <image name="logout" width="24" height="24"/>
         <image name="menu" width="36" height="36"/>
         <image name="order" width="36" height="36"/>
         <image name="profileIcon" width="36" height="36"/>
+        <image name="time" width="36" height="36"/>
+        <image name="upload" width="36" height="36"/>
     </resources>
 </document>
