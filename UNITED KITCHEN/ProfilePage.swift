@@ -76,13 +76,7 @@ class ProfilePage: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         
-//        
-//        if CartData().getItems().0 != 0 {
-//            //  tabBarController?.tabBar.items[1].
-//            tabBarController?.tabBar.items?[1].badgeValue = "\(CartData().getItems().1)"
-//        } else {
-//            tabBarController?.tabBar.items?[1].badgeValue = nil
-//        }
+
         
         
       isProfileEditing = false
@@ -96,15 +90,15 @@ class ProfilePage: UIViewController {
                 if ProfileData().getProfile().0.accountType == "admin" {
                     
                 } else {
-                   // self.navigationItem.rightBarButtonItems?.last?.addBadge(number: CartData().getItems().1)
+                   
                     tabBarController?.tabBar.items?[1].badgeValue = "\(CartData().getItems().1)"
                 }
             } else {
-               // self.navigationItem.rightBarButtonItems?.last?.addBadge(number: CartData().getItems().1)
+              
                 tabBarController?.tabBar.items?[1].badgeValue = "\(CartData().getItems().1)"
             }
         } else {
-            //self.navigationItem.rightBarButtonItems?.last?.removeBadge()
+            
             tabBarController?.tabBar.items?[1].badgeValue = nil
         }
     }
@@ -145,7 +139,7 @@ class ProfilePage: UIViewController {
             indicator.startAnimating()
             initialGoButton?.addSubview(indicator)
             checkForRegistration()
-            print("I am here")
+            
         }
     }
     
@@ -257,7 +251,7 @@ class ProfilePage: UIViewController {
         loginButton?.addSubview(indicator)
         
         backendless?.userService.login(prof_intr?.emailAddress, password: passwordLabel?.text, response: { (user) in
-            print("Login Success")
+           
             
             self.navigationItem.leftBarButtonItem?.image = UIImage(named: "edit.png")
             
@@ -273,7 +267,7 @@ class ProfilePage: UIViewController {
                             if self.prof_intr?.accountType == "normal" {
                                 self.registerForPushNotifications(channel: "C"+(self.prof_intr?.phoneNumber!)!)
                             }else if self.prof_intr?.accountType == "admin" {
-                                print("admin register called")
+                               
                                 self.registerForPushNotifications(channel: "admin")
                             }
                     })
@@ -285,7 +279,8 @@ class ProfilePage: UIViewController {
            
             
             }, error: { (error) in
-                print("Login error \(error)")
+               
+                
                 BackendlessErrorHandler().backendlessLoginErrorHandler(code: (error?.faultCode)!)
                 self.loginButton?.isEnabled = true
                 self.indicator.stopAnimating()
@@ -390,7 +385,7 @@ class ProfilePage: UIViewController {
         newUser.password = passwordTF?.text as NSString!
         
         backendless?.userService.register(newUser, response: { (user) in
-            print("User registered")
+           
             let profile = Profile()
             profile.accountType = "normal"
             profile.address = self.addressTV?.text
@@ -399,12 +394,12 @@ class ProfilePage: UIViewController {
             profile.personName = self.nameTF?.text
             profile.phoneNumber = self.initialNumberGrabberTF?.text
             self.backendless?.data.of(Profile.ofClass()).save(profile, response: { (data) in
-                print("details saved")
+              
                 let obj = data as! Profile
                 if ProfileData().removeProfiles() {
-                    print("Profiles removed")
+                 
                     if ProfileData().addProfile(profile: obj) {
-                        print("profiles added")
+                      
                         self.navigationItem.leftBarButtonItem?.image = UIImage(named: "edit.png")
                         //register for push notificatiosn channel
                         
@@ -418,7 +413,7 @@ class ProfilePage: UIViewController {
                         self.addressTV?.center = CGPoint(x: (self.addressTV?.center.x)! - (2 * UIScreen.main.bounds.width) , y: (self.addressTV?.center.y)!)
                         self.createAccountButton?.center = CGPoint(x: (self.createAccountButton?.center.x)! - (2 * UIScreen.main.bounds.width) , y: (self.createAccountButton?.center.y)!)
                         }, completion: { (done) in
-                            print("animations completed")
+                          
                             //Bring in the labels
                             let getProfile = ProfileData().getProfile()
                             if  getProfile.1 {
@@ -451,7 +446,7 @@ class ProfilePage: UIViewController {
         phoneLabel?.textColor = UIColor.blue
         phoneLabel?.textAlignment = .center
         phoneLabel?.backgroundColor = UIColor.white.withAlphaComponent(0.7)
-       // phoneLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+      
         phoneLabel?.font = UIFont.systemFont(ofSize: 20)
         phoneLabel?.isEnabled = false
         self.view.addSubview(phoneLabel!)
@@ -490,15 +485,7 @@ class ProfilePage: UIViewController {
         addressTV1?.pulse(nil)
     }
     
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     func setTextFieldAttribuetes( view : UITextField , placeHolderText : String) {
         
@@ -621,20 +608,20 @@ class ProfilePage: UIViewController {
     }
     
     func registerForPushNotifications(channel : String) {
-        print("channel character count \(channel.characters.count)")
+       
         backendless?.messaging.registerDevice([channel], response: { (response) in
-            print("succesfullt registered to channel \(channel) with response \(response)")
+         
             }, error: { (fault) in
-            print("Cannot register to channel \(channel) with fault \(fault)")
+            
         })
         
     }
     
     func unregisterForPushNotifications() {
         backendless?.messaging.unregisterDeviceAsync({ (response) in
-            print("Device unregistered with response \(response)")
+         
             }, error: { (fault) in
-                print("Ünable to deregister device with error \(fault)")
+                
         })
     }
     

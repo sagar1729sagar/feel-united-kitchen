@@ -24,7 +24,7 @@ class LocationCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        print("awake called")
+       
         let span = MKCoordinateSpan(latitudeDelta: lanDelta, longitudeDelta: lonDelta)
         map = MKMapView(frame: CGRect(x: 10, y: 10, width: UIScreen.main.bounds.width - 20, height: UIScreen.main.bounds.width - 20))
         self.contentView.addSubview(map)
@@ -35,11 +35,11 @@ class LocationCell: UITableViewCell {
         self.map.setRegion(region, animated: true)
         self.annotation.coordinate = self.coordinate!
         self.map.addAnnotation(self.annotation)
-        print("location found")
+     
         self.hasLocaton = true
         }) { (_, location, error) -> (Void) in
             self.coordinate = (location?.coordinate)!
-            print("Location not found")
+           
         }
         
         
@@ -54,7 +54,7 @@ class LocationCell: UITableViewCell {
     }
     
     func retryPressed(sender : UIButton){
-    print("Pressed")
+   
         Location.getLocation(accuracy: .navigation, frequency: .oneShot, success: { (_, location) -> (Void) in
             self.map.removeAnnotation(self.annotation)
             self.coordinate = location.coordinate
@@ -65,13 +65,13 @@ class LocationCell: UITableViewCell {
             self.map.addAnnotation(self.annotation)
         }) { (_, location, error) -> (Void) in
             self.coordinate = location?.coordinate
-            print("Location not found")
+           
         }
     }
     
     
     override func prepareForReuse() {
-       // map.removeAnnotation(annotation)
+       
         
     }
     

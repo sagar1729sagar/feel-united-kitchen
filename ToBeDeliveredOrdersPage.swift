@@ -20,9 +20,7 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
     var addButton = UIButton()
     var startNavigationButton = UIButton()
     var orderDetails = [OrderDetails]()
-    //var isNavigationStarted = false
-   // var table = UITableView()
-   // @IBOutlet weak var table: UITableView!
+
     @IBOutlet weak var table: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,32 +52,19 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
         
         startNavigationButton = UIButton(frame: CGRect(x: 10, y: navBarHeight + 50, width: 2*UIScreen.main.bounds.width/3 - 40, height: 30))
         startNavigationButton.setTitleColor(UIColor.white, for: .normal)
-      //  if isNavigationStarted {
-      //  startNavigationButton.setTitle("STOP NAVIGATION", for: .normal)
-       // } else {
+
         startNavigationButton.setTitle("START NAVIGATION", for: .normal)
-     //   }
+
         startNavigationButton.backgroundColor = UIColor.blue
         startNavigationButton.addTarget(self, action: #selector(startNavigation(sender:)), for: .touchDown)
         self.view.addSubview(startNavigationButton)
         
         table.frame = CGRect(x: 0, y: navBarHeight + 100, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - navBarHeight - 100)
         table.allowsSelection = false
-       // table.separatorStyle = .singleLineEtched
-        table.separatorColor = UIColor.red
-        //table.backgroundColor = UIColor.blue
-        
-//        table = UITableView(frame: CGRect(x: 0, y: navBarHeight + 100, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - navBarHeight - 100))
-//        table.delegate = self
-//        table.dataSource = self
-//        table.allowsSelection = false
-//        self.view.addSubview(table)
-        
 
-        
-        
-        
-        
+        table.separatorColor = UIColor.red
+       
+
         
     }
     
@@ -97,8 +82,6 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("number of rows \(OrderData().getOrders().count)")
-    //    print(OrderData().getOrders().count)
         return OrderData().getOrders().count
     }
     
@@ -163,10 +146,8 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
             cell.addSubview(revGeoTV)
             let loc = CLLocation(latitude: cordnts.0.latitude, longitude: cordnts.0.longitude)
             Location.getPlacemark(forLocation: loc, success: { (placemark) -> (Void) in
-                print("Placemark found \(placemark)")
                 revGeoTV.text = "Placemark found \n \(placemark)"
                 }, failure: { (error) -> (Void) in
-                    print("reverse geo coding error \(error)")
                     revGeoTV.text = "Reverse geo coding error \(error)"
             })
             
@@ -220,50 +201,15 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
         
         
         
-        
-        
-//        let index3 = long.characters.index(of: "(")
-//        let str3 = long.substring(from: index3!)
-//        let index4 = str3.characters.index(of: ")")
-//        let str4 = str3.substring(to: index4!)
-//        
+     
         let crd = CLLocationCoordinate2D(latitude: Double(str3)!, longitude: Double(str6)!)
         
         return (crd,str3,str6)
     }
     
-//        let index1 = data.characters.index(of: ":")
-//        let str1 = data.substring(from: index1!)
-//        let index2 = str1.index(str1.startIndex, offsetBy: 2)
-//        let str2 = str1.substring(from: index2)
-//        let index3 = str2.characters.index(of: ",")
-//        let str3 = str2.substring(to: index3!)
-//        let index4 = str2.characters.index(of: ":")
-//        let str4 = str2.substring(from: index4!)
-//        let index5 = str4.index(str4.startIndex, offsetBy: 2)
-//        let str5 = str4.substring(from: index5)
-//        let index6 = str5.characters.index(of: ")")
-//        let str6 = str5.substring(to: index6!)
-//        
-//        let lat : CLLocationDegrees = Double(str3)!
-//        let long : CLLocationDegrees = Double(str6)!
-//        
-//        print("latitude \(lat) longitude \(long)")
-//        
-//        let coordinates = CLLocationCoordinate2D(latitude: lat, longitude: long)
-//        return coordinates
-  //  }
+
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     
     func addPressed(sender : UIButton) {
@@ -275,7 +221,6 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
         let query = DataQueryBuilder()
         query?.setWhereClause(whereClause)
         backendless?.data.of(OrderDetails.ofClass()).find(query, response: { (data) in
-           // self.navbarIndicator.stopAnimating()
             if data?.count == 0 {
                 self.navbarIndicator.stopAnimating()
             SCLAlertView().showWarning("Error", subTitle: "No such order exist")
@@ -286,10 +231,6 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
                     SCLAlertView().showWarning("Too soon", subTitle: "Order not ready for delivery")
                     } else {
                         self.changeLocationTackingChannel(data: order)
-//                        if OrderData().addOrder(orderDetails: order) {
-//                        print("order added")
-//                        self.table.reloadData()
-//                        }
                     }
                 }
             }
@@ -302,11 +243,9 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
     
     
     func changeLocationTackingChannel(data :OrderDetails) {
-    print("updating location tracking channel")
     data.status = "4"
     data.locationTrackingChannel = "C"+ProfileData().getProfile().0.phoneNumber!
     backendless?.data.of(OrderDetails.ofClass()).save(data, response: { (result) in
-        print("Örder updated")
         if let returned = data as? OrderDetails {
             if OrderData().addOrder(orderDetails: data) {
                 self.sendNotification(data : returned)
@@ -315,7 +254,6 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
         }
         }, error: { (error) in
             self.navbarIndicator.stopAnimating()
-            print("updating location tracking hcannel error \(error)")
             SCLAlertView().showWarning("Error", subTitle: "The following error has occured while updating order status \n\(error)\n Please try again")
     })
     }
@@ -325,7 +263,7 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
         let headers = ["ios-alert":" Order Update recieved","ios-badge":"1","ios-sound":"default","type":"orderupdate","orderId":data.orderId!,"status":data.status!]
         publishOptions.assignHeaders(headers)
         backendless?.messaging.publish("C"+data.phoneNumber!, message: "Any", publishOptions: publishOptions, response: { (response) in
-            print("notification published \(response)")
+           
             self.navbarIndicator.stopAnimating()
             self.sendOrderUpdatesToAdmin(data: data)
             
@@ -333,9 +271,9 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
                 
                 
                 self.backendless?.messaging.publish("C"+data.giftedBy!, message: "any", publishOptions: publishOptions, response: { (response) in
-                    print("notification published gifted \(response)")
+                    
                     }, error: { (error) in
-                        print("Cannot publish notification")
+                        
 
                 })
                 
@@ -346,14 +284,14 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
             
             }, error: { (error) in
                 self.navbarIndicator.stopAnimating()
-                print("Cannot publish notification")
+                
         })
 
     }
 
     @IBAction func clear(_ sender: UIBarButtonItem) {
         if OrderData().deleteOrders() {
-            print("items deleted")
+           
             table.reloadData()
             
         }
@@ -364,54 +302,28 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
     
     
     func startNavigation(sender : UIButton) {
-      //  if isNavigationStarted {
-        //Request.cancel()
-      //  Lo
-      //
-      //  }
-        print("Navigation started")
-        
-    
-        
-//        Location.getLocation(withAccuracy: .navigation, frequency: .significant, timeout: nil, onSuccess: { (location) in
-//            //            print(location)
-//            let coordinates = location.coordinate
-//            //            let message = Message()
-//            //            message.data = coordinates
-//            SVProgressHUD.show()
-//            self.backendless?.messaging.publish("map", message: "\(coordinates)", response: { (status) in
-//                SVProgressHUD.dismiss()
-//                print("message published status \(status)")
-//                }, error: { (error) in
-//                    SVProgressHUD.dismiss()
-//                    print("Message publishing error \(error)")
-//            })
-//        }) { (location, error) in
-//            print("cannot get location \(error)")
-//        }
-//     
-        
+
         Location.getLocation(accuracy: .navigation, frequency: .significant, timeout: nil, success: { (locReq, location) -> (Void) in
-            print(location)
+           
             let coordinates = location.coordinate
             let message = Message()
             message.data = coordinates
             self.backendless?.messaging.publish("C"+ProfileData().getProfile().0.phoneNumber!, message: "\(coordinates)", response: { (response) in
-                print("data published \(response)")
+                
                 self.navbarIndicator.stopAnimating()
                 }, error: { (error) in
                     self.navbarIndicator.stopAnimating()
-                    print("cannot publish data")
+                
             })
             }) { (locReq, loc, error) -> (Void) in
                 self.navbarIndicator.stopAnimating()
-                print("Cannot get location error")
+                
         }
         
     }
     
     func deliveryDone(sender : UIButton) {
-        print("Dleivey done presed")
+       
     
         let order = orderDetails[sender.tag]
         
@@ -419,11 +331,11 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
         order.isDelivered = "1"
         navbarIndicator.startAnimating()
         backendless?.data.of(OrderDetails.ofClass()).save(order, response: { (response) in
-            print("saving done")
+           
             if let data = response as? OrderDetails {
-                print("casted")
+                
                 if OrderData().updateOrder(id: data.orderId!, status: data.status!) {
-                    print("Data updated")
+                   
                     
                     sender.setTitle("DONE", for: .normal)
                     sender.backgroundColor = UIColor.yellow
@@ -447,13 +359,8 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
         let headers = ["ios-alert":" Order Update recieved","ios-badge":"1","ios-sound":"default","type":"orderupdateadmin","orderId":data.orderId!,"status":data.status!]
         publishOptions.assignHeaders(headers)
         backendless?.messaging.publish("admin", message: "Any", publishOptions: publishOptions, response: { (response) in
-            print("notification published \(response)")
-          //  self.navbarIndicator.stopAnimating()
-            
-            
             }, error: { (error) in
-               // self.navbarIndicator.stopAnimating()
-                print("Cannot publish notification")
+            
         })
         
     }

@@ -60,12 +60,12 @@ class DateHandler {
         if calendar.component(.year, from: date1) == calendar.component(.year, from: date2) {
             if calendar.component(.month, from: date1) == calendar.component(.month, from: date2) {
                 if calendar.component(.day, from: date1) == calendar.component(.day, from: date2) {
-                    print("comaprision true")
+                    
                     return true
                 }
             }
         }
-        print("comparision false")
+    
         return false
     }
     

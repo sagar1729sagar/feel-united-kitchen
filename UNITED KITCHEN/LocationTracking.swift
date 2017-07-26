@@ -12,7 +12,7 @@ import SCLAlertView
 
 class LocationTracking: UIViewController , MKMapViewDelegate  {
     
-    //@IBOutlet weak var map: MKMapView!
+ 
     var map = MKMapView()
     let backendless = Backendless.sharedInstance()
     var subscription = [BESubscription]()
@@ -42,7 +42,7 @@ class LocationTracking: UIViewController , MKMapViewDelegate  {
         channels.removeAll()
         for order in orders {
             if order.locationTrackingChannel != "nil" && order.isDelivered != "1" {
-                print("location tracking chennels \(order.locationTrackingChannel)")
+                
                 channels.append(order.locationTrackingChannel!)
             }
         }
@@ -51,16 +51,16 @@ class LocationTracking: UIViewController , MKMapViewDelegate  {
         for chennel in channels {
         
             backendless?.messaging.subscribe(chennel, subscriptionResponse: { (messages) in
-                print("datareceived")
+           
                 if messages?.count != 0 {
                 if   let data = messages?[0].data as? String {
-                 print("subscription response \(data)")
+                
                     let coordinates = Misc().getCoordinates(data: data)
-                     print("coordinates are \(coordinates)")
+                    
                      let region = MKCoordinateRegion(center: coordinates, span: span)
                     self.map.setRegion(region, animated: true)
                     if self.points.count != 0 {
-                   // self.map.removeAnnotations(self.points)
+
                     }
                      let annotation = MKPointAnnotation()
                     annotation.coordinate = coordinates
@@ -76,7 +76,7 @@ class LocationTracking: UIViewController , MKMapViewDelegate  {
                 }, response: { (subs) in
                     self.subscription.append(subs!)
                 }, error: { (fault) in
-                    print(fault)
+                   
                 // do nothing
             })
         }
@@ -89,47 +89,7 @@ class LocationTracking: UIViewController , MKMapViewDelegate  {
         }
     }
     
-//        backendless?.messaging.subscribe("map", subscriptionResponse: { (messages) in
-//            if (messages?.count)! > 0 {
-//                print("datareceived")
-//                if   let data = messages?[0].data as? String {
-//                    
-//                    print("subscription response \(data)")
-//                    
-//                    let coordinates = Util().getCoordinates(data: data)
-//                    
-//                    print("coordinates are \(coordinates)")
-//                    
-//                    
-//                    let region = MKCoordinateRegion(center: coordinates, span: span)
-//                    self.map.setRegion(region, animated: true)
-//                    
-//                    if self.points.count != 0 {
-//                        self.map.removeAnnotations(self.points)
-//                    }
-//                    
-//                    let annotation = MKPointAnnotation()
-//                    annotation.coordinate = coordinates
-//                    self.points.removeAll()
-//                    self.points.append(annotation)
-//                    
-//                    self.map.addAnnotation(annotation)
-//                    
-//                }
-//                
-//            }
-//            
-//            }, subscriptionError: { (error) in
-//                print("error subscription \(error)")
-//            }, response: { (response) in
-//                print("messaging response \(response)")
-//                self.subscription = response!
-//            }, error: { (error) in
-//                print("messaging error \(error)")
-//        })
-//        
-    
-    
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -147,7 +107,8 @@ class LocationTracking: UIViewController , MKMapViewDelegate  {
         if annotationView == nil {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             annotationView!.canShowCallout = true
-            annotationView!.image = UIImage(named: "food.png")!   // go ahead and use forced unwrapping and you'll be notified if it can't be found; alternatively, use `guard` statement to accomplish the same thing and show a custom error message
+            annotationView!.image = UIImage(named: "food.png")!
+            
         } else {
             annotationView!.annotation = annotation
         }
@@ -157,14 +118,6 @@ class LocationTracking: UIViewController , MKMapViewDelegate  {
     }
     
 
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

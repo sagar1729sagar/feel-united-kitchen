@@ -22,13 +22,13 @@ class AddressSelectionCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
-       // t1 = UILabel(frame: CGRect(x: 10, y: 10, width: UIScreen.main.bounds.width - 50, height: 40))
+       
         t1 = UILabel(frame: CGRect(x: 10, y: 10, width: UIScreen.main.bounds.width - UIScreen.main.bounds.width/6.48, height: UIScreen.main.bounds.width/10.8))
         t1.font = UIFont.systemFont(ofSize: UIScreen.main.bounds.width/21.6)
         t1.text = "Delivery address"
         self.contentView.addSubview(t1)
         
-      //  b1 = M13Checkbox(frame: CGRect(x: UIScreen.main.bounds.width - 50, y: 10, width: 40, height: 30))
+     
          b1 = M13Checkbox(frame: CGRect(x: UIScreen.main.bounds.width - UIScreen.main.bounds.width/6.48, y: 10, width:
             UIScreen.main.bounds.width/8.1, height: UIScreen.main.bounds.width/10.8))
         self.contentView.addSubview(b1)

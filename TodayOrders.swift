@@ -48,14 +48,14 @@ class TodayOrders: UIViewController, UITableViewDelegate , UITableViewDataSource
         let allOrders = OrderData().getOrders()
         for order in allOrders {
             if order.isDelivered == "0" {
-                print(order.deliveryDate)
+                
                 if DateHandler().isTodayDate(date: order.deliveryDate!) {
-                    print("today")
+                    
                     orderDetails.append(order)
                 }
             }
         }
-        print(orderDetails)
+       
         
         fids.removeAll()
         filterOrders.removeAll()
@@ -73,7 +73,7 @@ class TodayOrders: UIViewController, UITableViewDelegate , UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("rows \(filtededids.count)")
+       
         return filtededids.count
     }
     
@@ -124,8 +124,7 @@ class TodayOrders: UIViewController, UITableViewDelegate , UITableViewDataSource
         
         table.reloadData()
         
-        print(filtededids)
-        print(filterOrders.count)
+      
     }
 
     override func didReceiveMemoryWarning() {
@@ -134,21 +133,13 @@ class TodayOrders: UIViewController, UITableViewDelegate , UITableViewDataSource
     }
     
 
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     @IBAction func refreshPressed(_ sender: UIBarButtonItem) {
         navbarIndicator.startAnimating()
         // check and register for admin
         backendless?.messaging.getRegistrationAsync({ (response) in
-            print("reg details \(response)")
+           
             if (response?.channels.contains("admin"))!{
                 self.refreshItems()
             } else {
@@ -156,7 +147,7 @@ class TodayOrders: UIViewController, UITableViewDelegate , UITableViewDataSource
             }
             }, error: { (fault) in
                 self.navbarIndicator.stopAnimating()
-                print("canot fetch reg details \(fault)")
+               
                 SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(fault?.message)")
         })
     }
@@ -167,29 +158,26 @@ class TodayOrders: UIViewController, UITableViewDelegate , UITableViewDataSource
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy"
         let dateString = dateFormatter.string(from: Date())
-        print("date exp \(dateString)")
-        print(dateString)
-        // let whereClause = "isDelivered = '0'"
+    
+       
         let queryBuilder = DataQueryBuilder()
         queryBuilder?.setPageSize(100)
-        // queryBuilder?.setWhereClause(whereClause)
-        queryBuilder?.setWhereClause(String(format: "deliveryDate >= %@", dateString))
-        // to-do
         
-        //  print(OrderData().getOrders().count)
+        queryBuilder?.setWhereClause(String(format: "deliveryDate >= %@", dateString))
+  
         if OrderData().deleteOrders(){
             backendless?.data.of(OrderDetails.ofClass()).find(queryBuilder, response: { (data) in
                 self.navbarIndicator.stopAnimating()
-                print("data recieved \(data?.count)")
+               
                 if data?.count == 0 {
-                    print("count zero")
+                  
                     if OrderData().deleteOrders(){
                         self.orderDetails.removeAll()
                         
                         self.viewDidAppear(true)
                     }
                 }
-                print(data?.count)
+                
                 for item in data! {
                     if let order = item as? OrderDetails {
                         self.getItemsFromServer(data: order)
@@ -197,7 +185,7 @@ class TodayOrders: UIViewController, UITableViewDelegate , UITableViewDataSource
                 }
                 }, error: { (fault) in
                     self.navbarIndicator.stopAnimating()
-                    print("canot fetch \(fault)")
+                   
                     SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(fault?.message)")
             })
         }
@@ -205,18 +193,18 @@ class TodayOrders: UIViewController, UITableViewDelegate , UITableViewDataSource
     
     func registerForAdmin() {
         backendless?.messaging.registerDevice(["admin"], response: { (response) in
-            print("registered to admin")
+          
             self.refreshItems()
             }, error: { (fault) in
                 self.navbarIndicator.stopAnimating()
-                print("canot fetch reg details \(fault)")
+               
                 SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(fault?.message)")
                 
         })
     }
     
     func getItemsFromServer( data :OrderDetails) {
-        print("getting items from server")
+       
         navbarIndicator.startAnimating()
         let whereClause = "orderId = "+data.orderId!
         let queryBuilder = DataQueryBuilder()
@@ -224,7 +212,7 @@ class TodayOrders: UIViewController, UITableViewDelegate , UITableViewDataSource
         queryBuilder?.setWhereClause(whereClause)
         backendless?.data.of(OrderItems.ofClass()).find(queryBuilder, response: { (items) in
             self.navbarIndicator.stopAnimating()
-            print("items found for \(data.orderId)")
+           
             for item in items! {
                 if let orderitem = item as? OrderItems {
                     data.items?.append(orderitem)
@@ -232,20 +220,16 @@ class TodayOrders: UIViewController, UITableViewDelegate , UITableViewDataSource
                 }
             }
             if OrderData().addOrder(orderDetails: data) {
-                print("order added")
-                //  print(self.i)
-                // self.i += 1
-                // print("reload table")
-                //to-do reload table
+              
+
                 self.orderDetails.removeAll()
                 self.viewDidAppear(true)
             }
             }, error: { (error) in
                 self.navbarIndicator.stopAnimating()
-                //print("items cannot be found \(error)")
+             
                 if OrderData().addOrder(orderDetails: data) {
-                    //  print("reload data error side")
-                    //to-do reload table
+ 
                     self.orderDetails.removeAll()
                     self.viewDidAppear(true)
                 }

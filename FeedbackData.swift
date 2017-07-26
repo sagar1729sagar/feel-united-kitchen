@@ -41,7 +41,7 @@ class FeedbackDB {
         }
         
         
-        print("new feedback aaded \(isSaved)")
+        
         return isSaved
     }
     
@@ -139,7 +139,7 @@ class FeedbackDB {
             isRemoved = false
         }
         
-        print("Feedbacks from db is removed \(isRemoved)")
+        
         return isRemoved
     }
 

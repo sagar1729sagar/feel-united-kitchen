@@ -70,19 +70,13 @@ class CloseTimesController: UIViewController , UIScrollViewDelegate{
    
     @IBAction func uploadData(_ sender: AnyObject) {
         
-     //   ref.child("orderTimes").updateChildValues(["new":"new update"])
-        
-//        ref.child("orderTimes").setValue(["Any":"Any"])
-        
-       // var list = [[String : Int]]()
+
         
         for i in 0...14 {
             
                 ref.child("orderTimes").updateChildValues([daysLabels[i]:Int(fields[i].text!)!])
             
-           // list.append([days[i]:Int(fields[i].text!)!])
-//            ref.child("orderTimes").setValue([days[i]:Int(fields[i].text!)!])
-//            print(Int(fields[i].text!)!)
+
         }
         
         
@@ -122,14 +116,6 @@ class CloseTimesController: UIViewController , UIScrollViewDelegate{
                 SCLAlertView().showError("Error", subTitle: "Cannot download data due to the following error \(error)")
         }
     }
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

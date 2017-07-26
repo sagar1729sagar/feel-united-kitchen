@@ -182,16 +182,12 @@ class CartData {
                 for result in results {
                     if let item = result as? NSManagedObject{
                         if let name = item.value(forKey: "itemName") as? String {
- //                           if let addedDate = item.value(forKey: "addedDate") as? Date {
- //                               if let deliveryTime = item.value(forKey: "deliveryTime") as? String {
                                     if name == ofName {
                                         context.delete(item)
                                         do {
                                             try context.save()
                                         }catch{return false}
                                     }
-  //                               }else {return false}
- //                           } else {return false}
                         }else{return false}
                     }else{return false}
                 }

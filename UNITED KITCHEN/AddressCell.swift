@@ -18,17 +18,14 @@ class AddressCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
-       // if ProfileData().profileCount().0 == 0 {
+ 
              add = UIButton(frame: CGRect(x: 10, y: 10, width: UIScreen.main.bounds.width - 20, height: UIScreen.main.bounds.height/10))
             add.setTitle("LOGIN/SIGNUP", for: .normal)
             add.backgroundColor = UIColor(red: 65/255, green: 105/255, blue: 225/255, alpha: 1)
             add.setTitleColor(UIColor.white, for: .normal)
             add.layer.cornerRadius = 10
             self.contentView.addSubview(add)
-          //  add.isHidden = false
-           // addressTV.isHidden = true
-            
-     //   } else {
+
             addressTV = UITextView(frame: CGRect(x: 10, y: 10, width: UIScreen.main.bounds.width - 20, height: UIScreen.main.bounds.height/6))
             addressTV.font = UIFont.systemFont(ofSize: UIScreen.main.bounds.width/27)
             addressTV.textAlignment = .center
@@ -41,12 +38,7 @@ class AddressCell: UITableViewCell {
         .bounds.width/27)
             addressChangeButton.addTarget(self, action: #selector(changePressed(sender:)), for: .touchDown)
             self.contentView.addSubview(addressChangeButton)
-         //   add.isHidden = true
-         //   addressTV.isHidden = false
-            
-      //  }
-        
-        
+
         
     }
     
@@ -67,16 +59,7 @@ class AddressCell: UITableViewCell {
         add.isHidden = true
         addressTV.isHidden = true
         addressChangeButton.isHidden = true
-//        if ProfileData().profileCount().0 != 0 {
-//        add.isHidden = true
-//        addressTV.isHidden = false
-//        } else {
-//        add.isHidden = false
-//        addressTV.isHidden = true
-//        }
-//        for sv in self.contentView.subviews {
-//        self.contentView.willRemoveSubview(sv)
-//        }
+
     }
 
 }

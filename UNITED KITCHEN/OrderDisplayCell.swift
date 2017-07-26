@@ -43,13 +43,7 @@ class OrderDisplayCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
         }
     }
     
-//    var order = OrderDetails(){
-//        didSet{
-//            awakeFromNib()
-//        }
-//        
-//    }
-    
+
     func setViews() {
         giftedLabel = UILabel(frame: CGRect(x: 5, y: 0, width: UIScreen.main.bounds.width - 10, height: 30))
         giftedLabel.textAlignment = .right
@@ -103,9 +97,7 @@ class OrderDisplayCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
         
         deliveryTimeLabel = UILabel(frame: CGRect(x: 10, y: 310, width: UIScreen.main.bounds.width - 10, height: 60))
         deliveryTimeLabel.textAlignment = .left
-      //  deliveryTimeLabel.backgroundColor = UIColor.white
-       // deliveryTimeLabel.text = getDeliveryText()
-      //  deliveryTimeLabel.text = ""
+
         deliveryTimeLabel.numberOfLines = 2
         if order.deliveryTime == "0" {
             deliveryTimeLabel.text = "To be be delivered on :\n"+DateHandler().dateToString(date: order.deliveryDate!)+" for Lunch"
@@ -143,19 +135,7 @@ class OrderDisplayCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
         longitueLabel.text = "longitude : "+order.longitude!
         self.contentView.addSubview(longitueLabel)
         
-//        revGeoCodingLabel = UILabel(frame: CGRect(x: 10, y: 680, width: UIScreen.main.bounds.width - 20, height: 30))
-//        revGeoCodingLabel.text = "Reverse Geocoded Address : "
-//        self.contentView.addSubview(revGeoCodingLabel)
-//        
-//        revGeoCodTV = UITextView(frame: CGRect(x: 10, y: 720, width: UIScreen.main.bounds.width - 20, height: 100))
-//        revGeoCodTV.font = UIFont.systemFont(ofSize: 15)
-//        if latitudeLabel.text == "nil" || longitueLabel.text == "nil" {
-//        revGeoCodTV.text = "GPS location is invalid"
-//        } else {
-//        revGeoCodTV.text = "Please wait..."
-//       // getRevGeoCoded(latitude: order.longitude!, longitude: order.latitude!)
-//        }
-//        self.contentView.addSubview(revGeoCodTV)
+
         
         
         ItemsHeading = UILabel(frame: CGRect(x: 10, y: 680, width: UIScreen.main.bounds.width - 20, height: 30))
@@ -172,7 +152,7 @@ class OrderDisplayCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
         getItemsButton.addTarget(self, action: #selector(getItems(sender:)), for: .touchDown)
         self.contentView.addSubview(getItemsButton)
             
-      //  intr = 1
+
             
         } else {
             
@@ -202,28 +182,11 @@ class OrderDisplayCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
             totalLabel.text = "Total : $"+getTotal()
             self.contentView.addSubview(totalLabel)
             
-           // intr = (order.items?.count)! + 1
+          
         }
         
         
-//            deliveryPreferenceLabel = UILabel(frame: CGRect(x: 10, y: 420 + CGFloat(intr*50), width: UIScreen.main.bounds.width - 20, height: 40))
-//            deliveryPreferenceLabel.textAlignment = .left
-//        if order.addressType == "0" {
-//            deliveryPreferenceLabel.text = "Address preference : Registered address"
-//        } else if order.addressType == "1" {
-//            deliveryPreferenceLabel.text = "Address preference : GPS Location"
-//        }
-//            self.contentView.addSubview(deliveryPreferenceLabel)
-        
-//        addressLabel = UILabel(frame: CGRect(x: 10, y: 470 + CGFloat(intr*50), width: UIScreen.main.bounds.width - 20, height: 30))
-//        addressLabel.textAlignment = .left
-//        addressLabel.text = "Registered address :"
-//        self.contentView.addSubview(addressLabel)
-//        
-//        addressTV = UITextView(frame: CGRect(x: 10, y: 510 + CGFloat(intr*50), width: UIScreen.main.bounds.width - 20, height: 50))
-//        addressTV.font = UIFont.systemFont(ofSize: 15)
-//        addressTV.text = order.deliveryAddress
-//        self.contentView.addSubview(addressTV)
+
 
     }
 
@@ -239,7 +202,7 @@ class OrderDisplayCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
     }
     
     func progressBar(_ progressBar: FlexibleSteppedProgressBar, didSelectItemAtIndex index: Int) {
-        print("Index selected \(index)")
+       
         // update order status
         navInd.startAnimating()
         let preIndex = Int(order.status!)!
@@ -249,8 +212,7 @@ class OrderDisplayCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
         }
         statusLabel.text = getStatus(code: order.status!)
         backendless?.data.of(OrderDetails.ofClass()).save(order, response: { (result) in
-            print("Order updated")
-            // to-do Notification to be sent
+          
             if OrderData().updateOrder(id: self.order.orderId!, status: "\(index)") {
                 self.sendNotification(order: self.order)
             }
@@ -282,20 +244,7 @@ class OrderDisplayCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
     }
     
     
-//    func getRevGeoCoded(latitude : String , longitude : String ){
-//        print(latitude)
-//        print(longitude)
-//        let lat : CLLocationDegrees = Double(latitude)!
-//        let long : CLLocationDegrees = Double(longitude)!
-//        let loc = CLLocation(latitude: lat, longitude: long)
-//       // print(loc)
-//        Location.getPlacemark(forLocation: loc , success: { (placemark) -> (Void) in
-//            print("placemark \(placemark)")
-//            }) { (error) -> (Void) in
-//                print("cannot find placemark with error \(error)")
-//        }
-//        
-  //  }
+
     
     
     func sendNotification( order :OrderDetails ) {
@@ -304,7 +253,7 @@ class OrderDisplayCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
         let headers = ["ios-alert":" Order Update recieved","ios-badge":"1","ios-sound":"default","type":"orderupdate","orderId":order.orderId!,"status":order.status!]
         publishOptions.assignHeaders(headers)
         backendless?.messaging.publish("C"+order.phoneNumber!, message: "Any", publishOptions: publishOptions, response: { (status) in
-            print("notification sent with sattus \(status)")
+           
             self.navInd.stopAnimating()
             }, error: { (error) in
                 self.navInd.stopAnimating()
@@ -313,9 +262,9 @@ class OrderDisplayCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
         
         if order.isGifted == "1" {
             backendless?.messaging.publish("C"+order.giftedBy!, message: "ANy", publishOptions: publishOptions, response: { (resposne) in
-                print("Gifted ublish resposne \(resposne)")
+              
                 }, error: { (fault) in
-                    print("Gifted publish fault \(fault)")
+                   
             })
         }
     }
@@ -329,7 +278,7 @@ class OrderDisplayCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
         queryBuilder?.setWhereClause(whereClause)
         backendless?.data.of(OrderItems.ofClass()).find(queryBuilder, response: { (data) in
             self.navInd.stopAnimating()
-            print("got items")
+        
             if (data?.count)! > 0 {
                 for element in data! {
                     if let item = element as? OrderItems {
@@ -346,7 +295,7 @@ class OrderDisplayCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
             }
             }, error: { (error) in
                 self.navInd.stopAnimating()
-                print("Cannot get details \(error)")
+                
                 SCLAlertView().showWarning("Error", subTitle: "Cannot get items because of the error \(error?.message)")
         })
         
@@ -363,16 +312,7 @@ class OrderDisplayCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
         return String(total)
     }
     
-//    func getDeliveryText() -> String {
-//        var time = ""
-//        let dateString = DateHandler().dateToString(date: order.deliveryDate!)
-//        if order.deliveryTime == "0"{
-//           time = "Lunch"
-//        } else if order.deliveryTime == "1" {
-//            time = "Dinner"
-//        }
-//        return "To be delivered on "+dateString+" for "+time
-//    }
+
     
     func getStatus(code : String) -> String {
         switch code {

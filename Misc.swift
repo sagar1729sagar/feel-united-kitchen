@@ -34,7 +34,7 @@ class Misc {
         let lat : CLLocationDegrees = Double(str3)!
         let long : CLLocationDegrees = Double(str6)!
         
-        print("latitude \(lat) longitude \(long)")
+        
         
         let coordinates = CLLocationCoordinate2D(latitude: lat, longitude: long)
         return coordinates

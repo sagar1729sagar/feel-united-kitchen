@@ -27,12 +27,12 @@ class AddFBCell: UITableViewCell {
         
         rating.didFinishTouchingCosmos = { rate in
             self.rated = rate
-            //self.rating.text = "\(self.rated)"
+            
         }
         
         rating.didTouchCosmos = { rate in
             self.rated = rate
-            //  self.rating.text = "\(self.rated)"
+           
         }
         
         nameLabel = UILabel(frame: CGRect(x: 10, y: 40, width: UIScreen.main.bounds.width - 20, height: 30))

@@ -30,7 +30,6 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
     var cartItems = [Cart]()
     var allDatesArray = [String]()
     var itemsArrayINPARWITHDates = [[Cart]]()
-  //  var headerDates = [String]()
     var sectionHeaders = [String]()
     var lunchDates = [String]()
     var dinnerDates = [String]()
@@ -51,7 +50,6 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
     var savedItems = [[OrderItems]]()
     
     var isGifted = false
-  //  var profileCount = 0
     var giftName = ""
     var giftNumber = ""
     var giftAddress = ""
@@ -102,10 +100,9 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
         lunchDates.removeAll()
         dinnerDates.removeAll()
         allDatesArray.removeAll()
-        print("called")
         itemsArrayINPARWITHDates.removeAll()
         profileCount = ProfileData().profileCount().0
-      //  itemCount = 0
+
         let cart = CartData().getItems()
         let menu = MenuItemsData().getMenu()
         if cart.2 && menu.2{
@@ -221,7 +218,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
         header.textLabel?.font = UIFont.systemFont(ofSize: UIScreen.main.bounds.width/27)
-      //  header.frame.height = 2*UIScreen.main.bounds.width/27
+
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -259,9 +256,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        if isGifted {
-//            table.scrollToRow(at: indexPath, at: .bottom, animated: true)
-//        }
+
         
         if indexPath.section < dates.count {
             let cell = table.dequeueReusableCell(withIdentifier: "items", for: indexPath) as! CartItems
@@ -288,7 +283,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
             
             case dates.count:
                 let cell = table.dequeueReusableCell(withIdentifier: "items1", for: indexPath)
-               // table.rowHeight = (UIScreen.main.bounds.height/10 + 20)/3
+             
                  table.rowHeight = (UIScreen.main.bounds.height/16.2 + 20)
                 cell.textLabel?.textAlignment = .right
                 cell.textLabel?.font = UIFont.systemFont(ofSize: UIScreen.main.bounds.width/16.2)
@@ -303,9 +298,9 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
                     addrCell.addressTV.isHidden = true
                     addrCell.addressChangeButton.isHidden = false
                     addrCell.add.addTarget(self, action: #selector(loginPressed(sender:)), for: .touchDown)
-                    print("Add called")
+                
                 } else {
-                    print("Address called")
+                    
                     addrCell.add.isHidden = true
                     addrCell.addressTV.isHidden = false
                     addrCell.addressChangeButton.isHidden = false
@@ -348,7 +343,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
         if indexPath.section < dates.count {
             if editingStyle == .delete {
                 let itm = itemsArrayINPARWITHDates[indexPath.section][indexPath.row]
-               // if CartData().deleteItem(ofName: itemsArrayINPARWITHDates[indexPath.section][indexPath.row].itemName!) {
+               
                 if CartData().deleteItem(ofName: itm.itemName!, date: itm.addedDate!, time: itm.deliveryTime!) {
                     viewDidAppear(true)
                 }
@@ -406,7 +401,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
             viewDidAppear(true)
         }
         
-        print(itemsArrayINPARWITHDates[section][row].itemName)
+        
         
     
     }
@@ -432,7 +427,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
     func ordernowPressed(sender : UIButton) {
         
         isGifted = false
-        print("Ordernow pressed")
+       
         checkCheckBoxes()
     
     }
@@ -462,12 +457,8 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
                     giftName = giftCell.nameTF.text!
                     giftNumber = giftCell.mobileTF.text!
                     giftAddress = giftCell.addressTV.text
-                    //                    giftCell.proceedButton.isEnabled = false
-                    //                    splCell.orderButton.isEnabled = false
-                    //                    splCell.giftButton.isEnabled = false
-                    //splCell.orderButton.isEnabled = false
                     checkCheckBoxes()
-                    print("came till checkbox calling")
+              
                 }
             }
         }
@@ -476,26 +467,18 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
     
     
     func checkCheckBoxes(){
-        print(splCell.b1.checkState.rawValue)
-        print(splCell.b2.checkState.rawValue)
+        
         if splCell.b1.checkState.rawValue == "Unchecked" && splCell.b2.checkState.rawValue == "Unchecked" {
-            //  splCell.orderButton.isEnabled = true
-            // splCell.giftButton.isEnabled = true
-            //giftCell.proceedButton.isEnabled = true
+            
             SCLAlertView().showError("No selection found!!", subTitle: "Please select the type of address you want us to use for delivery")
         } else if splCell.b1.checkState.rawValue == "Checked" && splCell.b2.checkState.rawValue == "Unchecked" {
-            print("Address is used")
-           // checkForDate(addressType: 0)
+           
             checkForDateFireBase(addressType: 0)
         } else if splCell.b1.checkState.rawValue == "Unchecked" && splCell.b2.checkState.rawValue == "Checked" {
-            print("Location is used")
-            //checkForDate(addressType: 1)
+           
             checkForDateFireBase(addressType: 1)
         } else if splCell.b1.checkState.rawValue == "Checked" && splCell.b2.checkState.rawValue == "Checked" {
-            // splCell.orderButton.isEnabled = true
-            //splCell.giftButton.isEnabled = true
-            //giftCell.proceedButton.isEnabled = true
-            print("Both are used")
+          
             SCLAlertView().showError("Invalid selection found!!", subTitle: "Please select only one type of address you want us to use for delivery")
         }
     }
@@ -529,7 +512,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
             self.giftCell.proceedButton.isEnabled = true
             self.splCell.orderButton.isEnabled = true
             self.splCell.giftButton.isEnabled = true
-            print("data found")
+          
             
             let value = snapshot.value as? NSDictionary
             let mondayLunch = value?["mondayLunch"] as? Int
@@ -627,14 +610,9 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
             
             if self.tobeRemovedItems.count == 0 {
                 
-                // proceed to palcing order
-                // check for total order price
-                // to-do
-                // let finalTotal = getTotal()
-                //  let amt = Double(self.getTotal())
-                //  print("fetched mina mount \(amt!)")
+     
                 if Double(self.getTotal())! >= Double(fetchedTimes.minAmount!)! {
-                    print("reched next step")
+                    
                     self.placeOrder(addressType : addressType)
                     
                 } else {
@@ -643,7 +621,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
                 
             } else {
                 // display popup
-                print("popup reached")
+           
                 
                 self.askForDelete(items : self.tobeRemovedItems)
             }
@@ -656,7 +634,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
             self.splCell.orderButton.isEnabled = true
             self.splCell.giftButton.isEnabled = true
             self.giftCell.proceedButton.isEnabled = true
-            print("data not found \(error)")
+            
             self.navigationItem.leftBarButtonItems?[0].isEnabled = true
             self.navigationItem.rightBarButtonItems?[0].isEnabled = true
             self.navbarIndicator.stopAnimating()
@@ -679,10 +657,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
         giftCell.proceedButton.isEnabled = false
         splCell.orderButton.isEnabled = false
         splCell.giftButton.isEnabled = false
-//        var allDates = [Date]()
-//        var allTimes = [String]()
-//        var statusArray = [Bool]()
-//        var tobeRemovedItems = [String]()
+
         
         allDates.removeAll()
         allTimes.removeAll()
@@ -703,11 +678,11 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
             self.giftCell.proceedButton.isEnabled = true
             self.splCell.orderButton.isEnabled = true
             self.splCell.giftButton.isEnabled = true
-            print("data found")
+            
             
             if let fecthedTimes = data?[0] as? OrderTimes {
                 
-                print("casted")
+                
                 /**
                  
                  First check for past date
@@ -768,7 +743,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
                 
                     if !self.statusArray[i] {
                         let removedString = DateHandler().dateToString(date: self.allDates[i])+" ("+self.allTimes[i]+")"
-                       // self.tobeRemovedItems.append(DateHandler().dateToString(date: self.allDates[i])+" ("+self.allTimes[i]+")")
+                       
                         if !self.tobeRemovedItems.contains(removedString) {
                             
                             self.tobeRemovedItems.append(removedString)
@@ -778,14 +753,9 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
                 
                 if self.tobeRemovedItems.count == 0 {
                 
-                    // proceed to palcing order
-                    // check for total order price
-                    // to-do
-                   // let finalTotal = getTotal()
-                  //  let amt = Double(self.getTotal())
-                  //  print("fetched mina mount \(amt!)")
+                    
                     if Double(self.getTotal())! >= Double(fecthedTimes.minAmount!)! {
-                        print("reched next step")
+                      
                         self.placeOrder(addressType : addressType)
                         
                     } else {
@@ -794,7 +764,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
                     
                                    } else {
                     // display popup
-                    print("popup reached")
+                    
                     
                     self.askForDelete(items : self.tobeRemovedItems)
                 }
@@ -805,7 +775,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
             self.splCell.orderButton.isEnabled = true
             self.splCell.giftButton.isEnabled = true
             self.giftCell.proceedButton.isEnabled = true
-            print("data not found \(error)")
+           
             self.navigationItem.leftBarButtonItems?[0].isEnabled = true
             self.navigationItem.rightBarButtonItems?[0].isEnabled = true
             self.navbarIndicator.stopAnimating()
@@ -826,19 +796,17 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
         
         if addressType == 1{
             if locCell.coordinate != nil {
-                print("Proceed")
+                
                 navbarIndicator.startAnimating()
-               // updateProfile(addressType: addressType, numberOfOrders: dates.count, currentOrderNumber: 1)
-                //generateOrderIds()
+             
                 generateOrderIds(addressType: 1)
             } else {
                 SCLAlertView().showWarning("Location not found", subTitle: "We cannot determine your GPS location right now. Please press RETRY and try again or use another type of address mode")
             }
         } else {
-            print("proceed")
+            
             navbarIndicator.startAnimating()
-           // updateProfile(addressType: addressType, numberOfOrders: dates.count, currentOrderNumber: 1)
-            //generateOrderIds()
+           
             
             generateOrderIds(addressType: 0)
         }
@@ -867,23 +835,23 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
         self.navbarIndicator.startAnimating()
 
         backendless?.data.of(Profile.ofClass()).save(ProfileData().getProfile().0, response: { (data) in
-            print("Updated profile saved")
+        
             
                 // save items
                 // save orders
             /// relations are ignored
-            // to-d0
+           
                         self.saveOrders(addressType: addressType, updatedProfile: ProfileData().getProfile().0)
             }, error: { (fault) in
                 self.splCell.orderButton.isEnabled = true
                 self.splCell.giftButton.isEnabled = true
                 self.giftCell.proceedButton.isEnabled = true
-               // print("data not found \(fault)")
+             
                 self.navigationItem.leftBarButtonItems?[0].isEnabled = true
                 self.navigationItem.rightBarButtonItems?[0].isEnabled = true
                 self.navbarIndicator.stopAnimating()
                 self.navbarIndicator.stopAnimating()
-                print("Error saving profile \(fault)")
+            
                 SCLAlertView().showWarning("Apologies", subTitle: "Cannot place your order as the following error has occured \n\(fault?.message) \n Please try again")
         })
         
@@ -895,9 +863,9 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
         
         
         orderCount = 0
-        print("orderis for loop")
+        
         for i in 0...(orderIds.count - 1) {
-            print("order id is \(orderIds[i])")
+            
             let orderDetails = OrderDetails()
             orderDetails.orderId = orderIds[i]
             orderDetails.deliveryDate = itemsArrayINPARWITHDates[i][0].addedDate
@@ -927,7 +895,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
                 if locCell.coordinate != nil {
                     orderDetails.longitude = "\(locCell.coordinate?.longitude)"
                     orderDetails.latitude = "\(locCell.coordinate?.latitude)"
-                    print(orderDetails.longitude!)
+                
                 } else {
                     orderDetails.latitude = "0"
                     orderDetails.longitude = "0"
@@ -940,7 +908,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
         }
             }
             
-            print("initiated")
+            
             initiateSave( items : itemsArrayINPARWITHDates[i], details : orderDetails , itemNumber : 1 , savedOrderItems: [OrderItems]())
             
             
@@ -954,16 +922,16 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
         
         if itemNumber <= items.count {
             let newItem = OrderItems()
-            print(1)
+         
             newItem.name = items[itemNumber - 1].itemName
-            print(2)
+          
             newItem.price = getPrice(item: getItemDetails(name: items[itemNumber - 1].itemName!).0, code: DateHandler().daysFromTodayTo(date: items[itemNumber - 1].addedDate!))
             newItem.orderId = details.orderId
             newItem.quantity = items[itemNumber - 1].itemQuantity
-            print("backendless item save")
+           
             backendless?.data.of(OrderItems.ofClass()).save(newItem, response: { (result) in
                 if let data = result as? OrderItems {
-                    print("backendless item data recieved")
+                    
                     var intr = savedOrderItems
                     intr.append(data)
                 self.initiateSave(items: items, details: details, itemNumber: itemNumber + 1, savedOrderItems: intr)
@@ -972,7 +940,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
                     self.splCell.orderButton.isEnabled = true
                     self.splCell.giftButton.isEnabled = true
                     self.giftCell.proceedButton.isEnabled = true
-                    print("data not found \(error)")
+                   
                     self.navigationItem.leftBarButtonItems?[0].isEnabled = true
                     self.navigationItem.rightBarButtonItems?[0].isEnabled = true
                     self.navbarIndicator.stopAnimating()
@@ -983,7 +951,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
         } else {
             backendless?.data.of(OrderDetails.ofClass()).save(details, response: { (result) in
                 if let data = result as? OrderDetails {
-                    print("Order details casted")
+                   
                     self.sendNotification(data: data)
                     data.items = savedOrderItems
                     if OrderData().addOrder(orderDetails: data) {
@@ -994,7 +962,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
                                 self.splCell.orderButton.isEnabled = true
                                 self.splCell.giftButton.isEnabled = true
                                 self.giftCell.proceedButton.isEnabled = true
-                              //  print("data not found \(error)")
+                             
                                 self.navigationItem.leftBarButtonItems?[0].isEnabled = true
                                 self.navigationItem.rightBarButtonItems?[0].isEnabled = true
                                 self.navbarIndicator.stopAnimating()
@@ -1015,7 +983,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
                     self.splCell.orderButton.isEnabled = true
                     self.splCell.giftButton.isEnabled = true
                     self.giftCell.proceedButton.isEnabled = true
-                    print("data not found \(error)")
+                   
                     self.navigationItem.leftBarButtonItems?[0].isEnabled = true
                     self.navigationItem.rightBarButtonItems?[0].isEnabled = true
                     self.navbarIndicator.stopAnimating()
@@ -1030,40 +998,20 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
     }
     
     func sendNotification(data : OrderDetails) {
-        print("sending message")
+        
         let publishOptions = PublishOptions()
         let headers = ["ios-alert":"New Order recieved","ios-badge":"1","ios-sound":"default","type":"neworder","orderId":data.orderId!]
         publishOptions.assignHeaders(headers)
         
         backendless?.messaging.publish("admin", message: "New order", publishOptions: publishOptions, response: { (status) in
-            print("message publish success \(status)")
-     //       self.LastTask(data: data)
+
             }, error: { (error) in
-                print("Message publish error \(error)")
-    //            self.LastTask(data: data)
+ 
         })
     }
     
     
-    
-//        for i in 0...(orderIds.count - 1) {
-//            let cart = itemsArrayINPARWITHDates[i]
-//            for item in cart {
-////                let newItem = OrderItems()
-////                newItem.name = item.itemName
-////                newItem.orderId = orderIds[i]
-////                newItem.price = getPrice(item: getItemDetails(name: item.itemName!).0, code: DateHandler().daysFromTodayTo(date: item.addedDate!))
-////                newItem.quantity = item.itemQuantity
-////                backendless?.data.of(OrderItems.ofClass()).save(newItem, response: { (data) in
-////                    print("Saved")
-////                    }, error: { (error) in
-////                        SCLAlertView().showWarning("Save error", subTitle: "The item \(newItem.name) is not saved due to the following error )
-////                })
-//            }
-//        }
-  //  }
-    
-    
+
     
     func askForDelete( items : [String]) {
         var rm = ""
@@ -1076,19 +1024,17 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
     
     
     func closeTimes(weekday : Int,data : OrderTimes) -> (Int,Int) {
-        print("close times called")
         
         switch weekday {
         case 1:
             return (Int(data.sundayLunch!)! , Int(data.sundayDinner!)!)
         case 2:
-            print("Monday called")
+            
             return (Int(data.mondayLunch!)! , Int(data.mondayDinner!)!)
         case 3:
             return (Int(data.tuesdayLunch!)! , Int(data.tuesdayDinner!)!)
         case 4:
-            print("wednedday called")
-            print(Int(data.wednesdayDinner!)!)
+            
             return (Int(data.wednesdayLunch!)! , Int(data.wednesdayDinner!)!)
         case 5:
             return (Int(data.thrusdayLunch!)! , Int(data.thrusdayDinner!)!)
@@ -1104,7 +1050,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
     
 
     func getTotal() -> String {
-        print("Called")
+        
         var total : Double = 0
         let items = CartData().getItems().0
         for item in items {
@@ -1120,15 +1066,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
         self.tabBarController?.selectedIndex = 4
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+ 
     
     
     @IBAction func menuPressed(_ sender: UIBarButtonItem) {
@@ -1136,20 +1074,11 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
     }
     @IBAction func deletePressed(_ sender: UIBarButtonItem) {
         if CartData().deleteCart() {
-          //  cartItems.removeAll()
-           // itemCount = 0
-           // table.reloadData()
-//            print("All deleted")
-//            viewDidAppear(true)
-//            itemsArrayINPARWITHDates.removeAll()
-//            lunchDates.removeAll()
-//            dinnerDates.removeAll()
-//            dates.removeAll()
-//            times.removeAll()
+
             itemCount = 0
             table.reloadData()
             noItemsLabel.isHidden = false
-            //viewDidAppear(true)
+            
         }
     }
     
@@ -1166,36 +1095,23 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
     
     
     @IBAction func testParse(_ sender: AnyObject) {
-        print("test pressed")
+        
         navbarIndicator.startAnimating()
-      //  let userID = Auth.auth().currentUser?.uid
+      
         ref.child("orderTimes").observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             self.navbarIndicator.stopAnimating()
             let value = snapshot.value as? NSDictionary
-//            let username = value?["username"] as? String ?? ""
-//            let user = User.init(username: username)
-           // let value = snapshot.value as? NSDictionary
+
             let amount = value?["minAmount"] as? Int
-            print(amount)
             
-            // ...
+            
+        
         }) { (error) in
             self.navbarIndicator.stopAnimating()
-            print("firebase error \(error.localizedDescription)")
+            
         }
-     //   self.ref.child("united-kitchen").setValue(["username": "test"])
-//        navbarIndicator.startAnimating()
-//        var query = PFQuery(className: "OrderTimes")
-//        query.whereKey("objectId", equalTo: "eWYWGMDa6o")
-//        query.findObjectsInBackground { (object, error) in
-//            self.navbarIndicator.stopAnimating()
-//            if error == nil {
-//            print("object retieved \(object)")
-//            } else {
-//            print("error in retrieval \(error)")
-//            }
-//        }
+
     }
 
 }

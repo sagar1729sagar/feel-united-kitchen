@@ -44,16 +44,6 @@ class MiscData {
         }catch{
         }
         
-//        let context = appDelegate.persistentContainer.viewContext
-//        let newEntry = NSEntityDescription.insertNewObject(forEntityName: "Misc", into: context)
-//        print(index)
-//        newEntry.setValue(String(index), forKey: "index")
-//        
-//        do {
-//            try context.save()
-//        } catch {
-//           
-//        }
         
     }
     
@@ -67,7 +57,7 @@ class MiscData {
             if results.count > 0 {
                 if let result = results[0] as? NSManagedObject {
                     if let index = result.value(forKey: "index") as? String {
-                        print("index \(index)")
+                    
                         return Int(index)!
                     }
                 }
@@ -117,7 +107,7 @@ class MiscData {
             if results.count > 0 {
                 if let result = results[0] as? NSManagedObject {
                     if let index = result.value(forKey: "selectedDate") as? Date {
-                       // print("index \(index)")
+                       
                         return index
                     }
                 }
@@ -167,7 +157,7 @@ class MiscData {
             if results.count > 0 {
                 if let result = results[0] as? NSManagedObject {
                     if let index = result.value(forKey: "menuRefreshDate") as? Date {
-                        // print("index \(index)")
+                        
                         return index
                     }
                 }

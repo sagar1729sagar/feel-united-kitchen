@@ -66,36 +66,14 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
     }
     
     override func viewDidAppear(_ animated: Bool) {
-      //  print(OrderData().getOrders().count)
-        
-        print("did Appear")
-        
-        
+     
+
         
         // Setting number badges
-        
-        
-//        if CartData().getItems().1 != 0 {
-//            
-//            if ProfileData().profileCount().0 != 0 {
-//                if ProfileData().getProfile().0.accountType == "admin" {
-//                    
-//                } else {
-//                    self.navigationItem.rightBarButtonItems?.last?.addBadge(number: CartData().getItems().1)
-//                    tabBarController?.tabBar.items?[1].badgeValue = "\(CartData().getItems().1)"
-//                }
-//            } else {
-//                self.navigationItem.rightBarButtonItems?.last?.addBadge(number: CartData().getItems().1)
-//                tabBarController?.tabBar.items?[1].badgeValue = "\(CartData().getItems().1)"
-//            }
-//        } else {
-//            self.navigationItem.rightBarButtonItems?.last?.removeBadge()
-//            tabBarController?.tabBar.items?[1].badgeValue = nil
-//        }
-        
+
         
         if CartData().getItems().1 != 0 {
-          //  tabBarController?.tabBar.items[1].
+        
             tabBarController?.tabBar.items?[1].badgeValue = "\(CartData().getItems().1)"
         } else {
             tabBarController?.tabBar.items?[1].badgeValue = nil
@@ -140,12 +118,12 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
     }
     
     func loadlist(notification : Notification) {
-        print("Notification detected for new orders")
+       
         let orderId = (notification.userInfo?["orderId"])! as! String
         let status = (notification.userInfo?["status"])! as! String
         
         if OrderData().updateOrder(id: orderId, status: status) {
-            print("saved")
+            
             viewDidAppear(true)
         }
         
@@ -180,17 +158,7 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
         
         return cell
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     @IBAction func refresh(_ sender: UIBarButtonItem) {
         
@@ -200,9 +168,9 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
         navbarIndicator.startAnimating()
         // check for reg
          let reqChannel = "C"+ProfileData().getProfile().0.phoneNumber!
-        print("req channel \(reqChannel)")
+      
         backendless?.messaging.getRegistrationAsync({ (response) in
-            print("reg details \(response)")
+            
             if (response?.channels.contains(reqChannel))!{
                 self.refreshOrders()
             } else {
@@ -210,7 +178,7 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
             }
             }, error: { (fault) in
                 self.navbarIndicator.stopAnimating()
-                print("canot fetch reg details \(fault)")
+                
                 SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(fault?.message)")
         })
             
@@ -223,11 +191,11 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
     
     func registerForChennal(channel : String){
         backendless?.messaging.registerDevice([channel], response: { (response) in
-            print("reg attempt \(response)")
+         
             self.refreshOrders()
             }, error: { (fault) in
                 self.navbarIndicator.stopAnimating()
-                print("canot fetch reg details \(fault)")
+               
                 SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(fault?.message)")
         })
     }
@@ -240,7 +208,7 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
         query?.setWhereClause(whereClause)
         
         backendless?.data.of(OrderDetails.ofClass()).find(query, response: { (data) in
-            print("recieved data \(data?.count)")
+          
             self.navbarIndicator.stopAnimating()
             if data?.count == 0 {
                 if OrderData().deleteOrders(){
@@ -257,14 +225,14 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
             }
             }, error: { (fault) in
                 self.navbarIndicator.stopAnimating()
-                print("canot fetch \(fault)")
+               
                 SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(fault?.message)")
         })
         
     }
     
     func getItemsFromServer(data : OrderDetails) {
-        print("getting items from server")
+       
         let whereClause = "orderId = "+data.orderId!
         let queryBuilder = DataQueryBuilder()
         queryBuilder?.setPageSize(100)
@@ -273,13 +241,13 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
         backendless?.data.of(OrderItems.ofClass()).find(queryBuilder, response: { (items) in
             for item in items! {
                 if let orderItem = item as? OrderItems {
-                    print("items casted")
+                   
                     data.items?.append(orderItem)
                 }
             }
             // add to db
             if OrderData().addOrder(orderDetails: data) {
-                print("data added")
+            
                 self.viewDidAppear(true)
             }
             
@@ -299,7 +267,7 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
         var statuses = [Bool]()
         for order in orders {
             if order.status == "3" {
-                print("found order")
+              
             statuses.append(true)
             } else {
             statuses.append(false)
@@ -309,7 +277,7 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
         
         for i in 0...(statuses.count - 1){
             if statuses[i] {
-            print("eligible ids")
+         
             isEligible = true
             eligibleIDs.append(orders[i].orderId!)
             }
@@ -322,7 +290,7 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
         navbarIndicator.stopAnimating()
         } else {
             if eligibleIDs.count > 0 {
-                print("eligible ids \(eligibleIDs.count)")
+               
                 for id in eligibleIDs {
                     for order in orders {
                         if order.orderId == id {
@@ -336,23 +304,19 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
                     getLocationChannels(ids: eligibleIDs, idsCount: eligibleIDs.count, iterationNumber: 1)
                 } else {
                     navbarIndicator.stopAnimating()
-                    // to-do perform segue
-                    print("print segue to be performed1")
+                  
                     performSegue(withIdentifier: "location", sender: self)
                 }
                 
             }
-       // getLocationChannels(ids: eligibleIDs)
-          //  channels.removeAll()
-            //getLocationChannels(ids: eligibleIDs, idsCount: eligibleIDs.count, iterationNumber: 1)
+       
         }
         
     }
     
     
     func getLocationChannels(ids : [String] , idsCount : Int , iterationNumber : Int){
-        print("ids count \(idsCount)")
-        print("iteration \(iterationNumber)")
+     
         let whereclause = "orderId = "+ids[iterationNumber - 1]
         let query = DataQueryBuilder()
         query?.setWhereClause(whereclause)
@@ -390,8 +354,6 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
         if name.count == 0 {
         SCLAlertView().showWarning("Not yet", subTitle: "Your order hasn't assigned a tracking channel. Please try again in some time")
         } else {
-            // to-do perform segue
-            print("segue to be performed2")
             performSegue(withIdentifier: "location", sender: self)
         }
     }

@@ -19,7 +19,6 @@ import DCAnimationKit
 class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
     
     let backendless = Backendless.sharedInstance()
-   // let coachMarksController = CoachMarksController()
     var days = [String]()
     var firstDate : Date?
     var selectedDate = Date()
@@ -45,7 +44,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
 
     override func viewDidLoad() {
         
-        print("didload")
+      
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadlist(notification:)), name: Notification.Name("menuupdate"), object: nil)
         
@@ -55,7 +54,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         if let firstOpen = UserDefaults.standard.object(forKey: "firstOpen") as? Bool {
             
             // not first launch
-          //  print("Not first launch")
+         
             
             if firstOpen {
                 
@@ -64,7 +63,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
             
         } else {
             // first launch
-          //  print("first launch")
+  
             getMenuData()
             UserDefaults.standard.set(false, forKey: "firstOpen")
         }
@@ -72,8 +71,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         MiscData().addIndex(index: 0)
         
         self.view.backgroundColor = UIColor.white.withAlphaComponent(0.8)
-       // self.view.backgroundColor = UIColor.clear
-
+       
         foodTypeSelection = HMSegmentedControl(sectionTitles: ["Starters","Main Course","Deserts"])
         foodTypeSelection.frame = CGRect(x: 0, y: (self.navigationController?.navigationBar.frame.height)!*1.5, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/12)
         foodTypeSelection.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 250/255, alpha: 1)
@@ -87,19 +85,19 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         self.view.addSubview(foodTypeSelection)
         
         carousel = iCarousel(frame: CGRect(x: 0, y: foodTypeSelection.frame.origin.y + foodTypeSelection.bounds.height , width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - foodTypeSelection.bounds.height - (self.navigationController?.navigationBar.frame.height)! - (self.tabBarController?.tabBar.frame.height)!*1.5))
-//        carousel = iCarousel(frame: CGRect(x: 0, y: foodTypeSelection.frame.origin.y , width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - foodTypeSelection.bounds.height - (self.navigationController?.navigationBar.frame.height)! - (self.tabBarController?.tabBar.frame.height)!))
+
         carousel.type = .coverFlow2
         carousel.dataSource = self
         carousel.delegate = self
         self.view.addSubview(carousel)
-        //carousel.reloadData()
+       
         
         
         navbarIndicator.hidesWhenStopped = true
         navbarIndicator.color = UIColor.red
         let left = self.navigationItem.leftBarButtonItems
         let spinner = UIBarButtonItem(customView: navbarIndicator)
-       // self.navigationItem.setLeftBarButton(nil, animated: true)
+      
         self.navigationItem.setLeftBarButtonItems(nil, animated: true)
         self.navigationItem.setLeftBarButtonItems([(left?[0])!,(left?[1])!,spinner], animated: true)
         
@@ -112,14 +110,14 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
     
     override func viewDidAppear(_ animated: Bool) {
         
-       // coachMarksController.startOn(self)
+       
         
-        print("View appeared")
+       
         
         
         if DateHandler().dateToString(date: Date()) == DateHandler().dateToString(date: MiscData().getRefreshDate()) {
             // check for cart items
-            print("Same day")
+           
             if CartData().getItems().1 != 0 {
             let names = MenuItemsData().getMenu().0
             let carts = CartData().getItems().0
@@ -133,7 +131,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         }
         MiscData().addRefreshDate(date: Date())
         } else {
-            print("Other day")
+            
             MiscData().addRefreshDate(date: Date())
             getMenuData()
         }
@@ -149,7 +147,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
             cartItems = cart.0
         }
         if items.2 {
-          //  print("value returned \(items.1)")
+         
             menuItems.removeAll()
             menuItems = items.0
             countCategerioes(items: menuItems)
@@ -187,17 +185,16 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         }
         
         if days.count == 0 {
-      //  print("zero count")
+    
             days = date_intr.0
             firstDate = date_intr.1[0]
         } else {
-      //  print("Non zero")
+      
             if DateHandler().isTodayDate(date: firstDate! ) {
-                print("today")
-//                selectedDate = date_intr.1[0]
-//                MiscData().addDate(date: selectedDate)
+                
+
             } else {
-                print("Not today")
+               
                 days.removeAll()
                 days = date_intr.0
                 selectedDate = date_intr.1[0]
@@ -215,19 +212,15 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         datesMenu.cellBackgroundColor = UIColor.white
         datesMenu.cellSelectionColor = UIColor(red: 230/255, green: 230/255, blue: 250/255, alpha: 1)
         self.navigationItem.titleView = datesMenu
-//        if CartData().getItems().1  == 0 {
-//            datesMenu.isUserInteractionEnabled = false
-//        } else {
-//            datesMenu.isUserInteractionEnabled = true
-//        }
+
+
         datesMenu.didSelectItemAtIndexHandler = {[weak self] (indexPath: Int) -> () in
             self?.selectedDate = date_intr.1[indexPath]
             MiscData().addDate(date: (self?.selectedDate)!)
             self?.dateTitleString = date_intr.0[indexPath]
             self?.removeCarouselSubviews()
             self?.carousel.reloadData()
-          //  print("selected date \(self?.selectedDate)")
-          //  print("selected date string \(self?.dateTitleString)")
+
             
         }
         
@@ -302,12 +295,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         mainVIew.addSubview(line2)
         
         
-        // draw circles to show availablity on several days
-//        let circle1 = UIView(frame: CGRect(x: 7, y: itemImage.frame.origin.y + itemImage.bounds.height + 15, width: itemImage.bounds.width/7, height: itemImage.bounds.width/7))
-//        circle1.layer.cornerRadius = itemImage.bounds.width/14
-//        circle1.backgroundColor = UIColor(red: 34/255, green: 139/255, blue: 34/255, alpha: 1)
-//        circle1.clipsToBounds = true
-//        mainVIew.addSubview(circle1)
+
         let available = [menuItems[index].availableSunday,menuItems[index].availableMonday,menuItems[index].availableTuesday,menuItems[index].availableWednesday,menuItems[index].availableThrusday,menuItems[index].availableFriday,menuItems[index].availableSaturday]
         let day = ["Su","M","Tu","W","Th","F","Sa"]
         var circle1 = UILabel()
@@ -335,10 +323,9 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         line4.backgroundColor = UIColor.gray
         mainVIew.addSubview(line4)
         
-      //  print(DateHandler().daysFromTodayTo(date: selectedDate))
+     
         priceLabel = UILabel(frame: CGRect(x: 5, y: line4.bounds.height + line4.frame.origin.y + 2, width: 2*mainVIew.bounds.width/3 - 10, height: UIScreen.main.bounds.height/28.4))
         priceLabel.text = "$" + setPriceforDisplay(item: menuItems[index], howfarfrom: DateHandler().daysFromTodayTo(date: selectedDate))+" (Today)"
-        //priceLabel.font = UIFont.boldSystemFont(ofSize: UIScreen.main.bounds.height/28.4)
         priceLabel.font = UIFont.systemFont(ofSize: UIScreen.main.bounds.height/38)
         mainVIew.addSubview(priceLabel)
         
@@ -346,22 +333,20 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         
         priceLabel1 = UILabel(frame: CGRect(x: 5, y: priceLabel.bounds.height + priceLabel.frame.origin.y + 2, width: 2*mainVIew.bounds.width/3 - 10, height: UIScreen.main.bounds.height/28.4))
         priceLabel1.text = "$" + setPriceforDisplay(item: menuItems[index], howfarfrom: DateHandler().daysFromTodayTo(date: selectedDate) + 1)+" (Next day)"
-       // priceLabel1.font = UIFont.boldSystemFont(ofSize: UIScreen.main.bounds.height/28.4)
+       
         priceLabel1.font = UIFont.systemFont(ofSize: UIScreen.main.bounds.height/38)
         mainVIew.addSubview(priceLabel1)
         
         priceLabel2 = UILabel(frame: CGRect(x: 5, y: priceLabel1.bounds.height + priceLabel1.frame.origin.y + 2, width: 2*mainVIew.bounds.width/3 - 10, height: UIScreen.main.bounds.height/28.4))
         priceLabel2.text = "$" + setPriceforDisplay(item: menuItems[index], howfarfrom: DateHandler().daysFromTodayTo(date: selectedDate) + 2)+" (Later)"
-        //priceLabel2.font = UIFont.boldSystemFont(ofSize: UIScreen.main.bounds.height/28.4)
+        
         priceLabel2.font = UIFont.systemFont(ofSize: UIScreen.main.bounds.height/38)
         mainVIew.addSubview(priceLabel2)
         
         if checkForitemAvailablefor(weekday: DateHandler().getDayofweekfor(date: selectedDate), item: menuItems[index]) {
-        // addButton in lunch Button
-         //let addButton = UIButton(frame: CGRect(x: 2*mainVIew.bounds.width/3, y: line4.bounds.height + line4.frame.origin.y + 2, width: mainVIew.bounds.width/3 - 5, height: 30))
+        
              addButton = UIButton(frame: CGRect(x: 2*mainVIew.bounds.width/3 - 10, y: line4.bounds.height + line4.frame.origin.y + 2, width: mainVIew.bounds.width/3, height: UIScreen.main.bounds.height / 19))
-            //if isInCart(name: menuItems[index].itemName!) {
-           // if isInCart(name: menuItems[index].itemName!, date: selectedDate){
+            
             if isInCart(name: menuItems[index].itemName!, date: selectedDate, time: "Lunch"){
                 addButton.setTitle("In Cart", for: .normal)
                 addButton.backgroundColor = UIColor(red: 46/255, green: 139/255, blue: 87/255, alpha: 0.6)
@@ -373,10 +358,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         
         addButton.setTitleColor(UIColor.white, for: .normal)
         addButton.titleLabel?.font = UIFont.systemFont(ofSize: UIScreen.main.bounds.height/28.4)
-       // addButton.layer.cornerRadius = 10
-       // print(carousel.currentItemIndex)
-       // addButton.tag = carousel.currentItemIndex
-       // print(addButton.tag)
+
         addButton.tag = 0
         addButton.addTarget(self, action: #selector(addButtonPressed(sender:)), for: .touchDown)
         mainVIew.addSubview(addButton)
@@ -387,8 +369,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         // Dinner button
             
              dinnerButton = UIButton(frame: CGRect(x: 2*mainVIew.bounds.width/3 - 10, y: addButton.bounds.height + addButton.frame.origin.y + 2, width: mainVIew.bounds.width/3, height: UIScreen.main.bounds.height / 19))
-           // if isInCart(name: menuItems[index].itemName!) {
-//            if isInCart(name: menuItems[index].itemName!, date: selectedDate){
+           
              if isInCart(name: menuItems[index].itemName!, date: selectedDate, time: "Dinner"){
                 dinnerButton.setTitle("In Cart", for: .normal)
                 dinnerButton.backgroundColor = UIColor(red: 46/255, green: 139/255, blue: 87/255, alpha: 0.6)
@@ -400,10 +381,6 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
             
             dinnerButton.setTitleColor(UIColor.white, for: .normal)
             dinnerButton.titleLabel?.font = UIFont.systemFont(ofSize: UIScreen.main.bounds.height/28.4)
-          //  dinnerButton.layer.cornerRadius = 10
-            // print(carousel.currentItemIndex)
-            // addButton.tag = carousel.currentItemIndex
-            // print(addButton.tag)
             dinnerButton.tag = 1
             dinnerButton.addTarget(self, action: #selector(addButtonPressed(sender:)), for: .touchDown)
             mainVIew.addSubview(dinnerButton)
@@ -432,16 +409,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         descTV.clipsToBounds = true
         descTV.font = UIFont.systemFont(ofSize: UIScreen.main.bounds.height/47.5)
         mainVIew.addSubview(descTV)
-        //let factor = UIScreen.main.bounds.height/12
-       // print("textview font factor \(factor)")
-        
-//        let line7 = UIView(frame: CGRect(x: 7, y: descTV.frame.origin.y + descTV.bounds.height + 10 , width: mainVIew.bounds.width - 14, height: 1))
-//        line7.backgroundColor = UIColor.gray
-//        mainVIew.addSubview(line7)
-//        
-//        let line8 = UIView(frame: CGRect(x: 7, y: descTV.frame.origin.y + descTV.bounds.height + 14 , width: mainVIew.bounds.width - 14, height: 1))
-//        line8.backgroundColor = UIColor.gray
-//        mainVIew.addSubview(line8)
+
         
         
         return mainVIew
@@ -465,9 +433,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         } else if menuItems[carousel.currentItemIndex].itemCategeory == "Desert" {
             foodTypeSelection.selectedSegmentIndex = 2
         }
-        
-        //UserDefaults.standard.set(carousel.currentItemIndex, forKey: "item")
-       // print("add index \(carousel.currentItemIndex)")
+
         MiscData().addIndex(index: carousel.currentItemIndex)
         
     }
@@ -475,13 +441,9 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
     func numberOfItems(in carousel: iCarousel) -> Int {
  
         let items = MenuItemsData().getMenu()
-      //  let cart = CartData().getItems()
-//        if cart.2 {
-//            cartItems.removeAll()
-//            cartItems = cart.0
-//        }
+
         if items.2 {
-          //  print("value returned \(items.1)")
+        
            menuItems.removeAll()
            menuItems = items.0
             countCategerioes(items: menuItems)
@@ -535,7 +497,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
     
     
     func loadlist(notification : Notification) {
-        print("Notification detected for new menu")
+       
         if CartData().deleteCart(){
             self.navigationItem.rightBarButtonItems?.last?.removeBadge()
             tabBarController?.tabBar.items?[1].badgeValue = nil
@@ -544,21 +506,10 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
     }
     
     
-    
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     @IBAction func refreshButton(_ sender: UIBarButtonItem) {
-       // print("refresh pressed")
+    
         if CartData().deleteCart() {
             self.navigationItem.rightBarButtonItems?.last?.removeBadge()
             tabBarController?.tabBar.items?[1].badgeValue = nil
@@ -576,26 +527,26 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
     queryBuilder?.setPageSize(100)
     backendless?.data.of(Item.ofClass()).find(queryBuilder, response: { (data) in
         self.navbarIndicator.stopAnimating()
-       // print("date recieved \(data?.count)")
+      
         if (data?.count)! > 0 {
             if MenuItemsData().deleteMenu() {
             for object in data! {
                 if let item = object as? Item {
                     if MenuItemsData().addItem(item: item) {
-                       // print("Adding")
+                       
                     }
                 }
             }
             }
         }
-       // print("Items added")
+       
         self.sortMenuData()
         self.removeCarouselSubviews()
-       // self.carousel.reloadData()
+      
         self.viewDidAppear(true)
         }, error: { (fault) in
             self.navbarIndicator.stopAnimating()
-          //  print("cannnot recieve data with error \(fault)")
+         
     })
 
     }
@@ -661,30 +612,26 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
     
     func addButtonPressed(sender:UIButton) {
         
-      //  print("add Pressed")
-        print("sender\(sender.tag)")
+      
+       
         
         if ProfileData().profileCount().0 != 0 {
             if ProfileData().getProfile().0.accountType == "admin" {
                 
             } else {
-                // add item to cart
-              //  addItemToCart(tag: carousel.currentItemIndex)
+
                 addItemToCart(tag: carousel.currentItemIndex, time: sender.tag)
-              //  print("here1")
+  
             }
         } else {
-            // add item to Cart
-           // addItemToCart(tag: carousel.currentItemIndex)
+
             addItemToCart(tag: carousel.currentItemIndex, time: sender.tag)
-          //  print("here2")
+  
         }
         
         cartItems.removeAll()
         cartItems = CartData().getItems().0
-//        for item in cartItems {
-//            print(item.itemName)
-//        }
+
         removeCarouselSubviews()
        carousel.reloadData()
     }
@@ -692,8 +639,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
     func isInCart(name : String , date : Date , time : String) -> Bool {
         let dateString = DateHandler().dateToString(date: date)
         for item in CartData().getItems().0 {
-          //  print(item.itemName)
-          //  print(name)
+
             if item.itemName == name && DateHandler().dateToString(date: item.addedDate!) == dateString && item.deliveryTime == time {
                 return true
             }
@@ -717,8 +663,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
             self.navigationItem.rightBarButtonItems?.last?.addBadge(number: CartData().getItems().1)
             tabBarController?.tabBar.items?[1].badgeValue = "\(CartData().getItems().1)"
             removeCarouselSubviews()
-            //carousel.reloadData()
-           // print("added123")
+
         }
         
         

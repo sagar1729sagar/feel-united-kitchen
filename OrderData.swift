@@ -35,7 +35,7 @@ class OrderData {
         newOrder.setValue(orderDetails.objectId, forKey: "objectId")
         newOrder.setValue(orderDetails.created, forKey: "created")
         newOrder.setValue(orderDetails.updated, forKey: "updated")
-        print("while saving items count \(orderDetails.items?.count) and \(orderDetails.orderId)")
+        
         for item in orderDetails.items! {
             let newItem = NSEntityDescription.insertNewObject(forEntityName: "OrderItems", into: context)
             newItem.setValue(item.name, forKey: "name")
@@ -52,7 +52,7 @@ class OrderData {
         do {
             try context.save()
         } catch {return false}
-        print("Order saved ]")
+        
         return true
     }
     
@@ -73,34 +73,34 @@ class OrderData {
                        
                         if let date = data.value(forKey: "deliveryDate") as? Date {
                             order.deliveryDate = date
-                        } else {print(1);return []}
+                        } else {return []}
                         if let time = data.value(forKey: "deliveryTime") as? String {
                             order.deliveryTime = time
-                        } else {print(2);return []}
+                        } else {return []}
                         if let status = data.value(forKey: "status") as? String {
                             order.status = status
-                        } else {print(3);return []}
+                        } else {return []}
                         if let isDelivered = data.value(forKey: "isDelivered") as? String {
                             order.isDelivered = isDelivered
-                        } else {print(4);return []}
+                        } else {return []}
                         if let channel = data.value(forKey: "locationTrackingChannel") as? String {
                             order.locationTrackingChannel = channel
-                        } else {print(5);return []}
+                        } else {return []}
                         if let phone = data.value(forKey: "phoneNumber") as? String {
                             order.phoneNumber = phone
-                        } else {print(6);return []}
+                        } else {return []}
                         if let name = data.value(forKey: "customerName") as? String {
                             order.customerName = name
-                        } else {print(7);return []}
+                        } else {return []}
                         if let mail = data.value(forKey: "email") as? String {
                             order.email = mail
-                        } else {print(8);return []}
+                        } else {return []}
                         if let address = data.value(forKey: "deliveryAddress") as? String {
                             order.deliveryAddress = address
-                        } else {print(9);return []}
+                        } else {return []}
                         if let type = data.value(forKey: "addressType") as? String {
                             order.addressType = type
-                        } else {print(10);return []}
+                        } else {return []}
                         if let lat = data.value(forKey: "latitude") as? String {
                             order.latitude = lat
                         }
@@ -109,13 +109,13 @@ class OrderData {
                         } 
                         if let gidfted = data.value(forKey: "isGifted") as? String {
                             order.isGifted = gidfted
-                        } else {print(13);return []}
+                        } else {return []}
                         if let by = data.value(forKey: "giftedBy") as? String {
                             order.giftedBy = by
-                        } else {print(14);return []}
+                        } else {return []}
                         if let objId = data.value(forKey: "objectId") as? String {
                             order.objectId = objId
-                        } else {print(15);return []}
+                        } else {return []}
                         if let created = data.value(forKey: "created") as? Date {
                             order.created = created
                         }
@@ -137,19 +137,19 @@ class OrderData {
                                         let item = (OrderItems)()
                                             if let name = data1.value(forKey: "name") as? String {
                                             item.name = name
-                                            }else{print(18);return[]}
+                                            }else{return[]}
                                             if let price = data1.value(forKey: "price") as? String {
                                             item.price = price
-                                            }else {print(19);return[]}
+                                            }else {return[]}
                                             if let quantity = data1.value(forKey: "quantity") as? String {
                                             item.quantity = quantity
-                                            }else{print(20);return[]}
+                                            }else{return[]}
                                             if let orderId = data1.value(forKey: "orderId") as? String {
                                             item.orderId = orderId
-                                            } else {print(21);return[]}
+                                            } else {return[]}
                                             if let objectId = data1.value(forKey: "objectId") as? String {
                                                 item.objectId = objectId
-                                            } else {print(22);return[]}
+                                            } else {return[]}
                                             if let created = data1.value(forKey: "created") as? Date {
                                                 item.created = created
                                             }
@@ -157,28 +157,28 @@ class OrderData {
                                                 item.updated = updated
                                             }
                                             order.items?.append(item)
-                                        }else {print(25);return[]}
-                                       // order.items?.append(item)
+                                        }else {return[]}
+                                       
                                     }
                                 }
-                                //else {print(26);return []}
-                            }catch {print(27);return []}
+                               
+                            }catch {return []}
                             
-                        } else {print(28);return []}
+                        } else {return []}
                         orders.append(order)
-                    } else { print(29);return [] }
+                    } else { return [] }
         
                 }
-            } else { print(30);return [] }
-        }catch {print(31); return []}
-        print("final return")
+            } else { return [] }
+        }catch { return []}
+        
         return orders
         
     }
     
     func deleteOrders() -> Bool {
         
-       // var isDeleted = false
+      
         
         let context = appDelegate.persistentContainer.viewContext
         
@@ -196,14 +196,14 @@ class OrderData {
                     do {
                         try context.save()
                     } catch {
-                        //print("Couldnt delete")
+                       
                         return false
                     }
                 }
             }
-            //isDeleted = true
+            
         } catch {
-           // isDeleted = false
+           
             return false
         }
         
@@ -211,35 +211,32 @@ class OrderData {
         do {
             let items = try context.fetch(request2)
             if items.count > 0 {
-              //  print(1)
+              
                 for item in items {
-                   // print(2)
+                  
                     context.delete(item as! NSManagedObject)
-                    //print(3)
+                    
                     do {
                         try context.save()
-                      //  print(4)
+                     
                     }catch {
-                        //print(5)
+                       
                         return false
                     }
                 }
             }
-            print("item count after relation destroyed \(items.count)")
+            
         } catch {
             return false
         }
-        //print("Ïs relation destroyed? \(isDeleted)")
+        
         return true
     }
     
     
     func updateOrder(id : String , status : String) -> Bool {
-     //   var isSuccess = false
-        
-        //        if order.confirmationStatus == "5" {
-        //            order.deliveryStatus = "1"
-        //        }
+    
+ 
         
         let context = appDelegate.persistentContainer.viewContext
         let request = NSFetchRequest<NSFetchRequestResult>(entityName :"OrderDetails")
@@ -258,7 +255,7 @@ class OrderData {
                             
                             do {
                                 try context.save()
-                                //isSuccess = true
+                               
                             } catch {
                                 return false
                             }
@@ -270,7 +267,7 @@ class OrderData {
             }
         } catch {
             return false
-            print("Cannot fetech order for status updation")
+            
         }
         
         
@@ -280,11 +277,7 @@ class OrderData {
     
     
     func updateLocationTrackingChannel(id : String , channel : String) -> Bool {
-        //   var isSuccess = false
-        
-        //        if order.confirmationStatus == "5" {
-        //            order.deliveryStatus = "1"
-        //        }
+      
         
         let context = appDelegate.persistentContainer.viewContext
         let request = NSFetchRequest<NSFetchRequestResult>(entityName :"OrderDetails")
@@ -297,13 +290,11 @@ class OrderData {
                         if orderId == id {
                             
                             obtained.setValue(channel, forKey: "locationTrackingChannel")
-//                            if status == "5" {
-//                                obtained.setValue("1", forKey: "isDelivered")
-//                            }
+
                             
                             do {
                                 try context.save()
-                                //isSuccess = true
+                                
                             } catch {
                                 return false
                             }
@@ -315,7 +306,7 @@ class OrderData {
             }
         } catch {
             return false
-            print("Cannot fetech order for status updation")
+        
         }
         
         

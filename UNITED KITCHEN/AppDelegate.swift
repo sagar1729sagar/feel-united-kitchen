@@ -18,8 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UNUserNotificationCenter
     
     
     
-   // let APP_ID = "9235ABB9-9B55-018B-FF58-D4DBD96ACA00"
-   // let SECRET_KEY = "4E4EF59B-E246-D445-FF23-B6AEBAFA5800"
+
     
     let APP_ID = "9D0D0B57-308E-B7E3-FFBE-DD24A0BDD400"
     let SECRET_KEY = "AE1C3531-AB6E-63D3-FF65-2DFF74761C00"
@@ -50,9 +49,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UNUserNotificationCenter
         backendless?.messaging.registerForRemoteNotifications()
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.badge,.sound]) { (accepted, error) in
             if accepted {
-                print("yes accepted")
             } else {
-                print("not accepted")
+              
             }
             
         }
@@ -78,24 +76,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UNUserNotificationCenter
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        print("device token is ")
+      
 
         backendless?.messaging.registerDeviceToken(deviceToken, response: { (response) in
-             print("device registered for notification \(response)")
+            
             }, error: { (error) in
-                print(error)
+                
         })
         
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        print("error of fail \(error)")
+       
     }
     
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        print("Notification recieved")
-        print(userInfo)
+        
         
         if let type = userInfo["type"] as? String {
             if type == "menuupdate"{
@@ -105,18 +102,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UNUserNotificationCenter
         
         if let type = userInfo["type"] as? String {
             if type == "neworder" {
-                print("success full")
-                //                NotificationCenter.default.post(name: Notification.Name("neworder"), object: nil)
+               
+              
                 NotificationCenter.default.post(name: Notification.Name("neworder"), object: nil, userInfo: userInfo)
             }
         }
         
         
         if let type = userInfo["type"] as? String {
-            print("recieving")
+            
             if type == "orderupdate" {
-                print("success full order update")
-                //                NotificationCenter.default.post(name: Notification.Name("neworder"), object: nil)
+                
+             
                 NotificationCenter.default.post(name: Notification.Name("orderupdate"), object: nil, userInfo: userInfo)
                 
             }
@@ -124,10 +121,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UNUserNotificationCenter
         
         
         if let type = userInfo["type"] as? String {
-            print("recieving admin")
+           
             if type == "orderupdate" {
-                print("success full order update")
-                //                NotificationCenter.default.post(name: Notification.Name("neworder"), object: nil)
+                
+               
                 NotificationCenter.default.post(name: Notification.Name("orderupdateadmin"), object: nil, userInfo: userInfo)
                 
             }
@@ -135,14 +132,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UNUserNotificationCenter
         
         
         
-//        if let type = userInfo["type"] as? String {
-//            if type == "orderupdate" {
-//                print("success full order update")
-//                //                NotificationCenter.default.post(name: Notification.Name("neworder"), object: nil)
-//                NotificationCenter.default.post(name: Notification.Name("orderupdate"), object: nil, userInfo: userInfo)
-//                
-//            }
-//        }
+
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

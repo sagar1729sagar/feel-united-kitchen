@@ -58,7 +58,7 @@ class MenuItemsData{
         do {
            let results = try context.fetch(request)
             count = results.count
-            print("ïtems fetched \(count)")
+         
             if count > 0 {
                 for result in results {
                     let item = Item()

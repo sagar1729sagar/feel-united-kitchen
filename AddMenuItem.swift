@@ -98,19 +98,7 @@ class AddMenuItem: FormViewController {
         let submit = FormRowDescriptor(tag: "submit", type: .button, title: "Add Item")
         section4.rows.append(submit)
 
-        
-        
-        
-        
-//        row = FormRowDescriptor(tag: "pass", type: .password, title: "Password")
-//        section1.rows.append(row)
-        
-//        // Define second section
-//        var section2 = FormSectionDescriptor(headerTitle: "s3", footerTitle: "s4")
-//        
-//        row = FormRowDescriptor(tag: "button", type: .button, title: "Submit")
-//        section2.rows.append(row)
-        
+
         form.sections = [section1,section2,section3,section4]
         
         self.form = form
@@ -126,8 +114,7 @@ class AddMenuItem: FormViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         if indexPath.section == 3 && indexPath.row == 0 {
-            print(areAllFilled())
-            print((self.form.sections[2].rows[1].value as! String))
+
             if areAllFilled() {
                 let item = Item()
                 item.itemName = self.form.sections[0].rows[0].value as? String
@@ -151,26 +138,23 @@ class AddMenuItem: FormViewController {
                let intr_view =  SCLAlertView().showTitle("Saving...", subTitle: "Please wait while we save...", style: .info, closeButtonTitle: "OK", duration: 100, colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: doneImage , animationStyle: .bottomToTop)
                 
                 backendless?.data.of(Item.ofClass()).save(item, response: { (data) in
-                    print("Save successfull")
-                    // self.clearAllFields()
-//                    intr_view.close()
-//                    
-//                   SCLAlertView().showTitle("Saved", subTitle: "Item successfully added", style: .info, closeButtonTitle: "OK", duration: 10, colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: self.doneImage , animationStyle: .bottomToTop)
+                   
+
                     let publishOptions = PublishOptions()
                     let headers = ["ios-alert":"Menu updated","ios-badge":"1","ios-sound":"default","type":"menuupdate"]
                     publishOptions.assignHeaders(headers)
                     self.backendless?.messaging.publish("default", message: "Menu Updated", publishOptions: publishOptions, response: { (response) in
-                        print("menu update publishe with response \(response)")
+                      
                         intr_view.close()
                         SCLAlertView().showTitle("Saved", subTitle: "Item successfully added", style: .info, closeButtonTitle: "OK", duration: 10, colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: self.doneImage , animationStyle: .bottomToTop)
                         }, error: { (fault) in
-                            print("Message publish failed with error \(fault)")
+                           
                             intr_view.close()
                             SCLAlertView().showTitle("Error", subTitle: "Please check your internet connection and try again", style: .info, closeButtonTitle: "OK", duration: 10, colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: self.warningImage , animationStyle: .bottomToTop)
                     })
                     }, error: { (error) in
                         intr_view.close()
-                        print("save failed \(error)")
+                       
                        
                         SCLAlertView().showTitle("Error", subTitle: "Please check your internet connection and try again", style: .info, closeButtonTitle: "OK", duration: 10, colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: self.warningImage , animationStyle: .bottomToTop)
                 })
@@ -280,15 +264,5 @@ class AddMenuItem: FormViewController {
     }
     
 
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

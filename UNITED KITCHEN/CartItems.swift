@@ -16,7 +16,7 @@ class CartItems: UITableViewCell {
     var quantityLabel = UILabel()
     var subButton = UIButton()
     var nameLabel = UILabel()
-  //  var typeView = UIImageView()
+ 
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -31,7 +31,7 @@ class CartItems: UITableViewCell {
         priceLabel.textAlignment = .center
         priceLabel.font = UIFont.systemFont(ofSize: UIScreen.main.bounds.width/16.2)
         self.contentView.addSubview(priceLabel)
-        print(UIScreen.main.bounds.width/20)
+       
         
         nameLabel = UILabel(frame: CGRect(x: itemImage.frame.origin.x + itemImage.bounds.width + 10, y: 0, width: UIScreen.main.bounds.width - itemImage.bounds.width - 10, height: rowHeight/2))
         nameLabel.textAlignment = .left
