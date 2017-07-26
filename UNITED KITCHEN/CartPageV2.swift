@@ -1094,24 +1094,5 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
     }
     
     
-    @IBAction func testParse(_ sender: AnyObject) {
-        
-        navbarIndicator.startAnimating()
-      
-        ref.child("orderTimes").observeSingleEvent(of: .value, with: { (snapshot) in
-            // Get user value
-            self.navbarIndicator.stopAnimating()
-            let value = snapshot.value as? NSDictionary
-
-            let amount = value?["minAmount"] as? Int
-            
-            
-        
-        }) { (error) in
-            self.navbarIndicator.stopAnimating()
-            
-        }
-
-    }
 
 }
