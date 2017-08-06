@@ -20,6 +20,8 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
     var selection = 0
     var channels = [String]()
     var noItemsLabel = UILabel()
+    var dateButtons = [UIButton]()
+    var dateSelected = [Bool]()
     
     @IBOutlet weak var orderTable: UITableView!
 
@@ -54,6 +56,7 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
         orderSelection.didSelectItemAtIndexHandler = {[weak self] (indexPath: Int) -> () in
             self?.selection = indexPath
             self?.viewDidAppear(true)
+            
             
             
         }
@@ -170,15 +173,88 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
         
         print(sender.tag)
         
-        let cartItem = Cart()
-        if selection == 0 {
-        let orderItem = activeOrders[sender.tag]
-        } else if selection == 1 {
-        let orderItem = passiveOrders[sender.tag]
+        
+        let appearance = SCLAlertView.SCLAppearance(
+            showCloseButton : false
+        )
+        let alertView = SCLAlertView(appearance: appearance)
+        
+        let subView = UIView(frame: CGRect(x: 0 , y: 0, width: UIScreen.main.bounds.width, height: 350))
+        let x = ( 0 - 180) / 2
+        let dates = DateHandler().getNext7Days().0
+        dateButtons.removeAll()
+        dateSelected.removeAll()
+        for i in 0...6 {
+           // let dateButton = UIButton(frame: CGRect(x: Int(x), y: 10 + (i*50), width: Int(UIScreen.main.bounds.width - 20), height: 40))
+            let dateButton = UIButton(frame: (CGRect(x: CGFloat(x), y: CGFloat(10 + (i*50)), width: UIScreen.main.bounds.width - 20, height: CGFloat(40))))
+            dateButton.setTitle(dates[i], for: .normal)
+            dateButton.setTitleColor(UIColor.blue, for: .normal)
+            dateButton.tag = i
+            dateButton.addTarget(self, action: #selector(dateButtonPressed(sender:)), for: .touchDown)
+            subView.addSubview(dateButton)
+            dateButtons.append(dateButton)
+            dateSelected.append(false)
+        }
+        
+//        let nextButton = UIButton(frame: CGRect(x: x, y: 360 , width: Int(subView.bounds.width), height: 40))
+//        nextButton.backgroundColor = UIColor.blue
+//        nextButton.setTitle("NEXT", for: .normal)
+//        nextButton.addTarget(self, action: #selector(nextPresses(sender:)), for: .touchDown)
+        alertView.addButton("NEXT") {
+            print("next Pressed")
+            
+            var k = false
+            for i in 0...6 {
+                if self.dateSelected[i] {
+                    k = true
+                print("selected \(dates[i])")
+                }
+            }
+            
+            if k {
+                print("something is selected")
+                // to-do add lunch or dinner alert
+            } else {
+                print("nothing is selected")
+              
+                SCLAlertView().showWarning("No selection", subTitle: "Please select a date to move the items to cart")
+            
+            }
+            
+            
+            
+        }
+        alertView.addButton("CANCEL") { 
+            print("cancel Pressed")
+        }
+       // subView.addSubview(nextButton)
+
+        alertView.customSubview = subView
+        
+        alertView.showInfo("Please select a date", subTitle: "")
+      
+
+    
+    }
+    
+    func nextPresses ( sender : UIButton) {
+    print("next pressed")
+    }
+    
+    func dateButtonPressed(sender : UIButton) {
+        print(sender.tag)
+        
+        for i in 0...6 {
+            if i == sender.tag {
+                dateButtons[i].backgroundColor = UIColor.yellow.withAlphaComponent(0.5)
+                dateSelected[i] = true
+            } else {
+                dateButtons[i].backgroundColor = UIColor.white
+                dateSelected[i] = false
+            }
         }
         
         
-    
     }
     
 
@@ -379,6 +455,10 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
         } else {
             performSegue(withIdentifier: "location", sender: self)
         }
+    }
+    
+    func didSelectButton(selectedButton: UIButton?) {
+        print(selectedButton)
     }
     
     

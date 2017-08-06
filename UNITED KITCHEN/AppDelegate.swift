@@ -12,6 +12,7 @@ import IQKeyboardManagerSwift
 import UserNotifications
 import Firebase
 
+
 @available(iOS 10.0, *)
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate , UNUserNotificationCenterDelegate{
@@ -37,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UNUserNotificationCenter
         
         //IQKeyboard enable
         IQKeyboardManager.sharedManager().enable = true
-        
+       
         
         // Initialzing firebase
         
