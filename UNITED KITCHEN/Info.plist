@@ -19,25 +19,27 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>2</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>Please Share your location for ease of delivery</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Please Share your location for ease of delivery</string>
-    <key>UIBackgroundModes</key>
-    <array>
-        <string>fetch</string>
-        <string>location</string>
-        <string>remote-notification</string>
-    </array>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Please Share your location for ease of delivery</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Please Share your location for ease of delivery</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>location</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIRequiresFullScreen</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
