@@ -24,6 +24,7 @@ class OrderMainCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
     var itemH = UILabel()
     var itemLabels = [UILabel]()
     var totalLabel = UILabel()
+    var reOrderButton = UIButton()
     
     
     
@@ -100,6 +101,13 @@ class OrderMainCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
         totalLabel.text = "Total : $"+getTotal()
         self.contentView.addSubview(totalLabel)
         
+        reOrderButton = UIButton(frame: CGRect(x: UIScreen.main.bounds.width/2 + 20, y: totalLabel.frame.origin.y + 50, width: UIScreen.main.bounds.width/2 - 40, height: 40))
+        reOrderButton.backgroundColor = UIColor.blue
+        reOrderButton.setTitleColor(UIColor.white, for: .normal)
+        reOrderButton.setTitle("Reorder", for: .normal)
+        reOrderButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        self.contentView.addSubview(reOrderButton)
+        
         
         
         
@@ -175,6 +183,7 @@ class OrderMainCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
         label.text = ""
         }
         totalLabel.text = ""
+        reOrderButton.isHidden = true
     }
 
 }

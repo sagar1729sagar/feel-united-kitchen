@@ -11,6 +11,7 @@ import Foundation
 class DateHandler {
     
     
+    
     func isPastPresenFuture(date : Date) -> Int{
         /** 0 - past
             1 - -present

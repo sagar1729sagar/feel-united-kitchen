@@ -149,15 +149,38 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
         let cell = orderTable.dequeueReusableCell(withIdentifier: "cell1", for: indexPath) as! OrderMainCell
         
         if selection == 0 {
-        orderTable.rowHeight = 300 + CGFloat((activeOrders[indexPath.row].items?.count)!*40)
+        orderTable.rowHeight = 350 + CGFloat((activeOrders[indexPath.row].items?.count)!*40)
         cell.order = activeOrders[indexPath.row]
+        cell.reOrderButton.tag = indexPath.row
+        cell.reOrderButton.isHidden = false
+        cell.reOrderButton.addTarget(self, action: #selector(reorderPressed(sender:)), for: .touchDown)
         } else if selection == 1 {
-        orderTable.rowHeight = 300 + CGFloat((passiveOrders[indexPath.row].items?.count)!*40)
+        orderTable.rowHeight = 350 + CGFloat((passiveOrders[indexPath.row].items?.count)!*40)
         cell.order = passiveOrders[indexPath.row]
+        cell.reOrderButton.isHidden = false
+        cell.reOrderButton.addTarget(self, action: #selector(reorderPressed(sender:)), for: .touchDown)
+        cell.reOrderButton.tag = indexPath.row
         }
         
         return cell
     }
+    
+    
+    func reorderPressed(sender : UIButton){
+        
+        print(sender.tag)
+        
+        let cartItem = Cart()
+        if selection == 0 {
+        let orderItem = activeOrders[sender.tag]
+        } else if selection == 1 {
+        let orderItem = passiveOrders[sender.tag]
+        }
+        
+        
+    
+    }
+    
 
 
     @IBAction func refresh(_ sender: UIBarButtonItem) {
