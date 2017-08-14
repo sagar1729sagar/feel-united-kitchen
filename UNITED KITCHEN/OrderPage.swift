@@ -179,14 +179,22 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
         )
         let alertView = SCLAlertView(appearance: appearance)
         
-        let subView = UIView(frame: CGRect(x: 0 , y: 0, width: UIScreen.main.bounds.width, height: 350))
+      //  let subView = UIView(frame: CGRect(x: 0 , y: 0, width: UIScreen.main.bounds.width, height: 350))
+        let subView = UIView(frame: CGRect(x: 0 , y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 262))
         let x = ( 0 - 180) / 2
         let dates = DateHandler().getNext7Days().0
         dateButtons.removeAll()
         dateSelected.removeAll()
+        
+       
+        
+        
+        
         for i in 0...6 {
            // let dateButton = UIButton(frame: CGRect(x: Int(x), y: 10 + (i*50), width: Int(UIScreen.main.bounds.width - 20), height: 40))
-            let dateButton = UIButton(frame: (CGRect(x: CGFloat(x), y: CGFloat(10 + (i*50)), width: UIScreen.main.bounds.width - 20, height: CGFloat(40))))
+//            let dateButton = UIButton(frame: (CGRect(x: CGFloat(x) + 10, y: CGFloat(10 + (i*50)), width: UIScreen.main.bounds.width - 20, height: CGFloat(40))))
+          //  let dateButton = UIButton(frame: (CGRect(x: CGFloat(x) + 10, y: CGFloat(i) * 4 * subView.bounds.height/49, width: UIScreen.main.bounds.width - 20, height: 4*subView.bounds.height/49)))
+            let dateButton = UIButton(frame: (CGRect(x: CGFloat(x) + 10, y: CGFloat(i) * subView.bounds.height/7, width: UIScreen.main.bounds.width - 20, height: subView.bounds.height/7)))
             dateButton.setTitle(dates[i], for: .normal)
             dateButton.setTitleColor(UIColor.blue, for: .normal)
             dateButton.tag = i
@@ -194,12 +202,21 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
             subView.addSubview(dateButton)
             dateButtons.append(dateButton)
             dateSelected.append(false)
+        
         }
+        
+        print("Screen height \(UIScreen.main.bounds.height)")
+        print("displayed height \(4.5 * subView.bounds.height/7)")
+        
+//        print("total availabel space \(4 * subView.bounds.height/7)")
+//        print("screen height \(UIScreen.main.bounds.height)")
+   
         
 //        let nextButton = UIButton(frame: CGRect(x: x, y: 360 , width: Int(subView.bounds.width), height: 40))
 //        nextButton.backgroundColor = UIColor.blue
 //        nextButton.setTitle("NEXT", for: .normal)
 //        nextButton.addTarget(self, action: #selector(nextPresses(sender:)), for: .touchDown)
+        
         alertView.addButton("NEXT") {
             print("next Pressed")
             
@@ -220,7 +237,6 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
                 SCLAlertView().showWarning("No selection", subTitle: "Please select a date to move the items to cart")
             
             }
-            
             
             
         }
