@@ -22,6 +22,7 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
     var noItemsLabel = UILabel()
   //  var dateButtons = [UIButton]()
 //    var dateSelected = [Bool]()
+    var cartItems = [Cart]()
     var selectionForReorder = (Date(),"")
     
     @IBOutlet weak var orderTable: UITableView!
@@ -173,6 +174,28 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
     func reorderPressed(sender : UIButton){
         
         print(sender.tag)
+        cartItems.removeAll()
+        if selection == 0 {
+            // active orders
+            let order = activeOrders[sender.tag]
+            let items = order.items
+            for item in items! {
+                let cartItem = Cart()
+                cartItem.itemName = item.name
+                cartItem.itemQuantity = item.quantity
+                cartItems.append(cartItem)
+            }
+        } else if selection == 1 {
+            // passive order
+            let order = passiveOrders[sender.tag]
+            let items = order.items
+            for item in items! {
+                let cartItem = Cart()
+                cartItem.itemName = item.name
+                cartItem.itemQuantity = item.quantity
+                cartItems.append(cartItem)
+            }
+        }
         
         
         let appearance = SCLAlertView.SCLAppearance(
@@ -273,7 +296,7 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
     
     
     func lunchORdinnerAlert() {
-        // to-do add lunch or dinner alert
+        
         
         let appearance = SCLAlertView.SCLAppearance(
             showCloseButton : false
@@ -293,6 +316,13 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
             alertView.addButton(times[i], backgroundColor: UIColor.white, textColor: UIColor.blue, showDurationStatus: true, action: { 
                 self.selectionForReorder.1 = times[i]
                 print("time \(self.selectionForReorder.1)")
+                for cartItem in self.cartItems {
+                    cartItem.addedDate = self.selectionForReorder.0
+                    cartItem.deliveryTime = self.selectionForReorder.1
+                    CartData().addItem(item: cartItem)
+                }
+                
+              self.tabBarController?.selectedIndex = 1
             })
         }
         alertView.addButton("CANCEL") {
