@@ -325,20 +325,20 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         
      
         priceLabel = UILabel(frame: CGRect(x: 5, y: line4.bounds.height + line4.frame.origin.y + 2, width: 2*mainVIew.bounds.width/3 - 10, height: UIScreen.main.bounds.height/28.4))
-        priceLabel.text = "$" + setPriceforDisplay(item: menuItems[index], howfarfrom: DateHandler().daysFromTodayTo(date: selectedDate))+" (Today)"
+        priceLabel.text = "$" + setPriceforDisplay(item: menuItems[index], howfarfrom: DateHandler().daysFromTodayTo(date: selectedDate))+"-Today"
         priceLabel.font = UIFont.systemFont(ofSize: UIScreen.main.bounds.height/38)
         mainVIew.addSubview(priceLabel)
         
         
         
         priceLabel1 = UILabel(frame: CGRect(x: 5, y: priceLabel.bounds.height + priceLabel.frame.origin.y + 2, width: 2*mainVIew.bounds.width/3 - 10, height: UIScreen.main.bounds.height/28.4))
-        priceLabel1.text = "$" + setPriceforDisplay(item: menuItems[index], howfarfrom: DateHandler().daysFromTodayTo(date: selectedDate) + 1)+" (Next day)"
+        priceLabel1.text = "$" + setPriceforDisplay(item: menuItems[index], howfarfrom: DateHandler().daysFromTodayTo(date: selectedDate) + 1)+"-Tomorrow"
        
         priceLabel1.font = UIFont.systemFont(ofSize: UIScreen.main.bounds.height/38)
         mainVIew.addSubview(priceLabel1)
         
         priceLabel2 = UILabel(frame: CGRect(x: 5, y: priceLabel1.bounds.height + priceLabel1.frame.origin.y + 2, width: 2*mainVIew.bounds.width/3 - 10, height: UIScreen.main.bounds.height/28.4))
-        priceLabel2.text = "$" + setPriceforDisplay(item: menuItems[index], howfarfrom: DateHandler().daysFromTodayTo(date: selectedDate) + 2)+" (Later)"
+        priceLabel2.text = "$" + setPriceforDisplay(item: menuItems[index], howfarfrom: DateHandler().daysFromTodayTo(date: selectedDate) + 2)+"-Later"
         
         priceLabel2.font = UIFont.systemFont(ofSize: UIScreen.main.bounds.height/38)
         mainVIew.addSubview(priceLabel2)
@@ -388,11 +388,19 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
             
             
         } else {
-            let NALabel = UILabel(frame: CGRect(x: line4.bounds.width / 2, y: line4.bounds.height + line4.frame.origin.y + UIScreen.main.bounds.height / 76 , width: line4.bounds.width / 2, height: 3*UIScreen.main.bounds.height / 38))
-            NALabel.text = "N/A"
-            NALabel.font = UIFont.boldSystemFont(ofSize: UIScreen.main.bounds.height/28.4)
+//            let NALabel = UILabel(frame: CGRect(x: line4.bounds.width / 2, y: line4.bounds.height + line4.frame.origin.y + UIScreen.main.bounds.height / 76 , width: line4.bounds.width / 2, height: 3*UIScreen.main.bounds.height / 38))
+//            NALabel.text = "Not \n Available"
+//            NALabel.font = UIFont.boldSystemFont(ofSize: UIScreen.main.bounds.height/28.4)
+//            NALabel.textAlignment = .center
+//            mainVIew.addSubview(NALabel)
+//            let NALabel = UITextView(frame: CGRect(x: line4.bounds.width / 2, y: line4.bounds.height + line4.frame.origin.y + UIScreen.main.bounds.height / 76 , width: line4.bounds.width / 2, height: 3*UIScreen.main.bounds.height / 38))
+            let NALabel = UITextView(frame: CGRect(x: line4.bounds.width / 2, y: line4.bounds.height + line4.frame.origin.y , width: line4.bounds.width / 2, height: 3*UIScreen.main.bounds.height / 38 + UIScreen.main.bounds.height / 76))
+            NALabel.text = "Not\nAvailable"
+            NALabel.isEditable = false
+            NALabel.font = UIFont.boldSystemFont(ofSize: UIScreen.main.bounds.height/30)
             NALabel.textAlignment = .center
             mainVIew.addSubview(NALabel)
+            
         }
         
         let line5 = UIView(frame: CGRect(x: 7, y: dinnerButton.frame.origin.y + dinnerButton.bounds.height + 2 , width: mainVIew.bounds.width - 14, height: 1))

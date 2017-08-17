@@ -40,4 +40,35 @@ class Misc {
         return coordinates
     }
     
+    
+    func emailModify(data : String) -> String {
+    
+        
+   
+        let char1 = Array(data.characters)
+        
+        var a = 0
+        var final = ""
+        for i in char1 {
+            if a == 0 || a == 1 || a == 2 {
+                final = final + String(i)
+                a += 1
+            } else if i == "@" {
+                final = final + String(i)
+                a = 0
+            } else if i == "." {
+                final = final + String(i)
+                a = 26
+            } else if a == 26 {
+                final = final + String(i)
+            } else {
+                final = final + "*"
+            }
+            }
+        
+        return final
+        
+    }
+    
+    
 }
