@@ -20,8 +20,6 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
     var selection = 0
     var channels = [String]()
     var noItemsLabel = UILabel()
-  //  var dateButtons = [UIButton]()
-//    var dateSelected = [Bool]()
     var cartItems = [Cart]()
     var selectionForReorder = (Date(),"")
     
@@ -173,7 +171,7 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
     
     func reorderPressed(sender : UIButton){
         
-        print(sender.tag)
+       
         cartItems.removeAll()
         if selection == 0 {
             // active orders
@@ -203,90 +201,21 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
         )
         let alertView = SCLAlertView(appearance: appearance)
         
-      //  let subView = UIView(frame: CGRect(x: 0 , y: 0, width: UIScreen.main.bounds.width, height: 350))
-//        let subView = UIView(frame: CGRect(x: 0 , y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 262))
-//        let x = ( 0 - 180) / 2
-    //   let x = ( 0 - 180) * 1.7
-       // let x = 460 - UIScreen.main.bounds.width
-//        var x : CGFloat = 0
-//        if UIScreen.main.bounds.width > 460 {
-//            x = 460 - UIScreen.main.bounds.width
-//        } else {
-//            x = UIScreen.main.bounds.width - 460
-//        }
         let dates = DateHandler().getNext7Days()
-//        dateButtons.removeAll()
-//        dateSelected.removeAll()
         
        
         for i in 0...6 {
             alertView.addButton(dates.0[i], backgroundColor: UIColor.white, textColor: UIColor.blue, showDurationStatus: true, action: {
                 self.selectionForReorder.0 = dates.1[i]
-                print("selected date \(self.selectionForReorder.0)")
+               
                 self.lunchORdinnerAlert()
             })
         }
         
-        
-        
-        
-//        for i in 0...6 {
-//           // let dateButton = UIButton(frame: CGRect(x: Int(x), y: 10 + (i*50), width: Int(UIScreen.main.bounds.width - 20), height: 40))
-////            let dateButton = UIButton(frame: (CGRect(x: CGFloat(x) + 10, y: CGFloat(10 + (i*50)), width: UIScreen.main.bounds.width - 20, height: CGFloat(40))))
-//          //  let dateButton = UIButton(frame: (CGRect(x: CGFloat(x) + 10, y: CGFloat(i) * 4 * subView.bounds.height/49, width: UIScreen.main.bounds.width - 20, height: 4*subView.bounds.height/49)))
-////            let dateButton = UIButton(frame: (CGRect(x: CGFloat(x) + 10, y: CGFloat(i) * subView.bounds.height/7, width: UIScreen.main.bounds.width - 20, height: subView.bounds.height/7)))
-//            let dateButton = UIButton(frame: (CGRect(x: CGFloat(x) + 10, y: CGFloat(i) * subView.bounds.height/7, width: UIScreen.main.bounds.width - 20, height: subView.bounds.height/7)))
-//            dateButton.setTitle(dates[i], for: .normal)
-//            dateButton.setTitleColor(UIColor.blue, for: .normal)
-//            dateButton.tag = i
-//            dateButton.addTarget(self, action: #selector(dateButtonPressed(sender:)), for: .touchDown)
-//            subView.addSubview(dateButton)
-//            dateButtons.append(dateButton)
-//            dateSelected.append(false)
-//        
-//        }
-//        
-        
-//        print("screen start \(x)")
-//        print("screen width \(UIScreen.main.bounds.width)")
-        
-        
-//        let nextButton = UIButton(frame: CGRect(x: x, y: 360 , width: Int(subView.bounds.width), height: 40))
-//        nextButton.backgroundColor = UIColor.blue
-//        nextButton.setTitle("NEXT", for: .normal)
-//        nextButton.addTarget(self, action: #selector(nextPresses(sender:)), for: .touchDown)
-        
-//        alertView.addButton("NEXT") {
-//            print("next Pressed")
-//            
-//            var k = false
-//            for i in 0...6 {
-//                if self.dateSelected[i] {
-//                    k = true
-//                print("selected \(dates[i])")
-//                }
-//            }
-//            
-//            if k {
-//                print("something is selected")
-//                
-//                self.lunchORdinnerAlert()
-//                
-//            } else {
-//                print("nothing is selected")
-//              
-//                SCLAlertView().showWarning("No selection", subTitle: "Please select a date to move the items to cart")
-//            
-//            }
-//            
-//            
-//        }
-        alertView.addButton("CANCEL") {
-            print("cancel Pressed")
-        }
-       // subView.addSubview(nextButton)
 
-     //   alertView.customSubview = subView
+        alertView.addButton("CANCEL") {
+           
+        }
         
         alertView.showInfo("Please select a date", subTitle: "")
       
@@ -302,20 +231,14 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
             showCloseButton : false
         )
         let alertView = SCLAlertView(appearance: appearance)
-//        let subView = UIView(frame: CGRect(x: 0 , y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 262))
-//        let x = ( 0 - 180) / 2
+
         let times = ["Lunch","Dinner"]
-        // to-do
-//        for i in 0...1 {
-//            let timeButton = UIButton(frame: CGRect(x: <#T##CGFloat#>, y: <#T##CGFloat#>, width: <#T##CGFloat#>, height: <#T##CGFloat#>)
-//        }
-        
-        //alertView.customSubview = subView
+
         
         for i in 0...1 {
             alertView.addButton(times[i], backgroundColor: UIColor.white, textColor: UIColor.blue, showDurationStatus: true, action: { 
                 self.selectionForReorder.1 = times[i]
-                print("time \(self.selectionForReorder.1)")
+               
                 for cartItem in self.cartItems {
                     cartItem.addedDate = self.selectionForReorder.0
                     cartItem.deliveryTime = self.selectionForReorder.1
@@ -326,35 +249,14 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
             })
         }
         alertView.addButton("CANCEL") {
-            print("cancel Pressed")
+           
         }
         alertView.showInfo("Please select a time", subTitle: "")
 
         
         
     }
-    
-//    func nextPresses ( sender : UIButton) {
-//    print("next pressed")
-//    }
-    
-//    func dateButtonPressed(sender : UIButton) {
-//        print(sender.tag)
-//        
-//        for i in 0...6 {
-//            if i == sender.tag {
-//                dateButtons[i].backgroundColor = UIColor.yellow.withAlphaComponent(0.5)
-//                dateSelected[i] = true
-//                selectionForReorder.0 = DateHandler().getNext7Days().1[i]
-//                print(selectionForReorder.0)
-//            } else {
-//                dateButtons[i].backgroundColor = UIColor.white
-//                dateSelected[i] = false
-//            }
-//        }
-//        
-//        
-//    }
+
     
 
 
@@ -557,7 +459,7 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
     }
     
     func didSelectButton(selectedButton: UIButton?) {
-        print(selectedButton)
+        
     }
     
     

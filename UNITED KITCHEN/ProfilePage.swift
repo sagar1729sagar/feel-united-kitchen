@@ -221,12 +221,11 @@ class ProfilePage: UIViewController {
         forgotPasswordButton?.addSubview(indicator)
         
         
-        print(Misc().emailModify(data: (prof_intr?.emailAddress)!))
         
         
         backendless?.userService.restorePassword(prof_intr?.emailAddress, response: { (response) in
             self.indicator.stopAnimating()
-           // self.forgotPasswordButton?.setTitle("Check your Email", for: .disabled)
+           
             SCLAlertView().showInfo("Password Recovery", subTitle: "Please check your email \(Misc().emailModify(data: (self.prof_intr?.emailAddress)!)) to reset your password", closeButtonTitle: "OK", duration: 30, colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: warningImage, animationStyle: .topToBottom)
             }, error: { (fault) in
                 BackendlessErrorHandler().backendlessPasswordRecoveryErrorhandler(code: (fault?.faultCode)!)
