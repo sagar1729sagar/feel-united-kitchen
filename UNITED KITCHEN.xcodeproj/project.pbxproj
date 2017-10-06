@@ -15,6 +15,7 @@
 		1B0AC48D1EBE452F00A05270 /* OrderPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0AC48C1EBE452F00A05270 /* OrderPage.swift */; };
 		1B0BD8601EBB2A3A00213CB9 /* GiftedPersonDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0BD85F1EBB2A3A00213CB9 /* GiftedPersonDetailsCell.swift */; };
 		1B1AB54C1EAA7C1600FE3A8E /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1AB54B1EAA7C1600FE3A8E /* TestViewController.swift */; };
+		1B2D6E411F87B1930072F46C /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2D6E401F87B1930072F46C /* MenuViewController.swift */; };
 		1B393E891EBF27BD00258512 /* OrderDisplayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B393E881EBF27BD00258512 /* OrderDisplayCell.swift */; };
 		1B3AB06E1F2240B7005A0DFC /* CloseTimesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AB06D1F2240B6005A0DFC /* CloseTimesController.swift */; };
 		1B3F2F871EC0F2AC009C62FE /* OrderMainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3F2F861EC0F2AC009C62FE /* OrderMainCell.swift */; };
@@ -73,6 +74,7 @@
 		1B0AC48C1EBE452F00A05270 /* OrderPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderPage.swift; sourceTree = "<group>"; };
 		1B0BD85F1EBB2A3A00213CB9 /* GiftedPersonDetailsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiftedPersonDetailsCell.swift; sourceTree = "<group>"; };
 		1B1AB54B1EAA7C1600FE3A8E /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		1B2D6E401F87B1930072F46C /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		1B393E881EBF27BD00258512 /* OrderDisplayCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderDisplayCell.swift; sourceTree = "<group>"; };
 		1B3AB06D1F2240B6005A0DFC /* CloseTimesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloseTimesController.swift; sourceTree = "<group>"; };
 		1B3F2F861EC0F2AC009C62FE /* OrderMainCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderMainCell.swift; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 				1BE2C5741EC1D6FD0047C70F /* LocationTracking.swift */,
 				1BE2C5781EC1E1C90047C70F /* food.png */,
 				1B9EFA8F1EC78026000F4160 /* CartPageV2.swift */,
+				1B2D6E401F87B1930072F46C /* MenuViewController.swift */,
 			);
 			path = "UNITED KITCHEN";
 			sourceTree = "<group>";
@@ -448,6 +451,7 @@
 				1BA47D881EAC9CC800EB781E /* DateHandler.swift in Sources */,
 				1BA47D831EAC972300EB781E /* MenuAdmin.swift in Sources */,
 				1BE315501E9EA00C008EB2B2 /* ProfilePage.swift in Sources */,
+				1B2D6E411F87B1930072F46C /* MenuViewController.swift in Sources */,
 				1BFE3EE11EC371BD00356D34 /* TodayOrders.swift in Sources */,
 				1B09F6BD1EADC3F3006E2EE4 /* ItemsData.swift in Sources */,
 				1BF1284D1EA2B55A00DD2AA5 /* BackendlessErroHandler.swift in Sources */,

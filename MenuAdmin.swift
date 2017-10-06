@@ -104,6 +104,8 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         
 
         // Do any additional setup after loading the view.
+        
+        MiscData().addDate(date: DateHandler().getNext21Days().1[0])
     }
     
    
@@ -139,7 +141,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         
         
         
-        
+        sortMenuData();
         let items = MenuItemsData().getMenu()
         let cart = CartData().getItems()
         if cart.2 {
@@ -178,7 +180,8 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         }
         
         // setting up dates DropDownMenu
-        var date_intr = DateHandler().getNext7Days()
+        //var date_intr = DateHandler().getNext7Days()
+        var date_intr = DateHandler().getNext21Days()
         
         if dateTitleString == "" {
             dateTitleString = date_intr.0[0]
@@ -211,6 +214,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         datesMenu.arrowTintColor = UIColor.blue
         datesMenu.cellBackgroundColor = UIColor.white
         datesMenu.cellSelectionColor = UIColor(red: 230/255, green: 230/255, blue: 250/255, alpha: 1)
+    
         self.navigationItem.titleView = datesMenu
 
 
@@ -218,6 +222,15 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
             self?.selectedDate = date_intr.1[indexPath]
             MiscData().addDate(date: (self?.selectedDate)!)
             self?.dateTitleString = date_intr.0[indexPath]
+            self?.sortMenuData();
+            let items = MenuItemsData().getMenu()
+            if items.2 {
+                
+                self?.menuItems.removeAll()
+                self?.menuItems = items.0
+                self?.countCategerioes(items: (self?.menuItems)!)
+                
+            }
             self?.removeCarouselSubviews()
             self?.carousel.reloadData()
 
@@ -535,22 +548,27 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
     queryBuilder?.setPageSize(100)
     backendless?.data.of(Item.ofClass()).find(queryBuilder, response: { (data) in
         self.navbarIndicator.stopAnimating()
-      
+      print(1)
         if (data?.count)! > 0 {
+            print(2)
             if MenuItemsData().deleteMenu() {
+                print(3)
             for object in data! {
+                print(4)
                 if let item = object as? Item {
+                    print(5)
                     if MenuItemsData().addItem(item: item) {
-                       
+                       print(6)
                     }
                 }
             }
             }
         }
-       
+       print(7)
         self.sortMenuData()
+        print(8)
         self.removeCarouselSubviews()
-      
+      print(9)
         self.viewDidAppear(true)
         }, error: { (fault) in
             self.navbarIndicator.stopAnimating()
@@ -559,27 +577,69 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
 
     }
     
+//    func sortMenuData() {
+//        var sortedData = [Item]()
+//        let data = MenuItemsData().getMenu()
+//        if data.1 != 0 && data.2 {
+//            if MenuItemsData().deleteMenu() {
+//                for item in data.0 {
+//                    if item.itemCategeory == "Straters" {
+//                        MenuItemsData().addItem(item: item)
+//                    }
+//                }
+//                for item in data.0 {
+//                    if item.itemCategeory == "Main Course" {
+//                        MenuItemsData().addItem(item: item)
+//                    }
+//                }
+//                for item in data.0 {
+//                    if item.itemCategeory == "Desert" {
+//                        MenuItemsData().addItem(item: item)
+//                    }
+//                }
+//          
+//            }
+//        }
+//    }
+    
     func sortMenuData() {
+        // sorting data displaying items which are availale first
+        print("sorting called")
         var sortedData = [Item]()
         let data = MenuItemsData().getMenu()
         if data.1 != 0 && data.2 {
             if MenuItemsData().deleteMenu() {
                 for item in data.0 {
-                    if item.itemCategeory == "Straters" {
+                    if item.itemCategeory == "Straters" && checkForitemAvailablefor(weekday: DateHandler().getDayofweekfor(date: selectedDate), item: item){
                         MenuItemsData().addItem(item: item)
                     }
                 }
                 for item in data.0 {
-                    if item.itemCategeory == "Main Course" {
+                    if item.itemCategeory == "Straters" && !checkForitemAvailablefor(weekday: DateHandler().getDayofweekfor(date: selectedDate), item: item){
                         MenuItemsData().addItem(item: item)
                     }
                 }
                 for item in data.0 {
-                    if item.itemCategeory == "Desert" {
+                    if item.itemCategeory == "Main Course" && checkForitemAvailablefor(weekday: DateHandler().getDayofweekfor(date: selectedDate), item: item){
                         MenuItemsData().addItem(item: item)
                     }
                 }
-          
+                for item in data.0 {
+                    if item.itemCategeory == "Main Course" && !checkForitemAvailablefor(weekday: DateHandler().getDayofweekfor(date: selectedDate), item: item){
+                        MenuItemsData().addItem(item: item)
+                    }
+                }
+                for item in data.0 {
+                    if item.itemCategeory == "Desert" && checkForitemAvailablefor(weekday: DateHandler().getDayofweekfor(date: selectedDate), item: item){
+                        MenuItemsData().addItem(item: item)
+                    }
+                }
+                for item in data.0 {
+                    if item.itemCategeory == "Desert" && !checkForitemAvailablefor(weekday: DateHandler().getDayofweekfor(date: selectedDate), item: item){
+                        MenuItemsData().addItem(item: item)
+                    }
+                }
+                
             }
         }
     }
