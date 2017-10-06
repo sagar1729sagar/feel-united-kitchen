@@ -118,7 +118,59 @@ class DateHandler {
             break
         }
         
+        
         for i in 0...6{
+            days.append(weekdays[i]+"\(calendar.component(.day, from: dates[i]))"+"/"+"\(calendar.component(.month, from: dates[i]))"+"/"+"\(calendar.component(.year, from: dates[i]))")
+        }
+        
+        return (days,dates)
+    }
+    
+    func getNext21Days() -> ([String],[Date]){
+        let today = Date()
+        let calendar = Calendar.current
+        var days = [String]()
+        var dates = [Date]()
+        var weekdays = [String]()
+        
+        for i in 0...20{
+            dates.append(calendar.date(byAdding: .day, value: i, to: today)!)
+        }
+        switch calendar.component(.weekday, from: today) {
+        case 1:
+            //Its sunday
+            weekdays = ["Sun : ","Mon : ","Tue : ","Wed : ","Thu : ","Fri : ","Sat : ","Sun : ","Mon : ","Tue : ","Wed : ","Thu : ","Fri : ","Sat : ","Sun : ","Mon : ","Tue : ","Wed : ","Thu : ","Fri : ","Sat : "]
+            break
+        case 2 :
+            // Its monday
+            weekdays = ["Mon : ","Tue : ","Wed : ","Thu : ","Fri : ","Sat : ","Sun : ","Mon : ","Tue : ","Wed : ","Thu : ","Fri : ","Sat : ","Sun : ","Mon : ","Tue : ","Wed : ","Thu : ","Fri : ","Sat : ","Sun : "]
+            break
+        case 3 :
+            // Its tuesday
+            weekdays = ["Tue : ","Wed : ","Thu : ","Fri : ","Sat : ","Sun : ","Mon : ","Tue : ","Wed : ","Thu : ","Fri : ","Sat : ","Sun : ","Mon : ","Tue : ","Wed : ","Thu : ","Fri : ","Sat : ","Sun : ","Mon : "]
+            break
+        case 4 :
+            // Its wednesday
+            weekdays = ["Wed : ","Thu : ","Fri : ","Sat : ","Sun : ","Mon : ","Tue : ","Wed : ","Thu : ","Fri : ","Sat : ","Sun : ","Mon : ","Tue : ","Wed : ","Thu : ","Fri : ","Sat : ","Sun : ","Mon : ","Tue : "]
+            break
+        case 5 :
+            // Its thrusday
+            weekdays = ["Thu : ","Fri : ","Sat : ","Sun : ","Mon : ","Tue : ","Wed : ","Wed : ","Thu : ","Fri : ","Sat : ","Sun : ","Mon : ","Tue : ","Wed : ","Thu : ","Fri : ","Sat : ","Sun : ","Mon : ","Tue : "]
+            break
+        case 6 :
+            // Its friday
+            weekdays = ["Fri : ","Sat : ","Sun : ","Mon : ","Tue : ","Wed : ","Thu : ","Fri : ","Sat : ","Sun : ","Mon : ","Tue : ","Wed : ","Thu : ","Fri : ","Sat : ","Sun : ","Mon : ","Tue : ","Wed : ","Thu : "]
+            break
+        case 7 :
+            weekdays = ["Sat : ","Sun : ","Mon : ","Tue : ","Wed : ","Thu : ","Fri : ","Sat : ","Sun : ","Mon : ","Tue : ","Wed : ","Thu : ","Fri : ","Sat : ","Sun : ","Mon : ","Tue : ","Wed : ","Thu : ","Fri : "]
+            break
+        default:
+            weekdays = ["","","","","","","","","","","","","","","","","","","","",""]
+            break
+        }
+        
+        
+        for i in 0...20{
             days.append(weekdays[i]+"\(calendar.component(.day, from: dates[i]))"+"/"+"\(calendar.component(.month, from: dates[i]))"+"/"+"\(calendar.component(.year, from: dates[i]))")
         }
         

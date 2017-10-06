@@ -529,10 +529,11 @@ class ProfilePage: UIViewController {
             //unregister from notification channels
             self.unregisterForPushNotifications()
             self.navbarIndicator.stopAnimating()
-            if ProfileData().removeProfiles() {
+            if ProfileData().removeProfiles() && OrderData().deleteOrders() {
                 self.removeLabels()
                 self.viewDidLoad()
             }
+            
             }, error: { (fault) in
                 left?.isEnabled = true
                 self.navbarIndicator.stopAnimating()

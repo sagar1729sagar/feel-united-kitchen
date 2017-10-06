@@ -250,15 +250,16 @@ class OrderDisplayCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
     func sendNotification( order :OrderDetails ) {
        
         let publishOptions = PublishOptions()
+//        let headers = ["ios-alert":" Order Update recieved","ios-badge":"1","ios-sound":"default","type":"orderupdate","orderId":order.orderId!,"status":order.status!,"android-ticker-text":" Order Update","android-content-title":order.orderId,"android-content-text":order.status]
         let headers = ["ios-alert":" Order Update recieved","ios-badge":"1","ios-sound":"default","type":"orderupdate","orderId":order.orderId!,"status":order.status!]
         publishOptions.assignHeaders(headers)
-        backendless?.messaging.publish("C"+order.phoneNumber!, message: "Any", publishOptions: publishOptions, response: { (status) in
-           
-            self.navInd.stopAnimating()
-            }, error: { (error) in
-                self.navInd.stopAnimating()
-                SCLAlertView().showWarning("Cannot notify", subTitle: "Notification couldnt be sent as the following fault occured \(error?.message)")
-        })
+//        backendless?.messaging.publish("C"+order.phoneNumber!, message: "Any", publishOptions: publishOptions, response: { (status) in
+//           
+//            self.navInd.stopAnimating()
+//            }, error: { (error) in
+//                self.navInd.stopAnimating()
+//                SCLAlertView().showWarning("Cannot notify", subTitle: "Notification couldnt be sent as the following fault occured \(error?.message)")
+//        })
         
         if order.isGifted == "1" {
             backendless?.messaging.publish("C"+order.giftedBy!, message: "ANy", publishOptions: publishOptions, response: { (resposne) in
@@ -267,6 +268,45 @@ class OrderDisplayCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
                    
             })
         }
+        
+        let deliveryOptions = DeliveryOptions()
+        deliveryOptions.pushBroadcast(FOR_IOS.rawValue)
+        
+        backendless?.messaging.publish("C"+order.phoneNumber!, message: "Any", publishOptions: publishOptions, deliveryOptions: deliveryOptions, response: { (status) in
+            self.navInd.stopAnimating()
+            }, error: { (error) in
+                self.navInd.stopAnimating()
+                SCLAlertView().showWarning("Cannot notify", subTitle: "Notification couldnt be sent as the following fault occured \(error?.message)")
+        })
+        
+        
+        
+//        print("sending android")
+        
+        
+        var publishOptions1 = PublishOptions()
+//        let headers1 = ["android-ticker-text":" Order Update","android-content-title":order.orderId,"android-content-text":order.status,"orderid":order.orderId]
+          let headers1 = ["android-ticker-text":" Order Update","android-content-title":order.orderId,"android-content-text":order.status,"orderid":order.orderId]
+        publishOptions1.assignHeaders(headers1)
+        let deliveryOptions1 = DeliveryOptions()
+        deliveryOptions.pushBroadcast(FOR_ANDROID.rawValue)
+        backendless?.messaging.publish("C"+order.phoneNumber!, message: order.orderId!+"and"+order.status!, publishOptions: publishOptions1, deliveryOptions: deliveryOptions1, response: { (status) in
+            //do nothing
+            print("sending android sent")
+            }, error: { (fault) in
+                //do nothing
+                print("sending android fault \(fault?.message)")
+        })
+//        backendless?.messaging.publish("C"+order.giftedBy!, message: "Order update", publishOptions: publishOptions1, response: { (status) in
+//            //code
+//            print("sending android sent")
+//            }, error: { (fault) in
+//                // fault
+//                print("sending android fault \(fault?.message)")
+//        })
+
+        
+        
     }
     
     func getItems(sender:UIButton) {
