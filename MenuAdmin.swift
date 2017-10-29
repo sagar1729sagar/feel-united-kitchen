@@ -14,6 +14,7 @@ import UIActivityIndicator_for_SDWebImage
 import iCarousel
 import SCLAlertView
 import DCAnimationKit
+import Firebase
 
 
 class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
@@ -37,7 +38,9 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
     var priceLabel = UILabel()
     var priceLabel1 = UILabel()
     var priceLabel2 = UILabel()
-    
+    var scrollView = UIView()
+    var scrollLabel = UILabel()
+    var ref : FIRDatabaseReference!
     
     
     
@@ -48,7 +51,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadlist(notification:)), name: Notification.Name("menuupdate"), object: nil)
         
-  
+        ref = FIRDatabase.database().reference()
         
         
         if let firstOpen = UserDefaults.standard.object(forKey: "firstOpen") as? Bool {
@@ -84,13 +87,37 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         foodTypeSelection.addTarget(self, action: #selector(valueChanged(sender:)), for: .valueChanged)
         self.view.addSubview(foodTypeSelection)
         
-        carousel = iCarousel(frame: CGRect(x: 0, y: foodTypeSelection.frame.origin.y + foodTypeSelection.bounds.height , width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - foodTypeSelection.bounds.height - (self.navigationController?.navigationBar.frame.height)! - (self.tabBarController?.tabBar.frame.height)!*1.5))
+//        carousel = iCarousel(frame: CGRect(x: 0, y: foodTypeSelection.frame.origin.y + foodTypeSelection.bounds.height , width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - foodTypeSelection.bounds.height - (self.navigationController?.navigationBar.frame.height)! - (self.tabBarController?.tabBar.frame.height)!*1.5))
+        print("UIScrren height")
+        print(UIScreen.main.bounds.height)
+//        carousel = iCarousel(frame: CGRect(x: 0, y: (foodTypeSelection.frame.origin.y) + (foodTypeSelection.bounds.height) + (UIScreen.main.bounds.height/28.4), width: (UIScreen.main.bounds.width), height: (UIScreen.main.bounds.height) - (UIScreen.main.bounds.height/28.4) - (foodTypeSelection.bounds.height) - (self.navigationController?.navigationBar.frame.height)! - ((self.tabBarController?.tabBar.frame.height)!*1.5)))
+        let x : CGFloat = 0
+        let y = (foodTypeSelection.frame.origin.y) + (foodTypeSelection.bounds.height) + (UIScreen.main.bounds.height/28.4)
+        let w = UIScreen.main.bounds.width
+        let h = (UIScreen.main.bounds.height) - (UIScreen.main.bounds.height/28.4) - (foodTypeSelection.bounds.height) - (self.navigationController?.navigationBar.frame.height)! - ((self.tabBarController?.tabBar.frame.height)!*1.5)
+        carousel = iCarousel(frame: CGRect(x: x, y: y, width: w, height: h))
 
         carousel.type = .coverFlow2
         carousel.dataSource = self
         carousel.delegate = self
         self.view.addSubview(carousel)
-       
+        
+//        scrollView = UIView(frame: CGRect(x: 0, y: foodTypeSelection.frame.origin.y + foodTypeSelection.bounds.height, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/28.4))
+//        self.view.addSubview(scrollView)
+//        scrollLabel = UILabel(frame: CGRect(x: UIScreen.main.bounds.width, y: 0, width: 1.5*UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/28.4))
+//        scrollLabel.text = ""
+//        scrollLabel.font = UIFont.systemFont(ofSize: UIScreen.main.bounds.height/28.4)
+//        scrollLabel.textAlignment = .right
+//        
+//        scrollView.addSubview(scrollLabel)
+//        UIView.animate(withDuration: 12.0, delay: 1, options: ([.curveLinear, .repeat]), animations: {() -> Void in
+//            self.scrollLabel.center = CGPoint(x: 0 - self.scrollLabel.bounds.width/2, y: self.scrollLabel.center.y)
+//            }, completion:  { _ in })
+        
+       // self.view.addSubView(scrollView)
+       // scrollLabel = UIView(frame: CGRect(x: 0, y: carousel.frame.origin.y + carousel.bounds.height, width: UIScreen.main.bounds.width, height: 10))
+        
+     //   scrollView = UIView(frame: CGRect(x: 0, y: carousel.frame.origin.y + ca, width: <#T##CGFloat#>, height: <#T##CGFloat#>)
         
         
         navbarIndicator.hidesWhenStopped = true
@@ -108,13 +135,39 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         MiscData().addDate(date: DateHandler().getNext21Days().1[0])
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        print("did disappear")
+        self.view.didAddSubview(scrollView)
+    }
    
     
     override func viewDidAppear(_ animated: Bool) {
         
-       
+        scrollView = UIView(frame: CGRect(x: 0, y: foodTypeSelection.frame.origin.y + foodTypeSelection.bounds.height, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/28.4))
+        self.view.addSubview(scrollView)
+        scrollLabel = UILabel(frame: CGRect(x: UIScreen.main.bounds.width, y: 0, width: 1.5*UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/28.4))
+        scrollLabel.text = ""
+        scrollLabel.font = UIFont.systemFont(ofSize: UIScreen.main.bounds.height/28.4)
+        scrollLabel.textAlignment = .right
         
+        scrollView.addSubview(scrollLabel)
        
+        //set scroll text
+        
+        ref.child("text").observeSingleEvent(of: .value, with: { (snapshot) in
+
+            print("Firebase snapshot \(snapshot.value!)")
+            self.scrollView.backgroundColor = UIColor.white
+            self.scrollLabel.text = snapshot.value as? String
+            UIView.animate(withDuration: 15.0, delay: 1, options: ([.curveLinear, .repeat]), animations: {() -> Void in
+                self.scrollLabel.center = CGPoint(x: 0 - self.scrollLabel.bounds.width/2, y: self.scrollLabel.center.y)
+                }, completion:  { _ in })
+            print("animate called")
+            
+        }) { (error) in
+
+            print("Firebase error \(error)")
+        }
         
         
         if DateHandler().dateToString(date: Date()) == DateHandler().dateToString(date: MiscData().getRefreshDate()) {
