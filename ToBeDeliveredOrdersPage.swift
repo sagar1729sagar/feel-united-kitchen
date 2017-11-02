@@ -302,12 +302,15 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
     
     
     func startNavigation(sender : UIButton) {
+        
+        print("start navigation pressed")
 
         Location.getLocation(accuracy: .navigation, frequency: .significant, timeout: nil, success: { (locReq, location) -> (Void) in
            
             let coordinates = location.coordinate
             let message = Message()
             message.data = coordinates
+            print("new coordinates \(coordinates)")
             self.backendless?.messaging.publish("C"+ProfileData().getProfile().0.phoneNumber!, message: "\(coordinates)", response: { (response) in
                 
                 self.navbarIndicator.stopAnimating()
