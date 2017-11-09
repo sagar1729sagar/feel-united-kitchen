@@ -391,21 +391,22 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         
      
         priceLabel = UILabel(frame: CGRect(x: 5, y: line4.bounds.height + line4.frame.origin.y + 2, width: 2*mainVIew.bounds.width/3 - 10, height: UIScreen.main.bounds.height/28.4))
-        priceLabel.text = "$" + setPriceforDisplay(item: menuItems[index], howfarfrom: DateHandler().daysFromTodayTo(date: selectedDate))+"-Today"
+       // priceLabel.text = "$" + setPriceforDisplay(item: menuItems[index], howfarfrom: DateHandler().daysFromTodayTo(date: selectedDate))+"-Today"
+        priceLabel.text = "$" + menuItems[index].priceToday!+"-Today"
         priceLabel.font = UIFont.systemFont(ofSize: UIScreen.main.bounds.height/38)
         mainVIew.addSubview(priceLabel)
         
         
         
         priceLabel1 = UILabel(frame: CGRect(x: 5, y: priceLabel.bounds.height + priceLabel.frame.origin.y + 2, width: 2*mainVIew.bounds.width/3 - 10, height: UIScreen.main.bounds.height/28.4))
-        priceLabel1.text = "$" + setPriceforDisplay(item: menuItems[index], howfarfrom: DateHandler().daysFromTodayTo(date: selectedDate) + 1)+"-Tomorrow"
-       
+       // priceLabel1.text = "$" + setPriceforDisplay(item: menuItems[index], howfarfrom: DateHandler().daysFromTodayTo(date: selectedDate) + 1)+"-Tomorrow"
+       priceLabel1.text = "$" + menuItems[index].priceTomorrow!+"-Tomorrow"
         priceLabel1.font = UIFont.systemFont(ofSize: UIScreen.main.bounds.height/38)
         mainVIew.addSubview(priceLabel1)
         
         priceLabel2 = UILabel(frame: CGRect(x: 5, y: priceLabel1.bounds.height + priceLabel1.frame.origin.y + 2, width: 2*mainVIew.bounds.width/3 - 10, height: UIScreen.main.bounds.height/28.4))
-        priceLabel2.text = "$" + setPriceforDisplay(item: menuItems[index], howfarfrom: DateHandler().daysFromTodayTo(date: selectedDate) + 2)+"-Later"
-        
+       // priceLabel2.text = "$" + setPriceforDisplay(item: menuItems[index], howfarfrom: DateHandler().daysFromTodayTo(date: selectedDate) + 2)+"-Later"
+        priceLabel2.text = "$" + menuItems[index].priceLater!+"-Later"
         priceLabel2.font = UIFont.systemFont(ofSize: UIScreen.main.bounds.height/38)
         mainVIew.addSubview(priceLabel2)
         
