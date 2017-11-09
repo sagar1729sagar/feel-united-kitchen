@@ -62,6 +62,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        print("did load")
         
         ref = FIRDatabase.database().reference()
         
@@ -87,7 +88,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
         
         
       
-        
+        print("Did appear")
        
         
         
@@ -102,6 +103,8 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
         allDatesArray.removeAll()
         itemsArrayINPARWITHDates.removeAll()
         profileCount = ProfileData().profileCount().0
+        
+        print(1)
 
         let cart = CartData().getItems()
         let menu = MenuItemsData().getMenu()
@@ -113,6 +116,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
             menuItems = menu.0
         }
         
+        print(2)
      // create dates list
         if itemCount != 0 {
         
@@ -135,6 +139,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
                 }
             }
         }
+            print(3)
         
         // section headers
         
@@ -150,7 +155,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
             times.append("Dinner")
             }
         }
-        
+        print(4)
        
         for i in 0...(dates.count - 1) {
             segItems.removeAll()
@@ -167,14 +172,14 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
         }
         
         table.reloadData()
-        
+        print(5)
         
         if itemCount == 0 {
             noItemsLabel.isHidden = false
         } else {
             noItemsLabel.isHidden = true
         }
-        
+        print(6)
         
     }
     
@@ -291,7 +296,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
                 return cell
             case dates.count+1:
                 addrCell = table.dequeueReusableCell(withIdentifier: "items2", for: indexPath) as! AddressCell
-                
+                print(10)
                 if ProfileData().profileCount().0 == 0 {
                     table.rowHeight = UIScreen.main.bounds.height/10 + 20
                     addrCell.add.isHidden = false
@@ -310,17 +315,24 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
                 
                 return addrCell
             case dates.count+2:
+                print(11)
                 locCell = table.dequeueReusableCell(withIdentifier: "items4", for: indexPath) as! LocationCell
                 table.rowHeight = UIScreen.main.bounds.width + 40
                 return locCell
             case dates.count+3:
+                print(12)
                 splCell = table.dequeueReusableCell(withIdentifier: "items3", for: indexPath) as! AddressSelectionCell
+                print(14)
                 table.rowHeight = UIScreen.main.bounds.width*0.525
+                print(15)
                 splCell.orderButton.addTarget(self, action: #selector(ordernowPressed(sender:)), for: .touchDown)
+                print(16)
                 splCell.giftButton.addTarget(self, action: #selector(giftitPressed(sender:)), for: .touchDown)
+                print(17)
                 
                 return splCell
             case dates.count+4:
+                print(13)
                 giftCell = table.dequeueReusableCell(withIdentifier: "items5", for: indexPath) as! GiftedPersonDetailsCell
                 table.rowHeight = UIScreen.main.bounds.height/2 + 20
                 giftCell.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
@@ -426,9 +438,20 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
     
     func ordernowPressed(sender : UIButton) {
         
+        if splCell.b2.checkState.rawValue == "Checked" {
+            if locCell.coordinate != nil {
+                isGifted = false
+                
+                checkCheckBoxes()
+            } else {
+                SCLAlertView().showError("Location not found", subTitle: "We couldnt find your location. Please try again or redirect you delivery to registered address")
+            }
+        //to-do check for coordnates
+        } else {
         isGifted = false
        
         checkCheckBoxes()
+        }
     
     }
     

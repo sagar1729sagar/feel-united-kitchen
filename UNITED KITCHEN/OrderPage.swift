@@ -23,10 +23,13 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
     var cartItems = [Cart]()
     var selectionForReorder = (Date(),"")
     
+    @IBOutlet weak var locationUpdatingButton: UIBarButtonItem!
     @IBOutlet weak var orderTable: UITableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         
          NotificationCenter.default.addObserver(self, selector: #selector(loadlist(notification:)), name: Notification.Name("orderupdate"), object: nil)
         noItemsLabel = UILabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
@@ -44,6 +47,9 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
         let spinner = UIBarButtonItem(customView: navbarIndicator)
         self.navigationItem.setLeftBarButton(nil, animated: true)
         self.navigationItem.setLeftBarButtonItems([left!,spinner], animated: true)
+        
+        self.navigationItem.rightBarButtonItem?.isEnabled = false
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clear
         
         // set dropdown menu
         

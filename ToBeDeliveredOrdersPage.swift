@@ -59,6 +59,8 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
         startNavigationButton.addTarget(self, action: #selector(startNavigation(sender:)), for: .touchDown)
         self.view.addSubview(startNavigationButton)
         
+        startNavigationButton.isHidden = true
+        
         table.frame = CGRect(x: 0, y: navBarHeight + 100, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - navBarHeight - 100)
         table.allowsSelection = false
 

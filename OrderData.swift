@@ -33,7 +33,7 @@ class OrderData {
         newOrder.setValue(orderDetails.isGifted , forKey: "isGifted")
         newOrder.setValue(orderDetails.giftedBy, forKey: "giftedBy")
         newOrder.setValue(orderDetails.objectId, forKey: "objectId")
-        newOrder.setValue(orderDetails.created, forKey: "created")
+      //  newOrder.setValue(orderDetails.created, forKey: "created")
         newOrder.setValue(orderDetails.updated, forKey: "updated")
         
         for item in orderDetails.items! {
@@ -43,7 +43,7 @@ class OrderData {
             newItem.setValue(item.quantity, forKey: "quantity")
             newItem.setValue(item.orderId, forKey: "orderId")
             newItem.setValue(item.objectId, forKey: "objectId")
-            newItem.setValue(item.created, forKey: "created")
+        //    newItem.setValue(item.created, forKey: "created")
             newItem.setValue(item.updated, forKey: "updated")
             newOrder.setValue(NSSet(object : newItem), forKey: "items")
             
@@ -116,9 +116,9 @@ class OrderData {
                         if let objId = data.value(forKey: "objectId") as? String {
                             order.objectId = objId
                         } else {return []}
-                        if let created = data.value(forKey: "created") as? Date {
-                            order.created = created
-                        }
+//                        if let created = data.value(forKey: "created") as? Date {
+//                            order.created = created
+//                        }
                         if let updated = data.value(forKey: "updated") as? Date {
                             order.updated = updated
                         } 
@@ -150,9 +150,6 @@ class OrderData {
                                             if let objectId = data1.value(forKey: "objectId") as? String {
                                                 item.objectId = objectId
                                             } else {return[]}
-                                            if let created = data1.value(forKey: "created") as? Date {
-                                                item.created = created
-                                            }
                                             if let updated = data1.value(forKey: "updated") as? Date {
                                                 item.updated = updated
                                             }
