@@ -19,7 +19,9 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
     var searchTF = UITextField()
     var addButton = UIButton()
     var startNavigationButton = UIButton()
+    var stopNavigationButton = UIButton()
     var orderDetails = [OrderDetails]()
+    var timer = Timer()
 
     @IBOutlet weak var table: UITableView!
     override func viewDidLoad() {
@@ -59,7 +61,17 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
         startNavigationButton.addTarget(self, action: #selector(startNavigation(sender:)), for: .touchDown)
         self.view.addSubview(startNavigationButton)
         
-        startNavigationButton.isHidden = true
+        stopNavigationButton = UIButton(frame: CGRect(x: 10, y: navBarHeight + 90, width: UIScreen.main.bounds.width - 20, height: 30))
+        stopNavigationButton.setTitleColor(UIColor.white, for: .normal)
+        
+        stopNavigationButton.setTitle("STOP NAVIGATION", for: .normal)
+        
+        stopNavigationButton.backgroundColor = UIColor.blue
+        stopNavigationButton.addTarget(self, action: #selector(stopNavigation(sender:)), for: .touchDown)
+       // stopNavigationButton.addTarget(self, action: #selector(startNavigation(sender:)), for: .touchDown)
+        self.view.addSubview(stopNavigationButton)
+        
+      //  startNavigationButton.isHidden = true
         
         table.frame = CGRect(x: 0, y: navBarHeight + 100, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - navBarHeight - 100)
         table.allowsSelection = false
@@ -304,27 +316,66 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
     
     
     func startNavigation(sender : UIButton) {
+        print("timer start")
         
-        print("start navigation pressed")
-
-        Location.getLocation(accuracy: .navigation, frequency: .significant, timeout: nil, success: { (locReq, location) -> (Void) in
-           
-            let coordinates = location.coordinate
-            let message = Message()
-            message.data = coordinates
-            print("new coordinates \(coordinates)")
-            self.backendless?.messaging.publish("C"+ProfileData().getProfile().0.phoneNumber!, message: "\(coordinates)", response: { (response) in
-                
-                self.navbarIndicator.stopAnimating()
-                }, error: { (error) in
-                    self.navbarIndicator.stopAnimating()
-                
-            })
-            }) { (locReq, loc, error) -> (Void) in
-                self.navbarIndicator.stopAnimating()
-                
-        }
+        timer = Timer.scheduledTimer(withTimeInterval: 15, repeats: true, block: { (time) in
+            print("timer")
+            self.getLocation()
+        })
         
+        
+//        print("start navigation pressed")
+//        
+//     //   CLLocationManager().startMonitoringSignificantLocationChanges()
+//
+//        Location.getLocation(accuracy: .navigation, frequency: .oneShot, timeout: nil, success: { (locReq, location) -> (Void) in
+//           
+//            let coordinates = location.coordinate
+//            let message = Message()
+//            message.data = coordinates
+//            print("new coordinates \(coordinates)")
+//            self.backendless?.messaging.publish("C"+ProfileData().getProfile().0.phoneNumber!, message: "\(coordinates)", response: { (response) in
+//                
+//                self.navbarIndicator.stopAnimating()
+//                }, error: { (error) in
+//                    self.navbarIndicator.stopAnimating()
+//                
+//            })
+//            }) { (locReq, loc, error) -> (Void) in
+//                print("new coordinates error")
+//                self.navbarIndicator.stopAnimating()
+//                
+//        }
+        
+    }
+    
+    func getLocation(){
+        
+                Location.getLocation(accuracy: .navigation, frequency: .oneShot, timeout: nil, success: { (locReq, location) -> (Void) in
+        
+                    let coordinates = location.coordinate
+                    let message = Message()
+                    message.data = coordinates
+                    print("new coordinates \(coordinates)")
+                    self.backendless?.messaging.publish("C"+ProfileData().getProfile().0.phoneNumber!, message: "\(coordinates)", response: { (response) in
+        
+                        self.navbarIndicator.stopAnimating()
+                        }, error: { (error) in
+                            self.navbarIndicator.stopAnimating()
+        
+                    })
+                    }) { (locReq, loc, error) -> (Void) in
+                        print("new coordinates error")
+                        self.navbarIndicator.stopAnimating()
+                        
+                }
+        
+    }
+    
+    func stopNavigation(sender : UIButton){
+        print("timer stop")
+        timer.invalidate()
+    
     }
     
     func deliveryDone(sender : UIButton) {

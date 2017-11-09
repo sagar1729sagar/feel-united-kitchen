@@ -14,6 +14,8 @@ class OrderData {
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     func addOrder(orderDetails : OrderDetails) -> Bool {
+        
+       // print(21)
     
         let context = appDelegate.persistentContainer.viewContext
         let newOrder = NSEntityDescription.insertNewObject(forEntityName: "OrderDetails", into: context)
@@ -34,7 +36,9 @@ class OrderData {
         newOrder.setValue(orderDetails.giftedBy, forKey: "giftedBy")
         newOrder.setValue(orderDetails.objectId, forKey: "objectId")
       //  newOrder.setValue(orderDetails.created, forKey: "created")
-        newOrder.setValue(orderDetails.updated, forKey: "updated")
+       // newOrder.setValue(orderDetails.updated, forKey: "updated")
+        
+      //  print(22)
         
         for item in orderDetails.items! {
             let newItem = NSEntityDescription.insertNewObject(forEntityName: "OrderItems", into: context)
@@ -44,7 +48,7 @@ class OrderData {
             newItem.setValue(item.orderId, forKey: "orderId")
             newItem.setValue(item.objectId, forKey: "objectId")
         //    newItem.setValue(item.created, forKey: "created")
-            newItem.setValue(item.updated, forKey: "updated")
+         //   newItem.setValue(item.updated, forKey: "updated")
             newOrder.setValue(NSSet(object : newItem), forKey: "items")
             
         }
@@ -119,9 +123,9 @@ class OrderData {
 //                        if let created = data.value(forKey: "created") as? Date {
 //                            order.created = created
 //                        }
-                        if let updated = data.value(forKey: "updated") as? Date {
-                            order.updated = updated
-                        } 
+//                        if let updated = data.value(forKey: "updated") as? Date {
+//                            order.updated = updated
+//                        } 
                         if let id = data.value(forKey: "orderId") as? String {
                             order.orderId = id
                             

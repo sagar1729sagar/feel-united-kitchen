@@ -48,8 +48,8 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
         self.navigationItem.setLeftBarButton(nil, animated: true)
         self.navigationItem.setLeftBarButtonItems([left!,spinner], animated: true)
         
-        self.navigationItem.rightBarButtonItem?.isEnabled = false
-        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clear
+     //   self.navigationItem.rightBarButtonItem?.isEnabled = false
+     //   self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clear
         
         // set dropdown menu
         
@@ -274,7 +274,7 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
         navbarIndicator.startAnimating()
         // check for reg
          let reqChannel = "C"+ProfileData().getProfile().0.phoneNumber!
-      
+     // print(678)
         backendless?.messaging.getRegistrationAsync({ (response) in
             
             if (response?.channels.contains(reqChannel))!{
@@ -307,6 +307,8 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
     }
     
     func refreshOrders() {
+        
+      //  print(1)
     
         let whereClause = "phoneNumber = "+ProfileData().getProfile().0.phoneNumber!+" or giftedBy = "+ProfileData().getProfile().0.phoneNumber!
         let query = DataQueryBuilder()
@@ -314,7 +316,7 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
         query?.setWhereClause(whereClause)
         
         backendless?.data.of(OrderDetails.ofClass()).find(query, response: { (data) in
-          
+         // print(2)
             self.navbarIndicator.stopAnimating()
             if data?.count == 0 {
                 if OrderData().deleteOrders(){
@@ -323,8 +325,10 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
             } else {
                 if OrderData().deleteOrders() {
                 for item in data! {
+                  //  print(3)
                     if let order = item as? OrderDetails {
                         self.getItemsFromServer(data : order)
+                      //  print(4)
                     }
                 }
             }
@@ -338,7 +342,7 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
     }
     
     func getItemsFromServer(data : OrderDetails) {
-       
+     //  print("getting items for \(data.orderId!)")
         let whereClause = "orderId = "+data.orderId!
         let queryBuilder = DataQueryBuilder()
         queryBuilder?.setPageSize(100)
@@ -346,14 +350,15 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
         
         backendless?.data.of(OrderItems.ofClass()).find(queryBuilder, response: { (items) in
             for item in items! {
+               // print("got items for \(data.orderId!)")
                 if let orderItem = item as? OrderItems {
-                   
+                  // print(6)
                     data.items?.append(orderItem)
                 }
             }
             // add to db
             if OrderData().addOrder(orderDetails: data) {
-            
+               // print(7)
                 self.viewDidAppear(true)
             }
             
@@ -372,7 +377,7 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
         let orders = OrderData().getOrders()
         var statuses = [Bool]()
         for order in orders {
-            if order.status == "3" {
+            if order.status == "4" {
               
             statuses.append(true)
             } else {
@@ -409,6 +414,7 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
                     channels.removeAll()
                     getLocationChannels(ids: eligibleIDs, idsCount: eligibleIDs.count, iterationNumber: 1)
                 } else {
+                    print("lets not come here")
                     navbarIndicator.stopAnimating()
                   
                     performSegue(withIdentifier: "location", sender: self)
