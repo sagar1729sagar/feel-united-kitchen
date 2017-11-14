@@ -28,6 +28,8 @@ class OrderDetails : NSObject {
     var isGifted : String?
     var giftedBy : String?
     var objectId : String?
+    var area : String?
+    var slot : String?
     var created : Date?
     var updated : Date?
 }

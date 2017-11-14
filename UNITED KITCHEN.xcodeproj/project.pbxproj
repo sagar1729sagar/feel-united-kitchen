@@ -13,10 +13,12 @@
 		1B09E2351EB2294100786BD7 /* CartItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B09E2341EB2294100786BD7 /* CartItems.swift */; };
 		1B09F6BD1EADC3F3006E2EE4 /* ItemsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B09F6BC1EADC3F3006E2EE4 /* ItemsData.swift */; };
 		1B0AC48D1EBE452F00A05270 /* OrderPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0AC48C1EBE452F00A05270 /* OrderPage.swift */; };
+		1B0BC7F21FBB566C00A477DF /* SlotSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0BC7F11FBB566C00A477DF /* SlotSelectionCell.swift */; };
 		1B0BD8601EBB2A3A00213CB9 /* GiftedPersonDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0BD85F1EBB2A3A00213CB9 /* GiftedPersonDetailsCell.swift */; };
 		1B1AB54C1EAA7C1600FE3A8E /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1AB54B1EAA7C1600FE3A8E /* TestViewController.swift */; };
 		1B2D6E411F87B1930072F46C /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2D6E401F87B1930072F46C /* MenuViewController.swift */; };
 		1B393E891EBF27BD00258512 /* OrderDisplayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B393E881EBF27BD00258512 /* OrderDisplayCell.swift */; };
+		1B398E8B1FB9993500457883 /* CartPageV3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B398E8A1FB9993500457883 /* CartPageV3.swift */; };
 		1B3AB06E1F2240B7005A0DFC /* CloseTimesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AB06D1F2240B6005A0DFC /* CloseTimesController.swift */; };
 		1B3F2F871EC0F2AC009C62FE /* OrderMainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3F2F861EC0F2AC009C62FE /* OrderMainCell.swift */; };
 		1B7C4AF71EB665A600A9D6BF /* AddressSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C4AF61EB665A500A9D6BF /* AddressSelectionCell.swift */; };
@@ -72,10 +74,14 @@
 		1B09E2341EB2294100786BD7 /* CartItems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartItems.swift; sourceTree = "<group>"; };
 		1B09F6BC1EADC3F3006E2EE4 /* ItemsData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemsData.swift; sourceTree = "<group>"; };
 		1B0AC48C1EBE452F00A05270 /* OrderPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderPage.swift; sourceTree = "<group>"; };
+		1B0BC7F11FBB566C00A477DF /* SlotSelectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlotSelectionCell.swift; sourceTree = "<group>"; };
+		1B0BC7F31FBBA36100A477DF /* UNITED_KITCHEN_v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UNITED_KITCHEN_v2.xcdatamodel; sourceTree = "<group>"; };
 		1B0BD85F1EBB2A3A00213CB9 /* GiftedPersonDetailsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiftedPersonDetailsCell.swift; sourceTree = "<group>"; };
 		1B1AB54B1EAA7C1600FE3A8E /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		1B2D6E401F87B1930072F46C /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		1B393E881EBF27BD00258512 /* OrderDisplayCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderDisplayCell.swift; sourceTree = "<group>"; };
+		1B398E8A1FB9993500457883 /* CartPageV3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartPageV3.swift; sourceTree = "<group>"; };
+		1B398E8C1FB99E7D00457883 /* UNITED_KITCHEN 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "UNITED_KITCHEN 2.xcdatamodel"; sourceTree = "<group>"; };
 		1B3AB06D1F2240B6005A0DFC /* CloseTimesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloseTimesController.swift; sourceTree = "<group>"; };
 		1B3F2F861EC0F2AC009C62FE /* OrderMainCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderMainCell.swift; sourceTree = "<group>"; };
 		1B7C4AF61EB665A500A9D6BF /* AddressSelectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressSelectionCell.swift; sourceTree = "<group>"; };
@@ -154,6 +160,7 @@
 				1B393E881EBF27BD00258512 /* OrderDisplayCell.swift */,
 				1B3F2F861EC0F2AC009C62FE /* OrderMainCell.swift */,
 				1BE2C56C1EC184FF0047C70F /* AddFBCell.swift */,
+				1B0BC7F11FBB566C00A477DF /* SlotSelectionCell.swift */,
 			);
 			name = TableCells;
 			sourceTree = "<group>";
@@ -222,6 +229,7 @@
 				1BE2C5781EC1E1C90047C70F /* food.png */,
 				1B9EFA8F1EC78026000F4160 /* CartPageV2.swift */,
 				1B2D6E401F87B1930072F46C /* MenuViewController.swift */,
+				1B398E8A1FB9993500457883 /* CartPageV3.swift */,
 			);
 			path = "UNITED KITCHEN";
 			sourceTree = "<group>";
@@ -425,6 +433,7 @@
 				1BEE552A1EB4D998001E1E01 /* AddressCell.swift in Sources */,
 				1BA6D0A61E96880A000CBDF5 /* ViewController.swift in Sources */,
 				1BE2C56D1EC184FF0047C70F /* AddFBCell.swift in Sources */,
+				1B0BC7F21FBB566C00A477DF /* SlotSelectionCell.swift in Sources */,
 				1B09E22E1EB1B88C00786BD7 /* Cart.swift in Sources */,
 				1BD80C361EB0FFC50069F8E1 /* ItemDescription.swift in Sources */,
 				1BE2C5711EC18D2C0047C70F /* FeedbackData.swift in Sources */,
@@ -449,6 +458,7 @@
 				1BFE3EDF1EC331F800356D34 /* DeliveryOrderAdmin.swift in Sources */,
 				1BA728F11EACFD3300851C91 /* MenuItems.swift in Sources */,
 				1BA47D881EAC9CC800EB781E /* DateHandler.swift in Sources */,
+				1B398E8B1FB9993500457883 /* CartPageV3.swift in Sources */,
 				1BA47D831EAC972300EB781E /* MenuAdmin.swift in Sources */,
 				1BE315501E9EA00C008EB2B2 /* ProfilePage.swift in Sources */,
 				1B2D6E411F87B1930072F46C /* MenuViewController.swift in Sources */,
@@ -660,6 +670,8 @@
 		1BA6D0AA1E96880A000CBDF5 /* UNITED_KITCHEN.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				1B0BC7F31FBBA36100A477DF /* UNITED_KITCHEN_v2.xcdatamodel */,
+				1B398E8C1FB99E7D00457883 /* UNITED_KITCHEN 2.xcdatamodel */,
 				1BA6D0AB1E96880A000CBDF5 /* UNITED_KITCHEN.xcdatamodel */,
 			);
 			currentVersion = 1BA6D0AB1E96880A000CBDF5 /* UNITED_KITCHEN.xcdatamodel */;

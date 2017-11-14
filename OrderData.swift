@@ -35,6 +35,8 @@ class OrderData {
         newOrder.setValue(orderDetails.isGifted , forKey: "isGifted")
         newOrder.setValue(orderDetails.giftedBy, forKey: "giftedBy")
         newOrder.setValue(orderDetails.objectId, forKey: "objectId")
+        newOrder.setValue(orderDetails.area, forKey: "area")
+        newOrder.setValue(orderDetails.slot, forKey: "slot")
       //  newOrder.setValue(orderDetails.created, forKey: "created")
        // newOrder.setValue(orderDetails.updated, forKey: "updated")
         
@@ -120,6 +122,12 @@ class OrderData {
                         if let objId = data.value(forKey: "objectId") as? String {
                             order.objectId = objId
                         } else {return []}
+                        if let area = data.value(forKey: "area") as? String {
+                            order.area = area
+                        } 
+                        if let slot = data.value(forKey: "slot") as? String {
+                            order.slot = slot
+                        }
 //                        if let created = data.value(forKey: "created") as? Date {
 //                            order.created = created
 //                        }

@@ -24,6 +24,7 @@ pod ‘Cosmos’, ‘~> 8.0’
 pod 'Firebase/Core'
 pod 'Firebase/Database'
 #pod 'MarqueeLabel/Swift'
-#pod 'DropDown'
+pod 'DropDown'
+pod ‘UIDropDown’
 
 end

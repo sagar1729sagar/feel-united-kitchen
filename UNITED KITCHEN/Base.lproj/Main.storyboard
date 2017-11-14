@@ -84,7 +84,7 @@
         <!--Yummy !!!-->
         <scene sceneID="dhF-lh-LPw">
             <objects>
-                <viewController id="Yq4-an-zD6" customClass="CartPageV2" customModule="UNITED_KITCHEN" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Yq4-an-zD6" customClass="CartPageV3" customModule="UNITED_KITCHEN" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="J1b-nd-ZYz"/>
                         <viewControllerLayoutGuide type="bottom" id="Tea-Mk-bTy"/>
@@ -141,6 +141,14 @@
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uKZ-BU-qHF" id="afX-Vj-nyu">
                                             <frame key="frameInset" width="375" height="145"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="items6" rowHeight="145" id="Ojk-jK-DxT" customClass="SlotSelectionCell" customModule="UNITED_KITCHEN" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="457" width="375" height="145"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ojk-jK-DxT" id="pqh-Uk-26j">
+                                            <frame key="frameInset" width="375" height="144"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -236,10 +244,10 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell1" id="5u6-4p-Js3" customClass="OrderMainCell" customModule="UNITED_KITCHEN" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="92" width="1000" height="44"/>
+                                        <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5u6-4p-Js3" id="fRA-Pi-cQB">
-                                            <frame key="frameInset" width="1000" height="44"/>
+                                            <frame key="frameInset" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>

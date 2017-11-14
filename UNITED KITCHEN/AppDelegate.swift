@@ -11,6 +11,7 @@ import CoreData
 import IQKeyboardManagerSwift
 import UserNotifications
 import Firebase
+import DropDown
 
 
 @available(iOS 10.0, *)
@@ -39,6 +40,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UNUserNotificationCenter
         //IQKeyboard enable
         IQKeyboardManager.sharedManager().enable = true
        
+        // DorpDown
+        DropDown.startListeningToKeyboard()
         
         // Initialzing firebase
         
@@ -170,6 +173,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UNUserNotificationCenter
          error conditions that could cause the creation of the store to fail.
         */
         let container = NSPersistentContainer(name: "UNITED_KITCHEN")
+       // let container = NSPersistentContainer(name: "UNITED_KITCHEN_v2")
+//        let description = NSPersistentStoreDescription()
+//        description.shouldInferMappingModelAutomatically = true
+//        description.shouldMigrateStoreAutomatically = true
+//        container.persistentStoreDescriptions = [description]
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
