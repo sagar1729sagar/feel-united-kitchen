@@ -30,6 +30,17 @@ class OrderMainCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
     
 
     func setViews() {
+        
+//        if order.area == nil {
+//            print("nil order area")
+//        }
+//        if (order.area?.isEmpty)! {
+//            print("order area empty")
+//        }
+//        if order.area == "" {
+//            print("no data present but instantiated variable")
+//        }
+        
     
         orderid = UILabel(frame: CGRect(x: 5, y: 5, width: UIScreen.main.bounds.width - 10, height: 30))
         orderid.textAlignment = .left
@@ -66,20 +77,37 @@ class OrderMainCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
         progressBar.currentIndex = Int(order.status!)!
         self.contentView.addSubview(progressBar)
         
-        delTime = UILabel(frame: CGRect(x: 10, y: 150, width: UIScreen.main.bounds.width - 20, height: 30))
+        delTime = UILabel(frame: CGRect(x: 10, y: 150, width: UIScreen.main.bounds.width - 20, height: 60))
+        delTime.numberOfLines = 0
+        var intr_text = "Delivery on "
+        intr_text.append(DateHandler().dateToString(date: order.deliveryDate!))
         if order.deliveryTime == "0" {
-        delTime.text = "Delivery on "+DateHandler().dateToString(date: order.deliveryDate!)+" for Lunch"
+            intr_text.append(" for Lunch ")
         } else if order.deliveryTime == "1" {
-        delTime.text = "Delivery on "+DateHandler().dateToString(date: order.deliveryDate!)+" for Dinner"
+            intr_text.append(" for Dinner ")
         }
+        if order.area != nil && order.slot != nil {
+            intr_text.append("\nbetween "+order.slot!+" at "+order.area!)
+        }
+        delTime.text = intr_text
+        
+//        if order.area != nil && order.slot != nil {
+//        if order.deliveryTime == "0" {
+//        let intr_text = "Delivery on "
+//        intr_text.append(<#T##other: String##String#>)
+//        delTime.text = "Delivery on "+DateHandler().dateToString(date: order.deliveryDate!)+" for Lunch between "+order.slot+" at "+order.area
+//        } else if order.deliveryTime == "1" {
+//        delTime.text = "Delivery on "+DateHandler().dateToString(date: order.deliveryDate!)+" for Dinner between "+order.slot+" at "+order.area
+//        }
+//        }
         self.contentView.addSubview(delTime)
         
-        itemH = UILabel(frame : CGRect(x: 10, y: 190, width: UIScreen.main.bounds.width - 20, height: 30))
+        itemH = UILabel(frame : CGRect(x: 10, y: 200, width: UIScreen.main.bounds.width - 20, height: 30))
         itemH.text = "Items : "
         self.contentView.addSubview(itemH)
         
         for i in 0...((order.items?.count)! - 1) {
-            let name = UILabel(frame: CGRect(x: 10, y: Int(230 + CGFloat(i*40)), width: Int(UIScreen.main.bounds.width/2), height: 30))
+            let name = UILabel(frame: CGRect(x: 10, y: Int(240 + CGFloat(i*40)), width: Int(UIScreen.main.bounds.width/2), height: 30))
             name.text = order.items?[i].name
             self.contentView.addSubview(name)
             itemLabels.append(name)
@@ -96,7 +124,7 @@ class OrderMainCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
             itemLabels.append(price)
         }
         
-        totalLabel = UILabel(frame: CGRect(x: 10, y: 230 + order.items!.count*40 , width: Int(UIScreen.main.bounds.width - 30), height: 30))
+        totalLabel = UILabel(frame: CGRect(x: 10, y: 240 + order.items!.count*40 , width: Int(UIScreen.main.bounds.width - 30), height: 30))
         totalLabel.textAlignment = .right
         totalLabel.text = "Total : $"+getTotal()
         self.contentView.addSubview(totalLabel)

@@ -100,18 +100,25 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        table.rowHeight = 400
+        table.rowHeight = 450
         let cell = UITableViewCell()
         let idlabel = UILabel(frame: CGRect(x: 5, y: 5, width: UIScreen.main.bounds.width - 10, height: 30))
         idlabel.text = "Order ID : "+orderDetails[indexPath.row].orderId!
         cell.addSubview(idlabel)
-        let cuslabel = UILabel(frame: CGRect(x: 5, y: 45, width: UIScreen.main.bounds.width - 10, height: 30))
+        
+        let slotLabel = UILabel(frame: CGRect(x: 5, y: 45, width: UIScreen.main.bounds.width - 10, height: 30))
+        if orderDetails[indexPath.row].area != nil && orderDetails[indexPath.row].slot != nil {
+            slotLabel.text = "Delivery between "+orderDetails[indexPath.row].slot!+" at "+orderDetails[indexPath.row].area!
+        }
+        cell.addSubview(slotLabel)
+        
+        let cuslabel = UILabel(frame: CGRect(x: 5, y: 85, width: UIScreen.main.bounds.width - 10, height: 30))
         cuslabel.text = "Customer name : "+orderDetails[indexPath.row].customerName!
         cell.addSubview(cuslabel)
-        let phnlabel = UILabel(frame: CGRect(x: 5, y: 85, width: UIScreen.main.bounds.width - 10, height: 30))
+        let phnlabel = UILabel(frame: CGRect(x: 5, y: 125, width: UIScreen.main.bounds.width - 10, height: 30))
         phnlabel.text = "Customer number : "+orderDetails[indexPath.row].phoneNumber!
         cell.addSubview(phnlabel)
-        let preflabel = UILabel(frame: CGRect(x: 5, y: 115, width: UIScreen.main.bounds.width - 10, height: 60))
+        let preflabel = UILabel(frame: CGRect(x: 5, y: 155, width: UIScreen.main.bounds.width - 10, height: 60))
         preflabel.numberOfLines = 2
         if orderDetails[indexPath.row].addressType == "0" {
             preflabel.text = "Delivery preference : \n Registered address"
@@ -119,7 +126,7 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
             preflabel.text = "Delivery preference : \n GPS Location"
         }
         cell.addSubview(preflabel)
-        let giftlabel = UILabel(frame: CGRect(x: 5, y: 185, width: UIScreen.main.bounds.width - 10, height: 60))
+        let giftlabel = UILabel(frame: CGRect(x: 5, y: 225, width: UIScreen.main.bounds.width - 10, height: 60))
         giftlabel.numberOfLines = 2
         if orderDetails[indexPath.row].isGifted == "0" {
             giftlabel.text = "Delivery for : \n self"
@@ -128,12 +135,12 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
         }
         cell.addSubview(giftlabel)
         
-        let regAddTV = UITextView(frame: CGRect(x: 5, y: 255, width: UIScreen.main.bounds.width - 20, height: 100))
+        let regAddTV = UITextView(frame: CGRect(x: 5, y: 295, width: UIScreen.main.bounds.width - 20, height: 100))
         regAddTV.font = UIFont.systemFont(ofSize: 15)
         regAddTV.text = "Registeres address : \n"+orderDetails[indexPath.row].deliveryAddress!
         cell.addSubview(regAddTV)
         
-        let delComButton = UIButton(frame: CGRect(x: 5, y: 365, width: UIScreen.main.bounds.width - 10, height: 30))
+        let delComButton = UIButton(frame: CGRect(x: 5, y: 405, width: UIScreen.main.bounds.width - 10, height: 30))
         delComButton.setTitle("DELIVERY DONE", for: .normal)
         delComButton.setTitleColor(UIColor.white, for: .normal)
         delComButton.backgroundColor = UIColor.blue
@@ -142,18 +149,18 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
         cell.addSubview(delComButton)
         
         if orderDetails[indexPath.row].addressType == "1" {
-            table.rowHeight = 700
-            let coordLabel = UILabel(frame: CGRect(x: 5, y: 400, width: UIScreen.main.bounds.width - 10, height: 90))
+            table.rowHeight = 750
+            let coordLabel = UILabel(frame: CGRect(x: 5, y: 440, width: UIScreen.main.bounds.width - 10, height: 90))
             let cordnts = getCoordinates(lat: orderDetails[indexPath.row].latitude!, long: orderDetails[indexPath.row].longitude!)
             coordLabel.numberOfLines = 3
             coordLabel.text = "GPS location : \n lat : "+cordnts.1+"\n long : "+cordnts.2
             cell.addSubview(coordLabel)
             
-            let revGeoHeadLabel = UILabel(frame: CGRect(x: 5, y: 500, width: UIScreen.main.bounds.width - 10, height: 30))
+            let revGeoHeadLabel = UILabel(frame: CGRect(x: 5, y: 540, width: UIScreen.main.bounds.width - 10, height: 30))
             revGeoHeadLabel.text = "Reverse Geo coded placemark : "
             cell.addSubview(revGeoHeadLabel)
             
-            let revGeoTV = UITextView(frame: CGRect(x: 5, y: 540, width: UIScreen.main.bounds.width - 10, height: 100))
+            let revGeoTV = UITextView(frame: CGRect(x: 5, y: 580, width: UIScreen.main.bounds.width - 10, height: 100))
             revGeoTV.font = UIFont.systemFont(ofSize: 15)
             revGeoTV.text = "Please wait..."
             revGeoTV.isEditable = false
@@ -165,7 +172,7 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
                     revGeoTV.text = "Reverse geo coding error \(error)"
             })
             
-            let setDIrectionsButton = UIButton(frame: CGRect(x: 5, y: 650, width: UIScreen.main.bounds.width, height: 30))
+            let setDIrectionsButton = UIButton(frame: CGRect(x: 5, y: 690, width: UIScreen.main.bounds.width, height: 30))
             setDIrectionsButton.setTitle("OPEN MAP", for: .normal)
             setDIrectionsButton.setTitleColor(UIColor.white, for: .normal)
             setDIrectionsButton.backgroundColor = UIColor.blue

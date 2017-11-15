@@ -95,18 +95,29 @@ class OrderDisplayCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
         orderPhone.text = "Phone : "+order.phoneNumber!
         self.contentView.addSubview(orderPhone)
         
-        deliveryTimeLabel = UILabel(frame: CGRect(x: 10, y: 310, width: UIScreen.main.bounds.width - 10, height: 60))
+        deliveryTimeLabel = UILabel(frame: CGRect(x: 10, y: 310, width: UIScreen.main.bounds.width - 10, height: 90))
         deliveryTimeLabel.textAlignment = .left
 
-        deliveryTimeLabel.numberOfLines = 2
+        deliveryTimeLabel.numberOfLines = 0
+        
+        var intr_text = "To be be delivered on :\n"+DateHandler().dateToString(date: order.deliveryDate!)
         if order.deliveryTime == "0" {
-            deliveryTimeLabel.text = "To be be delivered on :\n"+DateHandler().dateToString(date: order.deliveryDate!)+" for Lunch"
+            intr_text.append(" for Lunch \n")
         } else if order.deliveryTime == "1"{
-            deliveryTimeLabel.text = "To be be delivered on :\n"+DateHandler().dateToString(date: order.deliveryDate!)+" for Dinner"
+            intr_text.append(" for Dinner \n")
         }
+        if order.area != nil && order.slot != nil {
+            intr_text.append(" between "+order.slot!+" at "+order.area!)
+        }
+        deliveryTimeLabel.text = intr_text
+//        if order.deliveryTime == "0" {
+//            deliveryTimeLabel.text = "To be be delivered on :\n"+DateHandler().dateToString(date: order.deliveryDate!)+" for Lunch"
+//        } else if order.deliveryTime == "1"{
+//            deliveryTimeLabel.text = "To be be delivered on :\n"+DateHandler().dateToString(date: order.deliveryDate!)+" for Dinner"
+//        }
         self.contentView.addSubview(deliveryTimeLabel)
         
-        deliveryPreferenceLabel = UILabel(frame: CGRect(x: 10, y: 380, width: UIScreen.main.bounds.width - 20, height: 30))
+        deliveryPreferenceLabel = UILabel(frame: CGRect(x: 10, y: 410, width: UIScreen.main.bounds.width - 20, height: 30))
         if order.addressType == "0" {
             deliveryPreferenceLabel.text = "Address preference : Address"
         } else if order.addressType == "1" {
@@ -114,38 +125,38 @@ class OrderDisplayCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
             }
         self.contentView.addSubview(deliveryPreferenceLabel)
         
-        addressLabel = UILabel(frame: CGRect(x: 10, y: 420, width: UIScreen.main.bounds.width - 20, height: 30))
+        addressLabel = UILabel(frame: CGRect(x: 10, y: 450, width: UIScreen.main.bounds.width - 20, height: 30))
         addressLabel.text = "Registered address :"
         self.contentView.addSubview(addressLabel)
         
-        addressTV = UITextView(frame: CGRect(x: 10, y: 460, width: UIScreen.main.bounds.width - 20, height: 100))
+        addressTV = UITextView(frame: CGRect(x: 10, y: 490, width: UIScreen.main.bounds.width - 20, height: 100))
         addressTV.font = UIFont.systemFont(ofSize: 15)
         addressTV.text = order.deliveryAddress
         self.contentView.addSubview(addressTV)
         
-        locationLabel = UILabel(frame: CGRect(x: 10, y: 560, width: UIScreen.main.bounds.width - 20, height: 30))
+        locationLabel = UILabel(frame: CGRect(x: 10, y: 590, width: UIScreen.main.bounds.width - 20, height: 30))
         locationLabel.text = "Location :"
         self.contentView.addSubview(locationLabel)
         
-        latitudeLabel = UILabel(frame: CGRect(x: 10, y: 600, width: UIScreen.main.bounds.width - 20, height: 30))
+        latitudeLabel = UILabel(frame: CGRect(x: 10, y: 630, width: UIScreen.main.bounds.width - 20, height: 30))
         latitudeLabel.text = "latitude : "+order.latitude!
         self.contentView.addSubview(latitudeLabel)
         
-        longitueLabel = UILabel(frame: CGRect(x: 10, y: 640, width: UIScreen.main.bounds.width - 20, height: 30))
+        longitueLabel = UILabel(frame: CGRect(x: 10, y: 670, width: UIScreen.main.bounds.width - 20, height: 30))
         longitueLabel.text = "longitude : "+order.longitude!
         self.contentView.addSubview(longitueLabel)
         
 
         
         
-        ItemsHeading = UILabel(frame: CGRect(x: 10, y: 680, width: UIScreen.main.bounds.width - 20, height: 30))
+        ItemsHeading = UILabel(frame: CGRect(x: 10, y: 710, width: UIScreen.main.bounds.width - 20, height: 30))
         ItemsHeading.textAlignment = .left
         ItemsHeading.text = "Items :"
         self.contentView.addSubview(ItemsHeading)
         
         if order.items?.count == 0 {
         
-        getItemsButton = UIButton(frame: CGRect(x: 30, y: 720, width: UIScreen.main.bounds.width/2 - 30, height: 30))
+        getItemsButton = UIButton(frame: CGRect(x: 30, y: 750, width: UIScreen.main.bounds.width/2 - 30, height: 30))
         getItemsButton.setTitle("Get items", for: .normal)
         getItemsButton.backgroundColor = UIColor.blue
         getItemsButton.setTitleColor(UIColor.white, for: .normal)
@@ -157,7 +168,7 @@ class OrderDisplayCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
         } else {
             
             for i in 0...((order.items?.count)! - 1) {
-                let itemnameLabel = UILabel(frame: CGRect(x: 10, y: 720 + i*50, width: Int(UIScreen.main.bounds.width - 20), height: 40))
+                let itemnameLabel = UILabel(frame: CGRect(x: 10, y: 750 + i*50, width: Int(UIScreen.main.bounds.width - 20), height: 40))
                 itemnameLabel.textAlignment = .left
                 itemnameLabel.text = order.items?[i].name
                 self.contentView.addSubview(itemnameLabel)
@@ -177,7 +188,7 @@ class OrderDisplayCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
                 
             }
             
-            totalLabel = UILabel(frame: CGRect(x:20, y: 720 + CGFloat((order.items?.count)!*50), width: UIScreen.main.bounds.width - 40, height: 40))
+            totalLabel = UILabel(frame: CGRect(x:20, y: 750 + CGFloat((order.items?.count)!*50), width: UIScreen.main.bounds.width - 40, height: 40))
             totalLabel.textAlignment = .right
             totalLabel.text = "Total : $"+getTotal()
             self.contentView.addSubview(totalLabel)
