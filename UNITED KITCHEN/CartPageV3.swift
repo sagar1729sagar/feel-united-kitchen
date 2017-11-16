@@ -75,7 +75,7 @@ class CartPageV3: UIViewController , UITableViewDelegate , UITableViewDataSource
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        print("did load")
+        
         
         ref = FIRDatabase.database().reference()
         
@@ -103,7 +103,7 @@ class CartPageV3: UIViewController , UITableViewDelegate , UITableViewDataSource
         
         
         
-        print("Did appear")
+       
         
         
         
@@ -119,7 +119,7 @@ class CartPageV3: UIViewController , UITableViewDelegate , UITableViewDataSource
         itemsArrayINPARWITHDates.removeAll()
         profileCount = ProfileData().profileCount().0
         
-        print(1)
+        
         
         let cart = CartData().getItems()
         let menu = MenuItemsData().getMenu()
@@ -131,7 +131,7 @@ class CartPageV3: UIViewController , UITableViewDelegate , UITableViewDataSource
             menuItems = menu.0
         }
         
-        print(2)
+       
         // create dates list
         if itemCount != 0 {
             
@@ -154,7 +154,7 @@ class CartPageV3: UIViewController , UITableViewDelegate , UITableViewDataSource
                     }
                 }
             }
-            print(3)
+           
             
             // section headers
             
@@ -170,7 +170,7 @@ class CartPageV3: UIViewController , UITableViewDelegate , UITableViewDataSource
                     times.append("Dinner")
                 }
             }
-            print(4)
+           
             
             for i in 0...(dates.count - 1) {
                 segItems.removeAll()
@@ -187,14 +187,14 @@ class CartPageV3: UIViewController , UITableViewDelegate , UITableViewDataSource
         }
         
         table.reloadData()
-        print(5)
+        
         
         if itemCount == 0 {
             noItemsLabel.isHidden = false
         } else {
             noItemsLabel.isHidden = true
         }
-        print(6)
+       
         
     }
     
@@ -323,7 +323,7 @@ class CartPageV3: UIViewController , UITableViewDelegate , UITableViewDataSource
                 return cell
             case dates.count+1:
                 addrCell = table.dequeueReusableCell(withIdentifier: "items2", for: indexPath) as! AddressCell
-                print(10)
+               
                 if ProfileData().profileCount().0 == 0 {
                     table.rowHeight = UIScreen.main.bounds.height/10 + 20
                     addrCell.add.isHidden = false
@@ -342,24 +342,24 @@ class CartPageV3: UIViewController , UITableViewDelegate , UITableViewDataSource
                 
                 return addrCell
             case dates.count+2:
-                print(11)
+               
                 locCell = table.dequeueReusableCell(withIdentifier: "items4", for: indexPath) as! LocationCell
                 table.rowHeight = UIScreen.main.bounds.width + 40
                 return locCell
             case dates.count+3:
-                print(12)
+                
                 splCell = table.dequeueReusableCell(withIdentifier: "items3", for: indexPath) as! AddressSelectionCell
-                print(14)
+                
                 table.rowHeight = UIScreen.main.bounds.width*0.525
-                print(15)
+                
                 splCell.orderButton.addTarget(self, action: #selector(ordernowPressed(sender:)), for: .touchDown)
-                print(16)
+                
                 splCell.giftButton.addTarget(self, action: #selector(giftitPressed(sender:)), for: .touchDown)
-                print(17)
+                
                 
                 return splCell
             case dates.count+4:
-                print(13)
+                
                 giftCell = table.dequeueReusableCell(withIdentifier: "items5", for: indexPath) as! GiftedPersonDetailsCell
                 table.rowHeight = UIScreen.main.bounds.height/2 + 20
                 giftCell.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
@@ -847,7 +847,7 @@ class CartPageV3: UIViewController , UITableViewDelegate , UITableViewDataSource
         navbarIndicator.startAnimating()
         
         //to-do 
-        print("number of dates \(itemsArrayINPARWITHDates.count)")
+       
         ref.child("slots").observeSingleEvent(of: .value, with: { (snapshot) in
             self.navbarIndicator.stopAnimating()
             if let intr_times = snapshot.value as? NSDictionary {
@@ -924,13 +924,13 @@ class CartPageV3: UIViewController , UITableViewDelegate , UITableViewDataSource
         rect2.layer.borderWidth = 1
         popupView.addSubview(rect2)
         let icon = UIImageView(frame: CGRect(x: popupView.bounds.origin.x, y: popupView.bounds.origin.y + 20, width: popupView.bounds.width, height: (UIScreen.main.bounds.width*40)/568))
-        //print(UIScreen.main.bounds.height)
+        
         icon.image = UIImage(named: "time.png")
         icon.contentMode = .scaleAspectFit
         popupView.addSubview(icon)
         
         let inform_text = UITextView(frame: CGRect(x: popupView.bounds.origin.x + 20, y: icon.bounds.origin.y + icon.bounds.height + 20, width: popupView.bounds.width - 40, height: UIScreen.main.bounds.height * 120/568))
-        print(UIScreen.main.bounds.height)
+        
         inform_text.text = "Please select your area and time slot for delivery of your order for "+orderString
         inform_text.font = UIFont.systemFont(ofSize: UIScreen.main.bounds.width * 30/568)
         inform_text.isEditable = false
@@ -944,10 +944,9 @@ class CartPageV3: UIViewController , UITableViewDelegate , UITableViewDataSource
          popupView.addSubview(areadd)
         
         
-        print(areadd.fontSize)
+        
         timedd = UIDropDown(frame: CGRect(x: popupView.bounds.origin.x + 10, y: inform_text.bounds.origin.y + inform_text.bounds.height + (UIScreen.main.bounds.height*40)/568 + 40, width: popupView.bounds.width - 20, height: (UIScreen.main.bounds.height*40)/568))
-//        print(inform_text.bounds.origin.y + inform_text.bounds.height + 20)
-//        print(timedd.bounds.origin.y)
+
         timedd.placeholder = "Please select a time slot"
         timedd.hideOptionsWhenSelect = true
         timedd.isHidden = true
@@ -972,7 +971,7 @@ class CartPageV3: UIViewController , UITableViewDelegate , UITableViewDataSource
         heights += UIScreen.main.bounds.width/8.1
         heights += 80
         
-        print(heights)
+
         
         let cancelButton = UIButton(frame: CGRect(x: popupView.bounds.origin.x + 20, y: heights, width: popupView.bounds.width - 40, height: (UIScreen.main.bounds.width)/8.1))
         cancelButton.backgroundColor = UIColor.red
@@ -1040,14 +1039,12 @@ class CartPageV3: UIViewController , UITableViewDelegate , UITableViewDataSource
     }
     
     func popupProceedPressed(sender : UIButton){
-        print(areadd.options[areadd.selectedIndex!])
-        print(timedd.options[timedd.selectedIndex!])
+       
         
         areas.append(areadd.options[areadd.selectedIndex!])
         slots.append(timedd.options[timedd.selectedIndex!])
         
-        print(areas.count)
-        print(slots.count)
+        
         
        // self.view.willRemoveSubview(popupView)
         
@@ -1140,9 +1137,7 @@ class CartPageV3: UIViewController , UITableViewDelegate , UITableViewDataSource
             orderDetails.isDelivered = "0"
             orderDetails.locationTrackingChannel = "nil"
             orderDetails.addressType = String(addressType)
-            print(areas.count)
-            print(slots.count)
-            print(i)
+            
             orderDetails.area = areas[i]
             orderDetails.slot = slots[i]
             if !isGifted {

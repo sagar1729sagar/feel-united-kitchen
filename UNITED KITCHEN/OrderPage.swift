@@ -414,7 +414,7 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
                     channels.removeAll()
                     getLocationChannels(ids: eligibleIDs, idsCount: eligibleIDs.count, iterationNumber: 1)
                 } else {
-                    print("lets not come here")
+                    
                     navbarIndicator.stopAnimating()
                   
                     performSegue(withIdentifier: "location", sender: self)

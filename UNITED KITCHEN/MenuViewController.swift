@@ -36,7 +36,7 @@ class MenuViewController: UIViewController,UITableViewDataSource,UITableViewDele
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        print(MiscData().getSelectedDate())
+        
         starters.removeAll()
         mainCourse.removeAll()
         deserts.removeAll()
@@ -130,7 +130,7 @@ class MenuViewController: UIViewController,UITableViewDataSource,UITableViewDele
         var mcs = [Item]()
         var desrts = [Item]()
         let selectedDate = MiscData().getSelectedDate()
-        print("sorting called")
+       
         var sortedData = [Item]()
         let data = MenuItemsData().getMenu()
         if data.1 != 0 && data.2 {

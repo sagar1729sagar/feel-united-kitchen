@@ -323,10 +323,8 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
     
     
     func startNavigation(sender : UIButton) {
-        print("timer start")
         
-        timer = Timer.scheduledTimer(withTimeInterval: 15, repeats: true, block: { (time) in
-            print("timer")
+        timer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true, block: { (time) in
             self.getLocation()
         })
         
@@ -363,7 +361,7 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
                     let coordinates = location.coordinate
                     let message = Message()
                     message.data = coordinates
-                    print("new coordinates \(coordinates)")
+                
                     self.backendless?.messaging.publish("C"+ProfileData().getProfile().0.phoneNumber!, message: "\(coordinates)", response: { (response) in
         
                         self.navbarIndicator.stopAnimating()
@@ -372,7 +370,7 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
         
                     })
                     }) { (locReq, loc, error) -> (Void) in
-                        print("new coordinates error")
+                       
                         self.navbarIndicator.stopAnimating()
                         
                 }
@@ -380,7 +378,7 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
     }
     
     func stopNavigation(sender : UIButton){
-        print("timer stop")
+        
         timer.invalidate()
     
     }

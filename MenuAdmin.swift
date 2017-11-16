@@ -88,8 +88,8 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         self.view.addSubview(foodTypeSelection)
         
 //        carousel = iCarousel(frame: CGRect(x: 0, y: foodTypeSelection.frame.origin.y + foodTypeSelection.bounds.height , width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - foodTypeSelection.bounds.height - (self.navigationController?.navigationBar.frame.height)! - (self.tabBarController?.tabBar.frame.height)!*1.5))
-        print("UIScrren height")
-        print(UIScreen.main.bounds.height)
+//        print("UIScrren height")
+//        print(UIScreen.main.bounds.height)
 //        carousel = iCarousel(frame: CGRect(x: 0, y: (foodTypeSelection.frame.origin.y) + (foodTypeSelection.bounds.height) + (UIScreen.main.bounds.height/28.4), width: (UIScreen.main.bounds.width), height: (UIScreen.main.bounds.height) - (UIScreen.main.bounds.height/28.4) - (foodTypeSelection.bounds.height) - (self.navigationController?.navigationBar.frame.height)! - ((self.tabBarController?.tabBar.frame.height)!*1.5)))
         let x : CGFloat = 0
         let y = (foodTypeSelection.frame.origin.y) + (foodTypeSelection.bounds.height) + (UIScreen.main.bounds.height/28.4)
@@ -136,7 +136,6 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        print("did disappear")
         self.view.didAddSubview(scrollView)
     }
    
@@ -156,17 +155,17 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         
         ref.child("text").observeSingleEvent(of: .value, with: { (snapshot) in
 
-            print("Firebase snapshot \(snapshot.value!)")
+            
             self.scrollView.backgroundColor = UIColor.white
             self.scrollLabel.text = snapshot.value as? String
             UIView.animate(withDuration: 15.0, delay: 1, options: ([.curveLinear, .repeat]), animations: {() -> Void in
                 self.scrollLabel.center = CGPoint(x: 0 - self.scrollLabel.bounds.width/2, y: self.scrollLabel.center.y)
                 }, completion:  { _ in })
-            print("animate called")
+            
             
         }) { (error) in
 
-            print("Firebase error \(error)")
+            
         }
         
         
@@ -602,27 +601,27 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
     queryBuilder?.setPageSize(100)
     backendless?.data.of(Item.ofClass()).find(queryBuilder, response: { (data) in
         self.navbarIndicator.stopAnimating()
-      print(1)
+      
         if (data?.count)! > 0 {
-            print(2)
+            
             if MenuItemsData().deleteMenu() {
-                print(3)
+                
             for object in data! {
-                print(4)
+                
                 if let item = object as? Item {
-                    print(5)
+                 
                     if MenuItemsData().addItem(item: item) {
-                       print(6)
+                 
                     }
                 }
             }
             }
         }
-       print(7)
+       
         self.sortMenuData()
-        print(8)
+       
         self.removeCarouselSubviews()
-      print(9)
+      
         self.viewDidAppear(true)
         }, error: { (fault) in
             self.navbarIndicator.stopAnimating()
@@ -658,7 +657,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
     
     func sortMenuData() {
         // sorting data displaying items which are availale first
-        print("sorting called")
+      
         var sortedData = [Item]()
         let data = MenuItemsData().getMenu()
         if data.1 != 0 && data.2 {

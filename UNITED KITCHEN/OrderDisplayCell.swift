@@ -303,10 +303,10 @@ class OrderDisplayCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
         deliveryOptions.pushBroadcast(FOR_ANDROID.rawValue)
         backendless?.messaging.publish("C"+order.phoneNumber!, message: order.orderId!+"and"+order.status!, publishOptions: publishOptions1, deliveryOptions: deliveryOptions1, response: { (status) in
             //do nothing
-            print("sending android sent")
+        
             }, error: { (fault) in
                 //do nothing
-                print("sending android fault \(fault?.message)")
+            
         })
 //        backendless?.messaging.publish("C"+order.giftedBy!, message: "Order update", publishOptions: publishOptions1, response: { (status) in
 //            //code

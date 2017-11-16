@@ -20,9 +20,9 @@ class TestViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         backendless?.messaging.publish("default", message: "Hello", response: { (status) in
-            print("Message sent \(status)")
+            
             }, error: { (fault) in
-                print("Message cannot be sent \(fault)")
+            
         })
     }
 
