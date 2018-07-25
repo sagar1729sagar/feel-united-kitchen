@@ -101,7 +101,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         carousel.dataSource = self
         carousel.delegate = self
         self.view.addSubview(carousel)
-        
+        print("carousel added")
 //        scrollView = UIView(frame: CGRect(x: 0, y: foodTypeSelection.frame.origin.y + foodTypeSelection.bounds.height, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/28.4))
 //        self.view.addSubview(scrollView)
 //        scrollLabel = UILabel(frame: CGRect(x: UIScreen.main.bounds.width, y: 0, width: 1.5*UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/28.4))
@@ -322,19 +322,209 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         // Dispose of any resources that can be recreated.
     }
     
+    
+    
+    func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
+        let itemView = UIView(frame: CGRect(x: 0, y: 0, width: 3*carousel.bounds.width/5, height: carousel.bounds.height))
+        //itemView.backgroundColor = UIColor.purple.withAlphaComponent(0.4)
+        itemView.backgroundColor = UIColor.white
+        
+//                let itemPicture = UIImageView(frame: CGRect(x: 7, y: 7, width: mainVIew.bounds.width - 14, height: mainVIew.bounds.width - 14))
+//                let pictureUrl = URL(string: menuItems[index].itemUrl!)
+//                itemPicture.setImageWith(pictureUrl, usingActivityIndicatorStyle: .gray)
+//                mainVIew.addSubview(itemPicture)
+        
+        let itemPicture = UIImageView(frame: CGRect(x: 7, y: 7, width: itemView.bounds.width - 14, height: itemView.bounds.width - 14))
+        let pictureUrl = URL(string: menuItems[index].itemUrl!)
+        itemPicture.setImageWith(pictureUrl, usingActivityIndicatorStyle: .gray)
+        itemView.addSubview(itemPicture)
+        
+        
+        let type = UIImageView(frame: CGRect(x: itemPicture.frame.origin.x + itemPicture.bounds.width - 40, y: itemPicture.frame.origin.y + itemPicture.bounds.height - 40, width: 30, height: 30))
+        if menuItems[index].foodType == "Veg"{
+            type.image = UIImage(named: "veg.png")
+        } else {
+            type.image = UIImage(named: "nonveg.png")
+        }
+        itemView.addSubview(type)
+        
+        let nameLabel = UILabel(frame: CGRect(x: 7, y: itemPicture.frame.origin.y + itemPicture.bounds.height + 3, width: itemView.bounds.width - 14, height: UIScreen.main.bounds.height / 19))
+        nameLabel.text = menuItems[index].itemName
+        //print(nameLabel.text)
+        nameLabel.textAlignment = .center
+        nameLabel.font = UIFont.boldSystemFont(ofSize: UIScreen.main.bounds.height/28.4)
+        itemView.addSubview(nameLabel)
+        
+        
+        let line1 = UIView(frame: CGRect(x: 7, y: nameLabel.frame.origin.y + nameLabel.bounds.height + 3, width: itemView.bounds.width - 14, height: 1))
+        line1.backgroundColor = UIColor.gray
+        itemView.addSubview(line1)
+        
+        let line2 = UIView(frame: CGRect(x: 7, y: nameLabel.frame.origin.y + nameLabel.bounds.height + 6, width: itemView.bounds.width - 14, height: 1))
+        line2.backgroundColor = UIColor.gray
+        itemView.addSubview(line2)
+        
+        
+        
+        let available = [menuItems[index].availableSunday,menuItems[index].availableMonday,menuItems[index].availableTuesday,menuItems[index].availableWednesday,menuItems[index].availableThrusday,menuItems[index].availableFriday,menuItems[index].availableSaturday]
+        let day = ["Su","M","Tu","W","Th","F","Sa"]
+        var circle1 = UILabel()
+        for i in 0...6{
+            circle1 = UILabel(frame: CGRect(x: 7 + (CGFloat(i)*line2.bounds.width/7) + 0.5, y: line2.frame.origin.y + 5, width: line2.bounds.width/7 - 1, height: line2.bounds.width/7))
+            circle1.layer.cornerRadius = itemPicture.bounds.width/14
+            if available[i] == "1" {
+                circle1.backgroundColor = UIColor(red: 34/255, green: 139/255, blue: 34/255, alpha: 1)
+            } else {
+                circle1.backgroundColor = UIColor(red: 220/255, green: 20/255, blue: 60/255, alpha: 1)
+            }
+            circle1.textAlignment = .center
+            circle1.text = day[i]
+            circle1.textColor = UIColor.white
+            circle1.clipsToBounds = true
+            circle1.font = UIFont.systemFont(ofSize: UIScreen.main.bounds.height/28.4)
+            itemView.addSubview(circle1)
+        }
+        
+        let line3 = UIView(frame: CGRect(x: 7, y: line2.frame.origin.y + 11 + circle1.bounds.height + 3 , width: itemView.bounds.width - 14, height: 1))
+        line3.backgroundColor = UIColor.gray
+        itemView.addSubview(line3)
+        
+        let line4 = UIView(frame: CGRect(x: 7, y: line2.frame.origin.y + 11 + circle1.bounds.height + 6 , width: itemView.bounds.width - 14, height: 1))
+        line4.backgroundColor = UIColor.gray
+        itemView.addSubview(line4)
+        
+        
+        priceLabel = UILabel(frame: CGRect(x: 5, y: line4.bounds.height + line4.frame.origin.y + 2, width: 2*itemView.bounds.width/3 - 10, height: UIScreen.main.bounds.height/28.4))
+        // priceLabel.text = "$" + setPriceforDisplay(item: menuItems[index], howfarfrom: DateHandler().daysFromTodayTo(date: selectedDate))+"-Today"
+        priceLabel.text = "$" + menuItems[index].priceToday!+"-Today"
+        priceLabel.font = UIFont.systemFont(ofSize: UIScreen.main.bounds.height/38)
+        itemView.addSubview(priceLabel)
+        
+        
+        
+        priceLabel1 = UILabel(frame: CGRect(x: 5, y: priceLabel.bounds.height + priceLabel.frame.origin.y + 2, width: 2*itemView.bounds.width/3 - 10, height: UIScreen.main.bounds.height/28.4))
+        // priceLabel1.text = "$" + setPriceforDisplay(item: menuItems[index], howfarfrom: DateHandler().daysFromTodayTo(date: selectedDate) + 1)+"-Tomorrow"
+        priceLabel1.text = "$" + menuItems[index].priceTomorrow!+"-Tomorrow"
+        priceLabel1.font = UIFont.systemFont(ofSize: UIScreen.main.bounds.height/38)
+        itemView.addSubview(priceLabel1)
+        
+        priceLabel2 = UILabel(frame: CGRect(x: 5, y: priceLabel1.bounds.height + priceLabel1.frame.origin.y + 2, width: 2*itemView.bounds.width/3 - 10, height: UIScreen.main.bounds.height/28.4))
+        // priceLabel2.text = "$" + setPriceforDisplay(item: menuItems[index], howfarfrom: DateHandler().daysFromTodayTo(date: selectedDate) + 2)+"-Later"
+        priceLabel2.text = "$" + menuItems[index].priceLater!+"-Later"
+        priceLabel2.font = UIFont.systemFont(ofSize: UIScreen.main.bounds.height/38)
+        itemView.addSubview(priceLabel2)
+        
+        if checkForitemAvailablefor(weekday: DateHandler().getDayofweekfor(date: selectedDate), item: menuItems[index]) {
+            
+            addButton = UIButton(frame: CGRect(x: 2*itemView.bounds.width/3 - 10, y: line4.bounds.height + line4.frame.origin.y + 2, width: itemView.bounds.width/3, height: UIScreen.main.bounds.height / 19))
+            
+            if isInCart(name: menuItems[index].itemName!, date: selectedDate, time: "Lunch"){
+                addButton.setTitle("In Cart", for: .normal)
+                addButton.backgroundColor = UIColor(red: 46/255, green: 139/255, blue: 87/255, alpha: 0.6)
+                addButton.isEnabled = false
+            } else {
+                addButton.setTitle("Lunch", for: .normal)
+                addButton.backgroundColor = UIColor(red: 46/255, green: 139/255, blue: 87/255, alpha: 1)
+            }
+            
+            addButton.setTitleColor(UIColor.white, for: .normal)
+            addButton.titleLabel?.font = UIFont.systemFont(ofSize: UIScreen.main.bounds.height/28.4)
+            
+            addButton.tag = 0
+            addButton.addTarget(self, action: #selector(addButtonPressed(sender:)), for: .touchDown)
+            itemView.addSubview(addButton)
+            
+            
+            
+            
+            // Dinner button
+            
+            dinnerButton = UIButton(frame: CGRect(x: 2*itemView.bounds.width/3 - 10, y: addButton.bounds.height + addButton.frame.origin.y + 2, width: itemView.bounds.width/3, height: UIScreen.main.bounds.height / 19))
+            
+            if isInCart(name: menuItems[index].itemName!, date: selectedDate, time: "Dinner"){
+                dinnerButton.setTitle("In Cart", for: .normal)
+                dinnerButton.backgroundColor = UIColor(red: 46/255, green: 139/255, blue: 87/255, alpha: 0.6)
+                dinnerButton.isEnabled = false
+            } else {
+                dinnerButton.setTitle("Dinner", for: .normal)
+                dinnerButton.backgroundColor = UIColor(red: 46/255, green: 139/255, blue: 87/255, alpha: 1)
+            }
+            
+            dinnerButton.setTitleColor(UIColor.white, for: .normal)
+            dinnerButton.titleLabel?.font = UIFont.systemFont(ofSize: UIScreen.main.bounds.height/28.4)
+            dinnerButton.tag = 1
+            dinnerButton.addTarget(self, action: #selector(addButtonPressed(sender:)), for: .touchDown)
+            itemView.addSubview(dinnerButton)
+            
+            
+            
+        } else {
+            //            let NALabel = UILabel(frame: CGRect(x: line4.bounds.width / 2, y: line4.bounds.height + line4.frame.origin.y + UIScreen.main.bounds.height / 76 , width: line4.bounds.width / 2, height: 3*UIScreen.main.bounds.height / 38))
+            //            NALabel.text = "Not \n Available"
+            //            NALabel.font = UIFont.boldSystemFont(ofSize: UIScreen.main.bounds.height/28.4)
+            //            NALabel.textAlignment = .center
+            //            mainVIew.addSubview(NALabel)
+            //            let NALabel = UITextView(frame: CGRect(x: line4.bounds.width / 2, y: line4.bounds.height + line4.frame.origin.y + UIScreen.main.bounds.height / 76 , width: line4.bounds.width / 2, height: 3*UIScreen.main.bounds.height / 38))
+            let NALabel = UITextView(frame: CGRect(x: line4.bounds.width / 2, y: line4.bounds.height + line4.frame.origin.y , width: line4.bounds.width / 2, height: 3*UIScreen.main.bounds.height / 38 + UIScreen.main.bounds.height / 76))
+            NALabel.text = "Not\nAvailable"
+            NALabel.isEditable = false
+            NALabel.font = UIFont.boldSystemFont(ofSize: UIScreen.main.bounds.height/30)
+            NALabel.textAlignment = .center
+            itemView.addSubview(NALabel)
+            
+        }
+        
+        let line5 = UIView(frame: CGRect(x: 7, y: priceLabel2.frame.origin.y + priceLabel2.bounds.height + 2 , width: itemView.bounds.width - 14, height: 1))
+        line5.backgroundColor = UIColor.gray
+        itemView.addSubview(line5)
+        print("line 5")
+        print(line5.bounds)
+        
+        let line6 = UIView(frame: CGRect(x: 7, y: priceLabel2.frame.origin.y + priceLabel2.bounds.height + 5, width: itemView.bounds.width - 14, height: 1))
+        line6.backgroundColor = UIColor.gray
+        itemView.addSubview(line6)
+        
+        let descTV = UITextView(frame :CGRect(x: 7, y: line6.frame.origin.y + 3, width: itemView.bounds.width - 14, height: itemView.bounds.height - line6.frame.origin.y - 5 - 11))
+        descTV.text = menuItems[index].itemDescription
+        descTV.isEditable = false
+        descTV.clipsToBounds = true
+        descTV.font = UIFont.systemFont(ofSize: UIScreen.main.bounds.height/47.5)
+        itemView.addSubview(descTV)
+//        //print(descTV.bounds)
+        
+
+        
+        
+        return itemView
+    }
+    
+    
+    /**
     func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
         
         
         let mainVIew = UIView(frame: CGRect(x: 0, y: 0, width: 3*carousel.bounds.width/5, height: carousel.bounds.height))
         mainVIew.backgroundColor = UIColor.white
+        print("MainView")
+        print(mainVIew.bounds)
+        
+        let itemPicture = UIImageView(frame: CGRect(x: 7, y: 7, width: mainVIew.bounds.width - 14, height: mainVIew.bounds.width - 14))
+        let pictureUrl = URL(string: menuItems[index].itemUrl!)
+        itemPicture.setImageWith(pictureUrl, usingActivityIndicatorStyle: .gray)
+        mainVIew.addSubview(itemPicture)
+        print("item picture")
+        print(itemPicture.bounds)
         
         
-        let itemImage = UIImageView(frame: CGRect(x: 7, y: 7, width: mainVIew.bounds.width - 14, height: mainVIew.bounds.width - 14))
-        let imageURL = URL(string: menuItems[index].itemUrl!)
-        itemImage.setImageWith(imageURL, usingActivityIndicatorStyle: .gray)
-        mainVIew.addSubview(itemImage)
+//        let itemImage = UIImageView(frame: CGRect(x: 7, y: 7, width: mainVIew.bounds.width - 14, height: mainVIew.bounds.width - 14))
+//        let imageURL = URL(string: menuItems[index].itemUrl!)
+//        itemImage.backgroundColor = UIColor.black
+//       // itemImage.setImageWith(imageURL, usingActivityIndicatorStyle: .gray)
+//        mainVIew.addSubview(itemImage)
+//        print("item image")
+//        print(itemImage.bounds)
         
-       let type = UIImageView(frame: CGRect(x: itemImage.frame.origin.x + itemImage.bounds.width - 40, y: itemImage.frame.origin.y + itemImage.bounds.height - 40, width: 30, height: 30))
+       let type = UIImageView(frame: CGRect(x: itemPicture.frame.origin.x + itemPicture.bounds.width - 40, y: itemPicture.frame.origin.y + itemPicture.bounds.height - 40, width: 30, height: 30))
         if menuItems[index].foodType == "Veg"{
             type.image = UIImage(named: "veg.png")
         } else {
@@ -343,8 +533,9 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         mainVIew.addSubview(type)
         
         
-        let nameLabel = UILabel(frame: CGRect(x: 7, y: itemImage.frame.origin.y + itemImage.bounds.height + 3, width: mainVIew.bounds.width - 14, height: UIScreen.main.bounds.height / 19))
+        let nameLabel = UILabel(frame: CGRect(x: 7, y: itemPicture.frame.origin.y + itemPicture.bounds.height + 3, width: mainVIew.bounds.width - 14, height: UIScreen.main.bounds.height / 19))
         nameLabel.text = menuItems[index].itemName
+        //print(nameLabel.text)
         nameLabel.textAlignment = .center
         nameLabel.font = UIFont.boldSystemFont(ofSize: UIScreen.main.bounds.height/28.4)
         mainVIew.addSubview(nameLabel)
@@ -366,7 +557,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         var circle1 = UILabel()
         for i in 0...6{
         circle1 = UILabel(frame: CGRect(x: 7 + (CGFloat(i)*line2.bounds.width/7) + 0.5, y: line2.frame.origin.y + 5, width: line2.bounds.width/7 - 1, height: line2.bounds.width/7))
-             circle1.layer.cornerRadius = itemImage.bounds.width/14
+             circle1.layer.cornerRadius = itemPicture.bounds.width/14
             if available[i] == "1" {
             circle1.backgroundColor = UIColor(red: 34/255, green: 139/255, blue: 34/255, alpha: 1)
         } else {
@@ -472,6 +663,8 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         let line5 = UIView(frame: CGRect(x: 7, y: dinnerButton.frame.origin.y + dinnerButton.bounds.height + 2 , width: mainVIew.bounds.width - 14, height: 1))
         line5.backgroundColor = UIColor.gray
         mainVIew.addSubview(line5)
+        print("line 5")
+        print(line5.bounds)
        
         let line6 = UIView(frame: CGRect(x: 7, y: dinnerButton.frame.origin.y + dinnerButton.bounds.height + 5, width: mainVIew.bounds.width - 14, height: 1))
         line6.backgroundColor = UIColor.gray
@@ -483,11 +676,17 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         descTV.clipsToBounds = true
         descTV.font = UIFont.systemFont(ofSize: UIScreen.main.bounds.height/47.5)
         mainVIew.addSubview(descTV)
-
+        //print(descTV.bounds)
         
         
         return mainVIew
     }
+ 
+ 
+ 
+ **/
+    
+    
     func carousel(_ carousel: iCarousel, valueFor option: iCarouselOption, withDefault value: CGFloat) -> CGFloat {
         if option == .spacing {
             return value*1.5
@@ -603,7 +802,8 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         self.navbarIndicator.stopAnimating()
       
         if (data?.count)! > 0 {
-            
+            //print("Data recieved")
+            //print(data?.count)
             if MenuItemsData().deleteMenu() {
                 
             for object in data! {
