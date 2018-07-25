@@ -332,7 +332,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
 //                let itemPicture = UIImageView(frame: CGRect(x: 7, y: 7, width: mainVIew.bounds.width - 14, height: mainVIew.bounds.width - 14))
 //                let pictureUrl = URL(string: menuItems[index].itemUrl!)
 //                itemPicture.setImageWith(pictureUrl, usingActivityIndicatorStyle: .gray)
-//                mainVIew.addSubview(itemPicture)
+//                mainVIew.addSubview("itemPicture")
         
         let itemPicture = UIImageView(frame: CGRect(x: 7, y: 7, width: itemView.bounds.width - 14, height: itemView.bounds.width - 14))
         let pictureUrl = URL(string: menuItems[index].itemUrl!)
