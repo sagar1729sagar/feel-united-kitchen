@@ -39,7 +39,6 @@
 		1BA6D0B11E96880A000CBDF5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1BA6D0AF1E96880A000CBDF5 /* LaunchScreen.storyboard */; };
 		1BA728F11EACFD3300851C91 /* MenuItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA728F01EACFD3300851C91 /* MenuItems.swift */; };
 		1BD5E37E1EBEFD2700078441 /* ActiveOrderAdmin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD5E37D1EBEFD2500078441 /* ActiveOrderAdmin.swift */; };
-		1BD80C361EB0FFC50069F8E1 /* ItemDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD80C351EB0FFC50069F8E1 /* ItemDescription.swift */; };
 		1BD80C381EB1075D0069F8E1 /* MiscData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD80C371EB1075D0069F8E1 /* MiscData.swift */; };
 		1BD80C3E1EB131B00069F8E1 /* UIBarButtonItem+Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD80C3D1EB131B00069F8E1 /* UIBarButtonItem+Badge.swift */; };
 		1BE2C56D1EC184FF0047C70F /* AddFBCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE2C56C1EC184FF0047C70F /* AddFBCell.swift */; };
@@ -104,7 +103,6 @@
 		1BA6D0B21E96880A000CBDF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1BA728F01EACFD3300851C91 /* MenuItems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItems.swift; sourceTree = "<group>"; };
 		1BD5E37D1EBEFD2500078441 /* ActiveOrderAdmin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveOrderAdmin.swift; sourceTree = "<group>"; };
-		1BD80C351EB0FFC50069F8E1 /* ItemDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItemDescription.swift; path = "../../../Google Drive/ItemDescription.swift"; sourceTree = "<group>"; };
 		1BD80C371EB1075D0069F8E1 /* MiscData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiscData.swift; sourceTree = "<group>"; };
 		1BD80C3D1EB131B00069F8E1 /* UIBarButtonItem+Badge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Badge.swift"; sourceTree = "<group>"; };
 		1BE2C56C1EC184FF0047C70F /* AddFBCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFBCell.swift; sourceTree = "<group>"; };
@@ -240,7 +238,6 @@
 				1B88C7C51EABDFB0000938C0 /* Admin.storyboard */,
 				1BA47D821EAC972300EB781E /* MenuAdmin.swift */,
 				1BA47D891EACCBC400EB781E /* AddMenuItem.swift */,
-				1BD80C351EB0FFC50069F8E1 /* ItemDescription.swift */,
 				1BD5E37D1EBEFD2500078441 /* ActiveOrderAdmin.swift */,
 				1BFE3EDE1EC331F700356D34 /* DeliveryOrderAdmin.swift */,
 				1BFE3EE01EC371BD00356D34 /* TodayOrders.swift */,
@@ -435,7 +432,6 @@
 				1BE2C56D1EC184FF0047C70F /* AddFBCell.swift in Sources */,
 				1B0BC7F21FBB566C00A477DF /* SlotSelectionCell.swift in Sources */,
 				1B09E22E1EB1B88C00786BD7 /* Cart.swift in Sources */,
-				1BD80C361EB0FFC50069F8E1 /* ItemDescription.swift in Sources */,
 				1BE2C5711EC18D2C0047C70F /* FeedbackData.swift in Sources */,
 				1BD5E37E1EBEFD2700078441 /* ActiveOrderAdmin.swift in Sources */,
 				1B09E2351EB2294100786BD7 /* CartItems.swift in Sources */,
