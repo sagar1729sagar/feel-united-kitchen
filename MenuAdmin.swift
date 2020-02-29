@@ -799,11 +799,12 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
     let queryBuilder = DataQueryBuilder()
     queryBuilder?.setPageSize(100)
     backendless?.data.of(Item.ofClass()).find(queryBuilder, response: { (data) in
+        print(data)
         self.navbarIndicator.stopAnimating()
       
         if (data?.count)! > 0 {
-            //print("Data recieved")
-            //print(data?.count)
+            print("Data recieved")
+            print(data?.count)
             if MenuItemsData().deleteMenu() {
                 
             for object in data! {
@@ -824,6 +825,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
       
         self.viewDidAppear(true)
         }, error: { (fault) in
+            print(fault)
             self.navbarIndicator.stopAnimating()
          
     })

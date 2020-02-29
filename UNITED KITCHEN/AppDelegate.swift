@@ -22,8 +22,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UNUserNotificationCenter
     
 
     
-    let APP_ID = "9D0D0B57-308E-B7E3-FFBE-DD24A0BDD400"
-    let SECRET_KEY = "AE1C3531-AB6E-63D3-FF65-2DFF74761C00"
+//    let APP_ID = "9D0D0B57-308E-B7E3-FFBE-DD24A0BDD400"
+//    let SECRET_KEY = "AE1C3531-AB6E-63D3-FF65-2DFF74761C00"
+    
+    let APP_ID = "970E86A5-60F0-F1BB-FFFD-96025990B900"
+    let SECRET_KEY = "6B446BB0-8FAA-48F2-8EFD-1AE259826EE4"
     
     var backendless = Backendless.sharedInstance()
 
