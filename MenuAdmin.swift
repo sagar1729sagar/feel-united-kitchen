@@ -101,7 +101,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         carousel.dataSource = self
         carousel.delegate = self
         self.view.addSubview(carousel)
-        print("carousel added")
+//        print("carousel added")
 //        scrollView = UIView(frame: CGRect(x: 0, y: foodTypeSelection.frame.origin.y + foodTypeSelection.bounds.height, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/28.4))
 //        self.view.addSubview(scrollView)
 //        scrollLabel = UILabel(frame: CGRect(x: UIScreen.main.bounds.width, y: 0, width: 1.5*UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/28.4))
@@ -477,8 +477,8 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         let line5 = UIView(frame: CGRect(x: 7, y: priceLabel2.frame.origin.y + priceLabel2.bounds.height + 2 , width: itemView.bounds.width - 14, height: 1))
         line5.backgroundColor = UIColor.gray
         itemView.addSubview(line5)
-        print("line 5")
-        print(line5.bounds)
+//        print("line 5")
+//        print(line5.bounds)
         
         let line6 = UIView(frame: CGRect(x: 7, y: priceLabel2.frame.origin.y + priceLabel2.bounds.height + 5, width: itemView.bounds.width - 14, height: 1))
         line6.backgroundColor = UIColor.gray
@@ -799,12 +799,12 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
     let queryBuilder = DataQueryBuilder()
     queryBuilder?.setPageSize(100)
     backendless?.data.of(Item.ofClass()).find(queryBuilder, response: { (data) in
-        print(data)
+//        print(data)
         self.navbarIndicator.stopAnimating()
       
         if (data?.count)! > 0 {
-            print("Data recieved")
-            print(data?.count)
+//            print("Data recieved")
+//            print(data?.count)
             if MenuItemsData().deleteMenu() {
                 
             for object in data! {
@@ -825,7 +825,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
       
         self.viewDidAppear(true)
         }, error: { (fault) in
-            print(fault)
+//            print(fault)
             self.navbarIndicator.stopAnimating()
          
     })

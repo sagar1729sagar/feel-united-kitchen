@@ -317,6 +317,7 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
         
         backendless?.data.of(OrderDetails.ofClass()).find(query, response: { (data) in
          // print(2)
+           // print(data)
             self.navbarIndicator.stopAnimating()
             if data?.count == 0 {
                 if OrderData().deleteOrders(){
@@ -325,15 +326,17 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
             } else {
                 if OrderData().deleteOrders() {
                 for item in data! {
-                  //  print(3)
+                   // print(3)
                     if let order = item as? OrderDetails {
+                      //  print(order)
                         self.getItemsFromServer(data : order)
-                      //  print(4)
+                       // print(4)
                     }
                 }
             }
             }
             }, error: { (fault) in
+               // print(fault)
                 self.navbarIndicator.stopAnimating()
                
                 SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(fault?.message)")
@@ -342,23 +345,32 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
     }
     
     func getItemsFromServer(data : OrderDetails) {
-     //  print("getting items for \(data.orderId!)")
+      // print("getting items for \(data.orderId!)")
+       // print(data.orderId)
+      //  print(data.items)
+        data.items = [OrderItems]()
         let whereClause = "orderId = "+data.orderId!
         let queryBuilder = DataQueryBuilder()
         queryBuilder?.setPageSize(100)
         queryBuilder?.setWhereClause(whereClause)
         
         backendless?.data.of(OrderItems.ofClass()).find(queryBuilder, response: { (items) in
+           // print(items)
+           // print("Found objects: \(items as! [OrderItems])")
             for item in items! {
+               // print(item)
                // print("got items for \(data.orderId!)")
                 if let orderItem = item as? OrderItems {
-                  // print(6)
+//                   print(6)
+//                    print(orderItem.name)
+//                    print(type(of: orderItem))
                     data.items?.append(orderItem)
+                  //  print(data.items?.count)
                 }
             }
             // add to db
             if OrderData().addOrder(orderDetails: data) {
-               // print(7)
+                //print(7)
                 self.viewDidAppear(true)
             }
             

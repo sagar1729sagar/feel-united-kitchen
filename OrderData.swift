@@ -15,7 +15,7 @@ class OrderData {
     
     func addOrder(orderDetails : OrderDetails) -> Bool {
         
-       // print(21)
+      // print(21)
     
         let context = appDelegate.persistentContainer.viewContext
         let newOrder = NSEntityDescription.insertNewObject(forEntityName: "OrderDetails", into: context)
@@ -40,7 +40,9 @@ class OrderData {
       //  newOrder.setValue(orderDetails.created, forKey: "created")
        // newOrder.setValue(orderDetails.updated, forKey: "updated")
         
-      //  print(22)
+//        print(22)
+        
+//        print(orderDetails.items)
         
         for item in orderDetails.items! {
             let newItem = NSEntityDescription.insertNewObject(forEntityName: "OrderItems", into: context)
@@ -54,7 +56,7 @@ class OrderData {
             newOrder.setValue(NSSet(object : newItem), forKey: "items")
             
         }
-        
+
         do {
             try context.save()
         } catch {return false}

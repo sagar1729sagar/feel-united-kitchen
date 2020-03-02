@@ -330,7 +330,7 @@
 					1BA6D09F1E968808000CBDF5 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = Q4DV8LF38Q;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -603,15 +603,15 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "UNITED KITCHEN/UNITED KITCHEN.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: VIDYA SAGAR (Q4DV8LF38Q)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = Q4DV8LF38Q;
 				INFOPLIST_FILE = "UNITED KITCHEN/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ssapps.UNITED-KITCHEN";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "daf749a4-4ad6-4a51-ba2e-8683497504f5";
-				PROVISIONING_PROFILE_SPECIFIER = tgot;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Pods/Backendless/SDK/ios/backendless/include/Backendless-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
@@ -625,15 +625,15 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "UNITED KITCHEN/UNITED KITCHEN.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: VIDYA SAGAR (Q4DV8LF38Q)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = Q4DV8LF38Q;
 				INFOPLIST_FILE = "UNITED KITCHEN/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ssapps.UNITED-KITCHEN";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "daf749a4-4ad6-4a51-ba2e-8683497504f5";
-				PROVISIONING_PROFILE_SPECIFIER = tgot;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Pods/Backendless/SDK/ios/backendless/include/Backendless-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};

@@ -24,12 +24,12 @@ class LocationCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-       print("awake")
+//       print("awake")
         let span = MKCoordinateSpan(latitudeDelta: lanDelta, longitudeDelta: lonDelta)
         map = MKMapView(frame: CGRect(x: 10, y: 10, width: UIScreen.main.bounds.width - 20, height: UIScreen.main.bounds.width - 20))
         self.contentView.addSubview(map)
         
-        print(100)
+//        print(100)
       //  Location.requestAuthorizationIfNeeded(.always)
         
     Location.getLocation(accuracy: .navigation, frequency: .oneShot, success: { (_, location) -> (Void) in
@@ -38,16 +38,16 @@ class LocationCell: UITableViewCell {
         self.map.setRegion(region, animated: true)
         self.annotation.coordinate = self.coordinate!
         self.map.addAnnotation(self.annotation)
-        print("Location found \(location.coordinate)")
+//        print("Location found \(location.coordinate)")
 //
 //        self.hasLocaton = true
         }) { (_, location, error) -> (Void) in
          //   self.coordinate = (location?.coordinate)!
-            print("location error \(error)")
+//            print("location error \(error)")
            
         }
 
-        print(101)
+//        print(101)
       retryButton = UIButton(frame: CGRect(x: UIScreen.main.bounds.width - 60, y: map.frame.origin.y + map.bounds.height, width: 60, height: 40))
         retryButton.addTarget(self, action: #selector(retryPressed(sender:)), for: .touchDown)
         retryButton.setTitle("RETRY", for: .normal)
@@ -70,7 +70,7 @@ class LocationCell: UITableViewCell {
             self.map.addAnnotation(self.annotation)
         }) { (_, location, error) -> (Void) in
          //   self.coordinate = location?.coordinate
-            print("location error \(error)")
+//            print("location error \(error)")
            
         }
     }
