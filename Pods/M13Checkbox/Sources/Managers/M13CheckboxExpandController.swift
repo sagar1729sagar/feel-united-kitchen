@@ -98,7 +98,7 @@ internal class M13CheckboxExpandController: M13CheckboxController {
         
         // Setup the checkmark layer.
         markLayer.lineCap = CAShapeLayerLineCap.round
-        markLayer.lineJoin = kCALineJoinRound
+        markLayer.lineJoin = CAShapeLayerLineJoin.round
         markLayer.rasterizationScale = UIScreen.main.scale
         markLayer.shouldRasterize = true
         markLayer.actions = newActions
