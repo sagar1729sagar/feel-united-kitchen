@@ -35,13 +35,13 @@ open class FormTextViewCell : FormBaseCell, UITextViewDelegate {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         textField.translatesAutoresizingMaskIntoConstraints = false
         
-        titleLabel.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)
-        textField.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)
+        titleLabel.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.body)
+        textField.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.body)
         
         contentView.addSubview(titleLabel)
         contentView.addSubview(textField)
         
-        titleLabel.setContentHuggingPriority(500, for: .horizontal)
+        titleLabel.setContentHuggingPriority(UILayoutPriority(rawValue: 500), for: .horizontal)
         
         contentView.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .height, relatedBy: .equal, toItem: contentView, attribute: .height, multiplier: 1.0, constant: 0.0))
         contentView.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .centerY, relatedBy: .equal, toItem: contentView, attribute: .centerY, multiplier: 1.0, constant: 0.0))

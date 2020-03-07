@@ -554,7 +554,7 @@ public final class LocationTracker: NSObject, CLLocationManagerDelegate {
 	
 	public func locationManager(_ manager: CLLocationManager, didStartMonitoringFor region: CLRegion) {
 		let region = self.regionRequests.filter { $0.region == region }.first
-		region?.onStartMonitoring?()
+        region?.onStartMonitoring?()
 	}
 	
 	public func locationManager(_ manager: CLLocationManager, monitoringDidFailFor region: CLRegion?, withError error: Error) {

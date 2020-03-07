@@ -40,7 +40,7 @@ open class FormSwitchCell: FormTitleCell {
     
     // MARK: Actions
     
-    internal func valueChanged(_: UISwitch) {
+    @objc internal func valueChanged(_: UISwitch) {
         rowDescriptor?.value = switchView.isOn as AnyObject
         update()
     }

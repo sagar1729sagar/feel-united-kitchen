@@ -29,10 +29,10 @@ open class FormSegmentedControlCell: FormBaseCell {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         
-        titleLabel.setContentCompressionResistancePriority(500, for: .horizontal)
-        segmentedControl.setContentCompressionResistancePriority(500, for: .horizontal)
+        titleLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 500), for: .horizontal)
+        segmentedControl.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 500), for: .horizontal)
         
-        titleLabel.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)
+        titleLabel.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.body)
         
         contentView.addSubview(titleLabel)
         contentView.addSubview(segmentedControl)
@@ -76,7 +76,7 @@ open class FormSegmentedControlCell: FormBaseCell {
     
     // MARK: Actions
     
-    internal func valueChanged(_ sender: UISegmentedControl) {
+    @objc internal func valueChanged(_ sender: UISegmentedControl) {
         guard let options = rowDescriptor?.configuration.selection.options , !options.isEmpty else { return }
         let value = options[sender.selectedSegmentIndex]
         rowDescriptor?.value = value

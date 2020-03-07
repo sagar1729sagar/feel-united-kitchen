@@ -251,7 +251,7 @@ open class SCLAlertView: UIViewController {
     fileprivate func setup() {
         // Set up main view
         view.frame = UIScreen.main.bounds
-        view.autoresizingMask = [UIViewAutoresizing.flexibleHeight, UIViewAutoresizing.flexibleWidth]
+        view.autoresizingMask = [UIView.AutoresizingMask.flexibleHeight, UIView.AutoresizingMask.flexibleWidth]
         view.backgroundColor = UIColor(red:0, green:0, blue:0, alpha:appearance.kDefaultShadowOpacity)
         view.addSubview(baseView)
         // Base View
@@ -372,14 +372,14 @@ open class SCLAlertView: UIViewController {
     
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(SCLAlertView.keyboardWillShow(_:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil);
-        NotificationCenter.default.addObserver(self, selector: #selector(SCLAlertView.keyboardWillHide(_:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(SCLAlertView.keyboardWillShow(_:)), name:NSNotification.Name.UIResponder.keyboardWillShowNotification, object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(SCLAlertView.keyboardWillHide(_:)), name:NSNotification.Name.UIResponder.keyboardWillHideNotification, object: nil);
     }
     
     open override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     override open func touchesEnded(_ touches:Set<UITouch>, with event:UIEvent?) {
@@ -393,10 +393,10 @@ open class SCLAlertView: UIViewController {
         appearance.setkWindowHeight(appearance.kWindowHeight + appearance.kTextFieldHeight)
         // Add text field
         let txt = UITextField()
-        txt.borderStyle = UITextBorderStyle.roundedRect
+        txt.borderStyle = UITextField.BorderStyle.roundedRect
         txt.font = appearance.kTextFont
         txt.autocapitalizationType = UITextAutocapitalizationType.words
-        txt.clearButtonMode = UITextFieldViewMode.whileEditing
+        txt.clearButtonMode = UITextField.ViewMode.whileEditing
         txt.layer.masksToBounds = true
         txt.layer.borderWidth = 1.0
         if title != nil {
@@ -453,7 +453,7 @@ open class SCLAlertView: UIViewController {
         // Add button
         let btn = SCLButton()
         btn.layer.masksToBounds = true
-        btn.setTitle(title, for: UIControlState())
+        btn.setTitle(title, for: UIControl.State())
         btn.titleLabel?.font = appearance.kButtonFont
         btn.customBackgroundColor = backgroundColor
         btn.customTextColor = textColor
@@ -464,7 +464,7 @@ open class SCLAlertView: UIViewController {
         return btn
     }
     
-    func buttonTapped(_ btn:SCLButton) {
+    @objc func buttonTapped(_ btn:SCLButton) {
         if btn.actionType == SCLActionType.closure {
             btn.action()
         } else if btn.actionType == SCLActionType.selector {
@@ -478,7 +478,7 @@ open class SCLAlertView: UIViewController {
     }
     
     
-    func buttonTapDown(_ btn:SCLButton) {
+    @objc func buttonTapDown(_ btn:SCLButton) {
         var hue : CGFloat = 0
         var saturation : CGFloat = 0
         var brightness : CGFloat = 0
@@ -489,7 +489,7 @@ open class SCLAlertView: UIViewController {
         btn.backgroundColor = UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: alpha)
     }
     
-    func buttonRelease(_ btn:SCLButton) {
+    @objc  func buttonRelease(_ btn:SCLButton) {
         btn.backgroundColor = btn.customBackgroundColor ?? viewColor
     }
     
@@ -497,11 +497,11 @@ open class SCLAlertView: UIViewController {
     var tmpCircleViewFrameOrigin: CGPoint?
     var keyboardHasBeenShown:Bool = false
     
-    func keyboardWillShow(_ notification: Notification) {
+    @objc func keyboardWillShow(_ notification: Notification) {
         keyboardHasBeenShown = true
         
         guard let userInfo = (notification as NSNotification).userInfo else {return}
-        guard let endKeyBoardFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.minY else {return}
+        guard let endKeyBoardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.minY else {return}
         
         if tmpContentViewFrameOrigin == nil {
         tmpContentViewFrameOrigin = self.contentView.frame.origin
@@ -520,7 +520,7 @@ open class SCLAlertView: UIViewController {
         self.circleBG.frame.origin.y = newBallViewFrameY
     }
     
-    func keyboardWillHide(_ notification: Notification) {
+    @objc func keyboardWillHide(_ notification: Notification) {
         if(keyboardHasBeenShown){//This could happen on the simulator (keyboard will be hidden)
             if(self.tmpContentViewFrameOrigin != nil){
                 self.contentView.frame.origin.y = self.tmpContentViewFrameOrigin!.y
@@ -536,7 +536,7 @@ open class SCLAlertView: UIViewController {
     }
     
     //Dismiss keyboard when tapped outside textfield & close SCLAlertView when hideWhenBackgroundViewIsTapped
-    func tapped(_ gestureRecognizer: UITapGestureRecognizer) {
+    @objc func tapped(_ gestureRecognizer: UITapGestureRecognizer) {
         self.view.endEditing(true)
         
         if let tappedView = gestureRecognizer.view , tappedView.hitTest(gestureRecognizer.location(in: tappedView), with: nil) == baseView && appearance.hideWhenBackgroundViewIsTapped {
@@ -666,7 +666,7 @@ open class SCLAlertView: UIViewController {
             viewText.text = subTitle
             // Adjust text view size, if necessary
             let str = subTitle as NSString
-            let attr = [NSFontAttributeName:viewText.font ?? UIFont()]
+            let attr = [NSAttributedString.Key.font:viewText.font ?? UIFont()]
             let sz = CGSize(width: appearance.kWindowWidth - 24, height:90)
             let r = str.boundingRect(with: sz, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes:attr, context:nil)
             let ht = ceil(r.size.height)
@@ -689,7 +689,7 @@ open class SCLAlertView: UIViewController {
         circleView.backgroundColor = viewColor
         // Spinner / icon
         if style == .wait {
-            let indicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+            let indicator = UIActivityIndicatorView(style: .whiteLarge)
             indicator.startAnimating()
             circleIconView = indicator
         }
@@ -727,10 +727,10 @@ open class SCLAlertView: UIViewController {
             
             if let customTextColor = btn.customTextColor {
                 // Custom TextColor set
-                btn.setTitleColor(customTextColor, for:UIControlState())
+                btn.setTitleColor(customTextColor, for:UIControl.State())
             } else {
                 // Use default BackgroundColor derived from AlertStyle
-                btn.setTitleColor(UIColorFromRGB(colorTextButton ?? 0xFFFFFF), for:UIControlState())
+                btn.setTitleColor(UIColorFromRGB(colorTextButton ?? 0xFFFFFF), for:UIControl.State())
             }
         }
         
@@ -792,16 +792,16 @@ open class SCLAlertView: UIViewController {
         })
     }
     
-    open func updateDurationStatus() {
+    @objc open func updateDurationStatus() {
         duration = duration.advanced(by: -1)
         for btn in buttons.filter({$0.showDurationStatus}) {
             let txt = "\(btn.initialTitle) (\(duration))"
-            btn.setTitle(txt, for: UIControlState())
+            btn.setTitle(txt, for: UIControl.State())
         }
     }
     
     // Close SCLAlertView
-    open func hideView() {
+    @objc open func hideView() {
         UIView.animate(withDuration: 0.2, animations: {
             self.view.alpha = 0
             }, completion: { finished in

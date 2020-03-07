@@ -20,8 +20,8 @@ class FormLabelCell: FormValueCell {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         valueLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        titleLabel.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)
-        valueLabel.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)
+        titleLabel.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.body)
+        valueLabel.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.body)
         
         valueLabel.textColor = UIColor.lightGray
         valueLabel.textAlignment = .right
@@ -29,8 +29,8 @@ class FormLabelCell: FormValueCell {
         contentView.addSubview(titleLabel)
         contentView.addSubview(valueLabel)
         
-        titleLabel.setContentHuggingPriority(500, for: .horizontal)
-        titleLabel.setContentCompressionResistancePriority(1000, for: .horizontal)
+        titleLabel.setContentHuggingPriority(UILayoutPriority(rawValue: 500), for: .horizontal)
+        titleLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
         
         // apply constant constraints
         contentView.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .height, relatedBy: .equal, toItem: contentView, attribute: .height, multiplier: 1.0, constant: 0.0))

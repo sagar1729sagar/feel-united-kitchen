@@ -24,7 +24,7 @@ open class FormBaseCell: UITableViewCell {
     
     // MARK: Init
     
-    public required override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
+    public required override init(style: UITableViewCell.CellStyle, reuseIdentifier: String!) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
     
@@ -72,7 +72,7 @@ open class FormBaseCell: UITableViewCell {
         return actionBar
     }
     
-    internal func handleDoneAction(_: UIBarButtonItem) {
+    @objc internal func handleDoneAction(_: UIBarButtonItem) {
         firstResponderElement()?.resignFirstResponder()
     }
     
@@ -107,7 +107,7 @@ open class FormBaseCell: UITableViewCell {
         }
         
         for visualConstraint in visualConstraints {
-            let constraints = NSLayoutConstraint.constraints(withVisualFormat: visualConstraint, options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+            let constraints = NSLayoutConstraint.constraints(withVisualFormat: visualConstraint, options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: views)
             for constraint in constraints {
                 customConstraints.append(constraint)
             }
