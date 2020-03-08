@@ -43,7 +43,7 @@ class AddressCell: UITableViewCell {
     }
     
     
-    func changePressed(sender : UIButton) {
+    @objc func changePressed(sender : UIButton) {
         addressTV.isEditable = true
         addressTV.layer.borderWidth = 1
         addressTV.layer.borderColor = UIColor.blue.cgColor

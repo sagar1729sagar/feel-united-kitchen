@@ -39,7 +39,7 @@ class AddFBCell: UITableViewCell {
         self.contentView.addSubview(nameLabel)
         
         fbtext = UITextView(frame: CGRect(x: 10, y: 80, width: UIScreen.main.bounds.width - 20, height: 100))
-        fbtext.placeholderText = "Please enter your experience"
+       // fbtext.placeholderText = "Please enter your experience"
         fbtext.textColor = .black
         fbtext.text = ""
         fbtext.layer.borderWidth = 1
@@ -74,7 +74,7 @@ class AddFBCell: UITableViewCell {
     }
     
     override func prepareForReuse() {
-        fbtext.placeholderText = "Ënter your experience"
+       // fbtext.placeholderText = "Ënter your experience"
         fbtext.textColor = .black
         fbtext.text = ""
         fbtext.layer.borderWidth = 0

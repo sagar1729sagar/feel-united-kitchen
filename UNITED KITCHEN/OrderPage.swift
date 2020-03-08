@@ -126,7 +126,7 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
         // Dispose of any resources that can be recreated.
     }
     
-    func loadlist(notification : Notification) {
+    @objc func loadlist(notification : Notification) {
        
         let orderId = (notification.userInfo?["orderId"])! as! String
         let status = (notification.userInfo?["status"])! as! String
@@ -174,7 +174,7 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
         return cell
     }
     
-    
+    @objc  
     func reorderPressed(sender : UIButton){
         
        
@@ -211,12 +211,18 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
         
        
         for i in 0...6 {
-            alertView.addButton(dates.0[i], backgroundColor: UIColor.white, textColor: UIColor.blue, showDurationStatus: true, action: {
+//            alertView.addButton(dates.0[i], backgroundColor: UIColor.white, textColor: UIColor.blue, showDurationStatus: true, action: {
+//                self.selectionForReorder.0 = dates.1[i]
+//
+//                self.lunchORdinnerAlert()
+//            })
+            alertView.addButton(dates.0[i], backgroundColor: UIColor.white, textColor: UIColor.blue, showTimeout: nil) {
                 self.selectionForReorder.0 = dates.1[i]
-               
                 self.lunchORdinnerAlert()
-            })
+            }
+            
         }
+       
         
 
         alertView.addButton("CANCEL") {
@@ -237,22 +243,35 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
             showCloseButton : false
         )
         let alertView = SCLAlertView(appearance: appearance)
+       // let alertView = SCLAlertView(appearance: appearance)
 
         let times = ["Lunch","Dinner"]
 
         
         for i in 0...1 {
-            alertView.addButton(times[i], backgroundColor: UIColor.white, textColor: UIColor.blue, showDurationStatus: true, action: { 
+//            alertView.addButton(times[i], backgroundColor: UIColor.white, textColor: UIColor.blue, showDurationStatus: true, action: {
+//                self.selectionForReorder.1 = times[i]
+//
+//                for cartItem in self.cartItems {
+//                    cartItem.addedDate = self.selectionForReorder.0
+//                    cartItem.deliveryTime = self.selectionForReorder.1
+//                    CartData().addItem(item: cartItem)
+//                }
+//
+//              self.tabBarController?.selectedIndex = 1
+//            })
+            
+            alertView.addButton(times[i], backgroundColor: UIColor.white, textColor: UIColor.blue, showTimeout: nil) {
                 self.selectionForReorder.1 = times[i]
-               
-                for cartItem in self.cartItems {
-                    cartItem.addedDate = self.selectionForReorder.0
-                    cartItem.deliveryTime = self.selectionForReorder.1
-                    CartData().addItem(item: cartItem)
-                }
-                
-              self.tabBarController?.selectedIndex = 1
-            })
+                 
+                  for cartItem in self.cartItems {
+                      cartItem.addedDate = self.selectionForReorder.0
+                      cartItem.deliveryTime = self.selectionForReorder.1
+                      CartData().addItem(item: cartItem)
+                  }
+                  
+                self.tabBarController?.selectedIndex = 1
+            }
         }
         alertView.addButton("CANCEL") {
            

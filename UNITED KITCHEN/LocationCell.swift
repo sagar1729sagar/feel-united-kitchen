@@ -32,19 +32,33 @@ class LocationCell: UITableViewCell {
 //        print(100)
       //  Location.requestAuthorizationIfNeeded(.always)
         
-    Location.getLocation(accuracy: .navigation, frequency: .oneShot, success: { (_, location) -> (Void) in
-        self.coordinate = location.coordinate
-        let region = MKCoordinateRegion(center: self.coordinate!, span: span)
-        self.map.setRegion(region, animated: true)
-        self.annotation.coordinate = self.coordinate!
-        self.map.addAnnotation(self.annotation)
-//        print("Location found \(location.coordinate)")
+//    Location.getLocation(accuracy: .navigation, frequency: .oneShot, success: { (_, location) -> (Void) in
+//        self.coordinate = location.coordinate
+//        let region = MKCoordinateRegion(center: self.coordinate!, span: span)
+//        self.map.setRegion(region, animated: true)
+//        self.annotation.coordinate = self.coordinate!
+//        self.map.addAnnotation(self.annotation)
+////        print("Location found \(location.coordinate)")
+////
+////        self.hasLocaton = true
+//        }) { (_, location, error) -> (Void) in
+//         //   self.coordinate = (location?.coordinate)!
+////            print("location error \(error)")
 //
-//        self.hasLocaton = true
-        }) { (_, location, error) -> (Void) in
-         //   self.coordinate = (location?.coordinate)!
-//            print("location error \(error)")
-           
+//        }
+        
+        LocationManager.shared.locateFromGPS(.oneShot, accuracy: .room) { (result) in
+            switch result {
+                case .failure(let error):
+             //debugPrint("Received error: \(error)")
+                break
+            case .success(let location):
+                 // debugPrint("Location received: \(location)")
+                self.coordinate = location.coordinate
+                let region = MKCoordinateRegion(center: self.coordinate!, span: span)
+                self.map.setRegion(region, animated: true)
+                self.annotation.coordinate = self.coordinate!
+                self.map.addAnnotation(self.annotation)            }
         }
 
 //        print(101)
@@ -58,20 +72,37 @@ class LocationCell: UITableViewCell {
         
     }
     
-    func retryPressed(sender : UIButton){
+    @objc func retryPressed(sender : UIButton){
    
-        Location.getLocation(accuracy: .navigation, frequency: .oneShot, success: { (_, location) -> (Void) in
-            self.map.removeAnnotation(self.annotation)
-            self.coordinate = location.coordinate
-            let span = MKCoordinateSpan(latitudeDelta: self.lanDelta, longitudeDelta: self.lonDelta)
-            let region = MKCoordinateRegion(center: self.coordinate!, span: span)
-            self.map.setRegion(region, animated: true)
-            self.annotation.coordinate = self.coordinate!
-            self.map.addAnnotation(self.annotation)
-        }) { (_, location, error) -> (Void) in
-         //   self.coordinate = location?.coordinate
-//            print("location error \(error)")
-           
+//        Location.getLocation(accuracy: .navigation, frequency: .oneShot, success: { (_, location) -> (Void) in
+//            self.map.removeAnnotation(self.annotation)
+//            self.coordinate = location.coordinate
+//            let span = MKCoordinateSpan(latitudeDelta: self.lanDelta, longitudeDelta: self.lonDelta)
+//            let region = MKCoordinateRegion(center: self.coordinate!, span: span)
+//            self.map.setRegion(region, animated: true)
+//            self.annotation.coordinate = self.coordinate!
+//            self.map.addAnnotation(self.annotation)
+//        }) { (_, location, error) -> (Void) in
+//         //   self.coordinate = location?.coordinate
+////            print("location error \(error)")
+//           
+//        }
+        
+        LocationManager.shared.locateFromGPS(.oneShot, accuracy: .room) { (result) in
+            	  switch result {
+                  case .failure(let error):
+                   // debugPrint("Received error: \(error)")
+                    break
+                  case .success(let location):
+                    self.map.removeAnnotation(self.annotation)
+                    self.coordinate = location.coordinate
+                    let span = MKCoordinateSpan(latitudeDelta: self.lanDelta, longitudeDelta: self.lonDelta)
+                    let region = MKCoordinateRegion(center: self.coordinate!, span: span)
+                    self.map.setRegion(region, animated: true)
+                    self.annotation.coordinate = self.coordinate!
+                    self.map.addAnnotation(self.annotation)                   // debugPrint("Location received: \(location)")
+                }
+            
         }
     }
     

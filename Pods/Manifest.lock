@@ -3,37 +3,91 @@ PODS:
   - BTNavigationDropdownMenu (0.4.1)
   - Cosmos (8.0.2)
   - DCAnimationKit (0.0.6)
-  - DropDown (2)
-  - Firebase/Core (3.16.0):
-    - FirebaseAnalytics (= 3.8.0)
-    - FirebaseCore (= 3.6.0)
-  - Firebase/Database (3.16.0):
-    - Firebase/Core
-    - FirebaseDatabase (= 3.1.2)
-  - FirebaseAnalytics (3.8.0):
-    - FirebaseCore (~> 3.6)
-    - FirebaseInstanceID (~> 1.0)
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseCore (3.6.0):
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseDatabase (3.1.2):
-    - FirebaseAnalytics (~> 3.7)
-  - FirebaseInstanceID (1.0.10):
-    - FirebaseCore (~> 3.6)
-  - FlexibleSteppedProgressBar (0.4.0)
-  - GoogleToolboxForMac/Defines (2.1.1)
-  - GoogleToolboxForMac/NSData+zlib (2.1.1):
-    - GoogleToolboxForMac/Defines (= 2.1.1)
-  - HMSegmentedControl (1.5.3)
+  - DropDown (2.3.13)
+  - Firebase/Core (6.18.0):
+    - Firebase/CoreOnly
+    - FirebaseAnalytics (= 6.3.0)
+  - Firebase/CoreOnly (6.18.0):
+    - FirebaseCore (= 6.6.3)
+  - Firebase/Database (6.18.0):
+    - Firebase/CoreOnly
+    - FirebaseDatabase (~> 6.1.4)
+  - FirebaseAnalytics (6.3.0):
+    - FirebaseCore (~> 6.6)
+    - FirebaseInstallations (~> 1.1)
+    - GoogleAppMeasurement (= 6.3.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
+    - GoogleUtilities/MethodSwizzler (~> 6.0)
+    - GoogleUtilities/Network (~> 6.0)
+    - "GoogleUtilities/NSData+zlib (~> 6.0)"
+    - nanopb (= 0.3.9011)
+  - FirebaseAuthInterop (1.0.0)
+  - FirebaseCore (6.6.3):
+    - FirebaseCoreDiagnostics (~> 1.2)
+    - FirebaseCoreDiagnosticsInterop (~> 1.2)
+    - GoogleUtilities/Environment (~> 6.5)
+    - GoogleUtilities/Logger (~> 6.5)
+  - FirebaseCoreDiagnostics (1.2.1):
+    - FirebaseCoreDiagnosticsInterop (~> 1.2)
+    - GoogleDataTransportCCTSupport (~> 1.3)
+    - GoogleUtilities/Environment (~> 6.5)
+    - GoogleUtilities/Logger (~> 6.5)
+    - nanopb (~> 0.3.901)
+  - FirebaseCoreDiagnosticsInterop (1.2.0)
+  - FirebaseDatabase (6.1.4):
+    - FirebaseAuthInterop (~> 1.0)
+    - FirebaseCore (~> 6.0)
+    - leveldb-library (~> 1.22)
+  - FirebaseInstallations (1.1.0):
+    - FirebaseCore (~> 6.6)
+    - GoogleUtilities/UserDefaults (~> 6.5)
+    - PromisesObjC (~> 1.2)
+  - FlexibleSteppedProgressBar (0.6.3)
+  - GoogleAppMeasurement (6.3.0):
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
+    - GoogleUtilities/MethodSwizzler (~> 6.0)
+    - GoogleUtilities/Network (~> 6.0)
+    - "GoogleUtilities/NSData+zlib (~> 6.0)"
+    - nanopb (= 0.3.9011)
+  - GoogleDataTransport (4.0.1)
+  - GoogleDataTransportCCTSupport (1.4.1):
+    - GoogleDataTransport (~> 4.0)
+    - nanopb (~> 0.3.901)
+  - GoogleUtilities/AppDelegateSwizzler (6.5.1):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
+  - GoogleUtilities/Environment (6.5.1)
+  - GoogleUtilities/Logger (6.5.1):
+    - GoogleUtilities/Environment
+  - GoogleUtilities/MethodSwizzler (6.5.1):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/Network (6.5.1):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Reachability
+  - "GoogleUtilities/NSData+zlib (6.5.1)"
+  - GoogleUtilities/Reachability (6.5.1):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/UserDefaults (6.5.1):
+    - GoogleUtilities/Logger
+  - HMSegmentedControl (1.5.5)
   - iCarousel (1.8.3)
-  - IQKeyboardManagerSwift (4.0.8)
-  - M13Checkbox (3.1.3)
-  - SCLAlertView (0.7.0)
-  - SDWebImage (3.8.2):
-    - SDWebImage/Core (= 3.8.2)
-  - SDWebImage/Core (3.8.2)
-  - SwiftForms (1.7)
-  - SwiftLocation (2.0.2)
+  - IQKeyboardManagerSwift (6.5.5)
+  - leveldb-library (1.22)
+  - M13Checkbox (3.4.0)
+  - nanopb (0.3.9011):
+    - nanopb/decode (= 0.3.9011)
+    - nanopb/encode (= 0.3.9011)
+  - nanopb/decode (0.3.9011)
+  - nanopb/encode (0.3.9011)
+  - PromisesObjC (1.2.8)
+  - SCLAlertView (0.8)
+  - SDWebImage (3.8.3):
+    - SDWebImage/Core (= 3.8.3)
+  - SDWebImage/Core (3.8.3)
+  - SwiftForms (1.8.2)
+  - SwiftLocation (4.2.0)
   - UIActivityIndicator-for-SDWebImage (1.2):
     - SDWebImage (~> 3.7)
   - UIDropDown (1.1.1)
@@ -58,6 +112,38 @@ DEPENDENCIES:
   - UIActivityIndicator-for-SDWebImage (from `https://github.com/useeless37/UIActivityIndicator-for-SDWebImage.git`)
   - UIDropDown
 
+SPEC REPOS:
+  trunk:
+    - Backendless
+    - Cosmos
+    - DCAnimationKit
+    - DropDown
+    - Firebase
+    - FirebaseAnalytics
+    - FirebaseAuthInterop
+    - FirebaseCore
+    - FirebaseCoreDiagnostics
+    - FirebaseCoreDiagnosticsInterop
+    - FirebaseDatabase
+    - FirebaseInstallations
+    - FlexibleSteppedProgressBar
+    - GoogleAppMeasurement
+    - GoogleDataTransport
+    - GoogleDataTransportCCTSupport
+    - GoogleUtilities
+    - HMSegmentedControl
+    - iCarousel
+    - IQKeyboardManagerSwift
+    - leveldb-library
+    - M13Checkbox
+    - nanopb
+    - PromisesObjC
+    - SCLAlertView
+    - SDWebImage
+    - SwiftForms
+    - SwiftLocation
+    - UIDropDown
+
 EXTERNAL SOURCES:
   BTNavigationDropdownMenu:
     :branch: swift-3.0
@@ -67,7 +153,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   BTNavigationDropdownMenu:
-    :commit: 2c08c8579cf7a53ecb3dbf578e6e1034080a9859
+    :commit: e11a720322afc8baa02b3ff63fcc630e4f9de577
     :git: https://github.com/PhamBaTho/BTNavigationDropdownMenu.git
   UIActivityIndicator-for-SDWebImage:
     :commit: 152bcb4e4d7c3860a97e0b0f4b2da08d2cdb831d
@@ -78,25 +164,34 @@ SPEC CHECKSUMS:
   BTNavigationDropdownMenu: 093f3cbfad1572f2c222bdf8d17584d1e13380d4
   Cosmos: 007c0b8e33a85e5363911bdd933571bbe221f7ef
   DCAnimationKit: 7133bef877ce1aa113dcfeea1380ca67f91f7608
-  DropDown: 744784d9c9aa505100e942c16acd05430cbb2f0a
-  Firebase: 21bf4a89d3f01bfbe11adc3a5d934a4a3d3a5fd6
-  FirebaseAnalytics: 920e46455f27b0a52a80907a6d9b73ee4bd1c635
-  FirebaseCore: 9691ee2ade70c098d7cf92440f4303f16d83ca75
-  FirebaseDatabase: 05c96d7b43a7368dc91c07791adb49683e1738d1
-  FirebaseInstanceID: b9eedd6846fb5e1f0f7279e1deaa7a7e4cf8392e
-  FlexibleSteppedProgressBar: 599c2e738903fa9d76e0773044a501e3ee64f6d9
-  GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
-  HMSegmentedControl: 7c6145afb50f26cec5f3243082f6f12b9f41318f
+  DropDown: 8a2116376c1981888557f72ec2ffc9a5e0e456ec
+  Firebase: 0490eca762a72e4f1582319539153897f1508dee
+  FirebaseAnalytics: 058d71e714a1a6804d9e0f25e3bb18e377a51579
+  FirebaseAuthInterop: 0ffa57668be100582bb7643d4fcb7615496c41fc
+  FirebaseCore: 78276943ad85e616dfa54dafa6c89512987d9d60
+  FirebaseCoreDiagnostics: 2109d10c35e8289b1ee6cabf44d9ffb055620194
+  FirebaseCoreDiagnosticsInterop: 296e2c5f5314500a850ad0b83e9e7c10b011a850
+  FirebaseDatabase: 0144e0706a4761f1b0e8679572eba8095ddb59be
+  FirebaseInstallations: 575cd32f2aec0feeb0e44f5d0110a09e5e60b47b
+  FlexibleSteppedProgressBar: 37741b5cd0cd14f2e2118b597b81d0a6534f4d5a
+  GoogleAppMeasurement: 39ecba10918b21c83877d392246157f65db351cf
+  GoogleDataTransport: 653963cf5be60fb59cf051e070f0836fdc305f81
+  GoogleDataTransportCCTSupport: 84e4d4bbab642f2e9d83ee65d78aca2b5527d314
+  GoogleUtilities: 06eb53bb579efe7099152735900dd04bf09e7275
+  HMSegmentedControl: f514c6dad47aa3065e0ed2e8046b73efc71221b9
   iCarousel: d782f635afac190c49bb8ee455882284cff8b85f
-  IQKeyboardManagerSwift: c04bc9f68473823f825eb44d958fce98d921bead
-  M13Checkbox: c132a7e0eb964731855eff67b883a0b21b7c0977
-  SCLAlertView: 8a14ffc40590c619e183eed2298b854385f30be1
-  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
-  SwiftForms: 3f3dbaa79fe54eb1ccd0aca8d0cd1e38eb00537e
-  SwiftLocation: 887fa007f6f0567dfd00543c3fb356c4c793c2a6
+  IQKeyboardManagerSwift: 0fb93310284665245591f50f7a5e38de615960b7
+  leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
+  M13Checkbox: 6f59404540ac98ba83a3d1afac335895a40c6a5d
+  nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
+  SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
+  SDWebImage: a72e880a8fe0f7fc31efe15aaed443c074d2a80c
+  SwiftForms: f0d4d30401e21de87d9b7b63a4691a3d4e22bab5
+  SwiftLocation: 609ac8859f2c5d48a6cadd2a58c63b1dae02dc25
   UIActivityIndicator-for-SDWebImage: 7bf7ebbf0ed1747dedc0d6e949c4603a6d0f9e0c
   UIDropDown: 22e6e3e22d419884c8f21d95ea9be36aac905ed4
 
 PODFILE CHECKSUM: a0e6f83ab0f21420b30b27006d626581dde08e8b
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.9.0

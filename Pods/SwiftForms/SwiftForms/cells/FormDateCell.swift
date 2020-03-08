@@ -12,10 +12,10 @@ open class FormDateCell: FormValueCell {
     
     // MARK: Properties
     
-    fileprivate let datePicker = UIDatePicker()
-    fileprivate let hiddenTextField = UITextField(frame: CGRect.zero)
+    private let datePicker = UIDatePicker()
+    private let hiddenTextField = UITextField(frame: CGRect.zero)
     
-    fileprivate let defaultDateFormatter = DateFormatter()
+    private let defaultDateFormatter = DateFormatter()
     
     // MARK: FormBaseCell
     
@@ -23,6 +23,7 @@ open class FormDateCell: FormValueCell {
         super.configure()
         contentView.addSubview(hiddenTextField)
         hiddenTextField.inputView = datePicker
+        hiddenTextField.isAccessibilityElement = false
         datePicker.datePickerMode = .date
         datePicker.addTarget(self, action: #selector(FormDateCell.valueChanged(_:)), for: .valueChanged)
     }

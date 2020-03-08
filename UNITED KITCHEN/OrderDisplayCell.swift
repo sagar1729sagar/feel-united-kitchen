@@ -320,7 +320,7 @@ class OrderDisplayCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
         
     }
     
-    func getItems(sender:UIButton) {
+    @objc func getItems(sender:UIButton) {
         order.items?.removeAll()
         navInd.startAnimating()
         let whereClause = "orderId = "+order.orderId!

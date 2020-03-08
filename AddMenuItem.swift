@@ -112,6 +112,7 @@ class AddMenuItem: FormViewController {
 
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
 
         if indexPath.section == 3 && indexPath.row == 0 {
 
@@ -135,7 +136,11 @@ class AddMenuItem: FormViewController {
                 item.availableSaturday = self.form.sections[2].rows[7].value as? String
                 item.displayOrder = "0"
                 
-               let intr_view =  SCLAlertView().showTitle("Saving...", subTitle: "Please wait while we save...", style: .info, closeButtonTitle: "OK", duration: 100, colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: doneImage , animationStyle: .bottomToTop)
+//               let intr_view =  SCLAlertView().showTitle("Saving...", subTitle: "Please wait while we save...", style: .info, closeButtonTitle: "OK", duration: 100, colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: doneImage , animationStyle: .bottomToTop)
+                
+                let intr_view =  SCLAlertView().showTitle("Saving...", subTitle: "Please wait while we save...", style: .info, closeButtonTitle: "OK", timeout: SCLAlertView.SCLTimeoutConfiguration(timeoutValue: 100, timeoutAction: {
+                    //Do nothing
+                }), colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: doneImage , animationStyle: .bottomToTop)
                 
                 backendless?.data.of(Item.ofClass()).save(item, response: { (data) in
                    
@@ -146,24 +151,32 @@ class AddMenuItem: FormViewController {
                     self.backendless?.messaging.publish("default", message: "Menu Updated", publishOptions: publishOptions, response: { (response) in
                       
                         intr_view.close()
-                        SCLAlertView().showTitle("Saved", subTitle: "Item successfully added", style: .info, closeButtonTitle: "OK", duration: 10, colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: self.doneImage , animationStyle: .bottomToTop)
+                        SCLAlertView().showTitle("Saved", subTitle: "Item successfully added", style: .info, closeButtonTitle: "OK", timeout: SCLAlertView.SCLTimeoutConfiguration(timeoutValue: 10, timeoutAction: {
+                            //Do nothing
+                        }), colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: self.doneImage , animationStyle: .bottomToTop)
                         }, error: { (fault) in
                            
                             intr_view.close()
-                            SCLAlertView().showTitle("Error", subTitle: "Please check your internet connection and try again", style: .info, closeButtonTitle: "OK", duration: 10, colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: self.warningImage , animationStyle: .bottomToTop)
+                            SCLAlertView().showTitle("Error", subTitle: "Please check your internet connection and try again", style: .info, closeButtonTitle: "OK", timeout: SCLAlertView.SCLTimeoutConfiguration(timeoutValue: 10, timeoutAction: {
+                                //Do nothing
+                            }), colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: self.warningImage , animationStyle: .bottomToTop)
                     })
                     }, error: { (error) in
                         intr_view.close()
                        
                        
-                        SCLAlertView().showTitle("Error", subTitle: "Please check your internet connection and try again", style: .info, closeButtonTitle: "OK", duration: 10, colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: self.warningImage , animationStyle: .bottomToTop)
+                        SCLAlertView().showTitle("Error", subTitle: "Please check your internet connection and try again", style: .info, closeButtonTitle: "OK", timeout: SCLAlertView.SCLTimeoutConfiguration(timeoutValue: 10, timeoutAction: {
+                            //Do nothing
+                        }), colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: self.warningImage , animationStyle: .bottomToTop)
                 })
             
             
             
             } else {
                 
-                 SCLAlertView().showTitle("Error", subTitle: "Please fill all the fields", style: .info, closeButtonTitle: "OK", duration: 30, colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: warningImage , animationStyle: .bottomToTop)
+                SCLAlertView().showTitle("Error", subTitle: "Please fill all the fields", style: .info, closeButtonTitle: "OK", timeout: SCLAlertView.SCLTimeoutConfiguration(timeoutValue: 10, timeoutAction: {
+                    //Do nothing
+                }), colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: warningImage , animationStyle: .bottomToTop)
             }
             
             

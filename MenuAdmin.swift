@@ -40,7 +40,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
     var priceLabel2 = UILabel()
     var scrollView = UIView()
     var scrollLabel = UILabel()
-    var ref : FIRDatabaseReference!
+    var ref : DatabaseReference!
     
     
     
@@ -51,7 +51,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadlist(notification:)), name: Notification.Name("menuupdate"), object: nil)
         
-        ref = FIRDatabase.database().reference()
+        ref = Database.database().reference()
         
         
         if let firstOpen = UserDefaults.standard.object(forKey: "firstOpen") as? Bool {
@@ -295,7 +295,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         
     }
     
-    func valueChanged(sender:HMSegmentedControl) {
+    @objc func valueChanged(sender:HMSegmentedControl) {
         
         switch foodTypeSelection.selectedSegmentIndex {
         case 0:
@@ -769,7 +769,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
     }
     
     
-    func loadlist(notification : Notification) {
+    @objc func loadlist(notification : Notification) {
        
         if CartData().deleteCart(){
             self.navigationItem.rightBarButtonItems?.last?.removeBadge()
@@ -932,8 +932,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
     
   
     
-    
-    func addButtonPressed(sender:UIButton) {
+    @objc func addButtonPressed(sender:UIButton) {
         
       
        

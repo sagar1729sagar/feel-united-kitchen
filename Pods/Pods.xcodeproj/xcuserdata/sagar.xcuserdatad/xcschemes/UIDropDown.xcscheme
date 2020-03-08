@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "1100"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -13,11 +13,11 @@
             buildForProfiling = "YES"
             buildForArchiving = "YES">
             <BuildableReference
-               BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'A6758A27A44D52296C8D46EA5C3DAD66'
-               BlueprintName = 'UIDropDown'
-               ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'UIDropDown.framework'>
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "0C55DDB2B09AD8CC32301332BA4DB9D5"
+               BuildableName = "UIDropDown.framework"
+               BlueprintName = "UIDropDown"
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

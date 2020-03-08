@@ -12,7 +12,7 @@ open class FormSwitchCell: FormTitleCell {
     
     // MARK: Cell views
     
-    open let switchView = UISwitch()
+    public  let switchView = UISwitch()
     
     // MARK: FormBaseCell
     

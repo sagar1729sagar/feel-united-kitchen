@@ -125,7 +125,7 @@ class ProfilePage: UIViewController {
        
     }
     
-    func initialGoButtopnPressed(sender : UIButton) {
+    @objc func initialGoButtopnPressed(sender : UIButton) {
         if initialNumberGrabberTF?.text?.characters.count == 0 {
             initialNumberGrabberTF?.tada(nil)
         } else {
@@ -165,7 +165,9 @@ class ProfilePage: UIViewController {
             }
             }, error: { (fault) in
                 let warningImage = UIImage(named: "warning.png")
-                SCLAlertView().showTitle("Error", subTitle: "Please check your internet connection and try again", style: .info, closeButtonTitle: "OK", duration: 30, colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: warningImage , animationStyle: .bottomToTop)
+                SCLAlertView().showTitle("Error", subTitle: "Please check your internet connection and try again", style: .info, closeButtonTitle: "OK", timeout: SCLAlertView.SCLTimeoutConfiguration(timeoutValue: 30, timeoutAction: {
+                    //Do nothing
+                }), colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: warningImage , animationStyle: .bottomToTop)
               self.initialGoButton?.isEnabled = true
               self.indicator.stopAnimating()
               self.initialGoButton?.setTitle("GO", for: .normal)
@@ -210,7 +212,7 @@ class ProfilePage: UIViewController {
     
     }
     
-    func forgotpasswordPressed(sender : UIButton) {
+    @objc func forgotpasswordPressed(sender : UIButton) {
         let warningImage = UIImage(named: "warning.png")
         forgotPasswordButton?.isEnabled = true
         forgotPasswordButton?.setTitle("", for: .normal)
@@ -226,7 +228,10 @@ class ProfilePage: UIViewController {
         backendless?.userService.restorePassword(prof_intr?.emailAddress, response: { (response) in
             self.indicator.stopAnimating()
            
-            SCLAlertView().showInfo("Password Recovery", subTitle: "Please check your email \(Misc().emailModify(data: (self.prof_intr?.emailAddress)!)) to reset your password", closeButtonTitle: "OK", duration: 30, colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: warningImage, animationStyle: .topToBottom)
+            SCLAlertView().showInfo("Password Recovery", subTitle: "Please check your email \(Misc().emailModify(data: (self.prof_intr?.emailAddress)!)) to reset your password", closeButtonTitle: "OK", timeout: SCLAlertView.SCLTimeoutConfiguration(timeoutValue: 30, timeoutAction: {
+                //Do nothing
+            }), colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: warningImage, animationStyle: .topToBottom)
+
             }, error: { (fault) in
                 BackendlessErrorHandler().backendlessPasswordRecoveryErrorhandler(code: (fault?.faultCode)!)
                 self.indicator.stopAnimating()
@@ -240,7 +245,7 @@ class ProfilePage: UIViewController {
         
     }
     
-    func backendlesslogin(sender : UIButton){
+    @objc func backendlesslogin(sender : UIButton){
         
         if passwordLabel?.text?.characters.count == 0 {
             passwordLabel?.tada(nil)
@@ -327,7 +332,7 @@ class ProfilePage: UIViewController {
         addressTV?.layer.borderWidth = 2
         addressTV?.layer.cornerRadius = 0.5
         addressTV?.layer.borderColor = UIColor.blue.withAlphaComponent(1).cgColor
-        addressTV?.placeholderText = "  Please enter your address"
+        //addressTV?.placeholderText = "  Please enter your address"
         addressTV?.textAlignment = .center
         addressTV?.textColor = UIColor.blue
         addressTV?.backgroundColor = UIColor.white
@@ -352,7 +357,7 @@ class ProfilePage: UIViewController {
         
     }
     
-    func createAccountButtonPressed(sender : UIButton) {
+    @objc func createAccountButtonPressed(sender : UIButton) {
         
         if passwordTF?.text?.characters.count != 0 {
             if nameTF?.text?.characters.count != 0 {
@@ -428,7 +433,9 @@ class ProfilePage: UIViewController {
                 }
                 }, error: { (fault) in
             let warningImage = UIImage(named: "warning.png")
-            SCLAlertView().showTitle("Error", subTitle: "Please check your internet connection and try again", style: .info, closeButtonTitle: "OK", duration: 30, colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: warningImage , animationStyle: .bottomToTop)
+                    SCLAlertView().showTitle("Error", subTitle: "Please check your internet connection and try again", style: .info, closeButtonTitle: "OK", timeout: SCLAlertView.SCLTimeoutConfiguration(timeoutValue: 30, timeoutAction: {
+                        //Do nothing
+                    }), colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: warningImage , animationStyle: .bottomToTop)
             // Here account is registered but profile is not saved. So it will be taken to first screen
             self.viewDidLoad()
             })
@@ -537,7 +544,9 @@ class ProfilePage: UIViewController {
             }, error: { (fault) in
                 left?.isEnabled = true
                 self.navbarIndicator.stopAnimating()
-                SCLAlertView().showTitle("Error", subTitle: " Please check your internet connectiona nd try again", style: .info, closeButtonTitle: "OK", duration: 30, colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: warningImage , animationStyle: .bottomToTop)
+                SCLAlertView().showTitle("Error", subTitle: " Please check your internet connectiona nd try again", style: .info, closeButtonTitle: "OK", timeout: SCLAlertView.SCLTimeoutConfiguration(timeoutValue: 30, timeoutAction: {
+                    //Do nothing
+                }), colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: warningImage , animationStyle: .bottomToTop)
         })
         
         }
@@ -596,7 +605,9 @@ class ProfilePage: UIViewController {
                         }
                     }
                     }, error: { (fault) in
-                        SCLAlertView().showTitle("Error", subTitle: " Please check your internet connectiona nd try again", style: .info, closeButtonTitle: "OK", duration: 30, colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: warningImage , animationStyle: .bottomToTop)
+                        SCLAlertView().showTitle("Error", subTitle: " Please check your internet connectiona nd try again", style: .info, closeButtonTitle: "OK", timeout: SCLAlertView.SCLTimeoutConfiguration(timeoutValue: 30, timeoutAction: {
+                            //Do nothing
+                        }), colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: warningImage , animationStyle: .bottomToTop)
                         self.navbarIndicator.stopAnimating()
                         self.addressTV1?.isEditable = true
                         self.nameLabel?.isEnabled = true

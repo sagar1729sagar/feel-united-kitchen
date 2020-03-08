@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "1100"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -13,11 +13,11 @@
             buildForProfiling = "YES"
             buildForArchiving = "YES">
             <BuildableReference
-               BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'A52524E727A97710A55D0EDA55BB7CFE'
-               BlueprintName = 'BTNavigationDropdownMenu'
-               ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'BTNavigationDropdownMenu.framework'>
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "E5F1E6214A6184999F9D513F4A0E9682"
+               BuildableName = "BTNavigationDropdownMenu.framework"
+               BlueprintName = "BTNavigationDropdownMenu"
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

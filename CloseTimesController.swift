@@ -12,7 +12,7 @@ import SCLAlertView
 
 class CloseTimesController: UIViewController , UIScrollViewDelegate{
     
-    var ref : FIRDatabaseReference!
+    var ref : DatabaseReference!
     
     var navbarIndicator = UIActivityIndicatorView()
     var scrollView = UIScrollView()
@@ -24,7 +24,7 @@ class CloseTimesController: UIViewController , UIScrollViewDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ref = FIRDatabase.database().reference()
+        ref = Database.database().reference()
 
         // Do any additional setup after loading the view.
         

@@ -14,7 +14,7 @@ import Firebase
 class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource {
     
     
-    var ref : FIRDatabaseReference!
+    var ref : DatabaseReference!
     
 
     @IBOutlet weak var table: UITableView!
@@ -64,7 +64,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
         // Do any additional setup after loading the view.
         
         
-        ref = FIRDatabase.database().reference()
+        ref = Database.database().reference()
         
         navbarIndicator.hidesWhenStopped = true
         navbarIndicator.color = UIColor.red
@@ -350,7 +350,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
     
     
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if indexPath.section < dates.count {
             if editingStyle == .delete {
                 let itm = itemsArrayINPARWITHDates[indexPath.section][indexPath.row]
@@ -401,7 +401,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
         }
     }
     
-    func addButtonPressed(sender : UIButton) {
+    @objc func addButtonPressed(sender : UIButton) {
         
         
         let tag = sender.tag
@@ -417,7 +417,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
     
     }
     
-    func subButtonPressed(sender : UIButton) {
+    @objc func subButtonPressed(sender : UIButton) {
         
         let tag = sender.tag
         let row = tag%1000
@@ -435,7 +435,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
     
     }
     
-    func ordernowPressed(sender : UIButton) {
+    @objc func ordernowPressed(sender : UIButton) {
         
         if splCell.b2.checkState.rawValue == "Checked" {
             if locCell.coordinate != nil {
@@ -454,7 +454,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
     
     }
     
-    func giftitPressed(sender : UIButton) {
+    @objc func giftitPressed(sender : UIButton) {
         if isGifted {
             isGifted = false
             table.reloadData()
@@ -465,7 +465,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
     
     }
     
-    func proceedPressed ( sender : UIButton) {
+    @objc func proceedPressed ( sender : UIButton) {
         
         if giftCell.nameTF.text?.characters.count == 0 {
             giftCell.nameTF.tada(nil)
@@ -1084,7 +1084,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
         
     }
     
-    func loginPressed(sender:UIButton){
+    @objc func loginPressed(sender:UIButton){
         self.tabBarController?.selectedIndex = 4
     }
     

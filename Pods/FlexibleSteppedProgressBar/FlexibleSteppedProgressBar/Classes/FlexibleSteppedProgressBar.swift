@@ -38,7 +38,7 @@ import CoreGraphics
     }
     
     /// The current selected index
-    open var currentIndex: Int = 0 {
+    @objc open var currentIndex: Int = 0 {
         willSet(newValue){
             if let delegate = self.delegate {
                 delegate.progressBar?(self, willSelectItemAtIndex: newValue)
@@ -50,7 +50,7 @@ import CoreGraphics
         }
     }
     
-    open var completedTillIndex: Int = -1 {
+    @objc open var completedTillIndex: Int = -1 {
         willSet(newValue){
 
         }
@@ -59,16 +59,16 @@ import CoreGraphics
         }
     }
     
-    open var currentSelectedCenterColor: UIColor = UIColor.black
-    open var currentSelectedTextColor: UIColor!
-    open var viewBackgroundColor: UIColor = UIColor.white
-    open var selectedOuterCircleStrokeColor: UIColor!
-    open var lastStateOuterCircleStrokeColor: UIColor!
-    open var lastStateCenterColor: UIColor!
-    open var centerLayerTextColor: UIColor!
-    open var centerLayerDarkBackgroundTextColor: UIColor = UIColor.white
+    @objc open var currentSelectedCenterColor: UIColor = UIColor.black
+    @objc open var currentSelectedTextColor: UIColor!
+    @objc open var viewBackgroundColor: UIColor = UIColor.white
+    @objc open var selectedOuterCircleStrokeColor: UIColor!
+    @objc open var lastStateOuterCircleStrokeColor: UIColor!
+    @objc open var lastStateCenterColor: UIColor!
+    @objc open var centerLayerTextColor: UIColor!
+    @objc open var centerLayerDarkBackgroundTextColor: UIColor = UIColor.white
     
-    open var useLastState: Bool = false {
+    @objc open var useLastState: Bool = false {
         didSet {
             if useLastState {
                 self.layer.addSublayer(self.clearLastStateLayer)
@@ -86,19 +86,19 @@ import CoreGraphics
         }
     }
     
-    open var selectedOuterCircleLineWidth: CGFloat = 3.0 {
+    @objc open var selectedOuterCircleLineWidth: CGFloat = 3.0 {
         didSet {
             self.setNeedsDisplay()
         }
     }
     
-    open var lastStateOuterCircleLineWidth: CGFloat = 5.0 {
+    @objc open var lastStateOuterCircleLineWidth: CGFloat = 5.0 {
         didSet {
             self.setNeedsDisplay()
         }
     }
     
-    open var textDistance: CGFloat = 20.0 {
+    @objc open var textDistance: CGFloat = 20.0 {
         didSet {
             self.setNeedsDisplay()
         }
@@ -174,19 +174,25 @@ import CoreGraphics
     }
     
     /// The text font in the step points
-    open var stepTextFont: UIFont? {
+    @objc open var stepTextFont: UIFont? {
         didSet {
             self.setNeedsDisplay()
         }
     }
     
     /// The text color in the step points
-    open var stepTextColor: UIColor? {
+    @objc open var stepTextColor: UIColor? {
         didSet {
             self.setNeedsDisplay()
         }
     }
     
+    /// The text font inside the circles
+    @objc open var centerLayerTextFont: UIFont? {
+        didSet {
+            self.setNeedsDisplay()
+        }
+    }
     
     /// The component's background color
     @IBInspectable open var backgroundShapeColor: UIColor = UIColor(red: 238.0/255.0, green: 238.0/255.0, blue: 238.0/255.0, alpha: 0.8) {
@@ -203,7 +209,7 @@ import CoreGraphics
     }
     
     /// The component's delegate
-    open weak var delegate: FlexibleSteppedProgressBarDelegate?
+    @objc open weak var delegate: FlexibleSteppedProgressBarDelegate?
     
     
     //MARK: - Private properties
@@ -284,6 +290,10 @@ import CoreGraphics
             stepTextFont = UIFont(name: "HelveticaNeue-Medium", size: 14.0)
         }
         
+        if centerLayerTextFont == nil {
+            centerLayerTextFont = UIFont.boldSystemFont(ofSize: 15)
+        }
+        
         if centerLayerTextColor == nil {
             centerLayerTextColor = stepTextColor
         }
@@ -304,7 +314,7 @@ import CoreGraphics
         self.layer.addSublayer(self.roadToSelectionLayer)
         self.progressLayer.mask = self.maskLayer
         
-        self.contentMode = UIViewContentMode.redraw
+        self.contentMode = UIView.ContentMode.redraw
     }
     
     override open func draw(_ rect: CGRect) {
@@ -409,7 +419,7 @@ import CoreGraphics
             progressAnimation.duration = stepAnimationDuration * CFTimeInterval(abs(completedTillIndex - previousIndex))
             progressAnimation.toValue = maskPath
             progressAnimation.isRemovedOnCompletion = false
-            progressAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+            progressAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
             
             
             CATransaction.setCompletionBlock { () -> Void in
@@ -437,11 +447,10 @@ import CoreGraphics
             
             let textLayer = self._textLayer(atIndex: i)
             
-            let textLayerFont = UIFont.boldSystemFont(ofSize: 15)
             textLayer.contentsScale = UIScreen.main.scale
             
-            textLayer.font = CTFontCreateWithName(textLayerFont.fontName as CFString, textLayerFont.pointSize, nil)
-            textLayer.fontSize = textLayerFont.pointSize
+            textLayer.font = centerLayerTextFont
+            textLayer.fontSize = (centerLayerTextFont?.pointSize)!
             
             if i == currentIndex || i == completedTillIndex {
                 textLayer.foregroundColor = centerLayerDarkBackgroundTextColor.cgColor
@@ -472,7 +481,6 @@ import CoreGraphics
             let textLayer = self._topTextLayer(atIndex: i)
             
             textLayer.contentsScale = UIScreen.main.scale
-            
             
             textLayer.font = stepTextFont
             textLayer.fontSize = (stepTextFont?.pointSize)!
@@ -633,33 +641,33 @@ import CoreGraphics
                 
                 xCursor = centerPoint.x
                 
-                startAngle = CGFloat(M_PI)
+                startAngle = CGFloat.pi
                 endAngle = -angle
                 
             } else if(i < nbPoint - 1) {
                 
-                startAngle = CGFloat(M_PI) + angle
+                startAngle = CGFloat.pi + angle
                 endAngle = -angle
                 
             } else if(i == (nbPoint - 1)){
                 
-                startAngle = CGFloat(M_PI) + angle
+                startAngle = CGFloat.pi + angle
                 endAngle = 0
                 
             } else if(i == nbPoint) {
                 
                 startAngle = 0
-                endAngle = CGFloat(M_PI) - angle
+                endAngle = CGFloat.pi - angle
                 
             } else if (i < (2 * nbPoint - 1)) {
                 
                 startAngle = angle
-                endAngle = CGFloat(M_PI) - angle
+                endAngle = CGFloat.pi - angle
                 
             } else {
                 
                 startAngle = angle
-                endAngle = CGFloat(M_PI)
+                endAngle = CGFloat.pi
                 
             }
             
@@ -683,10 +691,10 @@ import CoreGraphics
     }
     
     fileprivate func _shapePathForLastState(_ center: CGPoint) -> UIBezierPath {
-//        let angle = CGFloat(M_PI)/4
+//        let angle = CGFloat.pi/4
         let path = UIBezierPath()
-//        path.addArcWithCenter(center, radius: self._progressRadius + _radius, startAngle: angle, endAngle: 2*CGFloat(M_PI) + CGFloat(M_PI)/4, clockwise: true)
-        path.addArc(withCenter: center, radius: self._progressRadius + lastStateOuterCircleLineWidth, startAngle: 0, endAngle: 4*CGFloat(M_PI), clockwise: true)
+//        path.addArcWithCenter(center, radius: self._progressRadius + _radius, startAngle: angle, endAngle: 2*CGFloat.pi + CGFloat.pi/4, clockwise: true)
+        path.addArc(withCenter: center, radius: self._progressRadius + lastStateOuterCircleLineWidth, startAngle: 0, endAngle: 4*CGFloat.pi, clockwise: true)
         return path
     }
     
@@ -732,9 +740,9 @@ import CoreGraphics
      
      - parameter gestureRecognizer: The gesture recognizer responsible for the action
      */
-    func gestureAction(_ gestureRecognizer: UIGestureRecognizer) {
-        if(gestureRecognizer.state == UIGestureRecognizerState.ended ||
-            gestureRecognizer.state == UIGestureRecognizerState.changed ) {
+    @objc func gestureAction(_ gestureRecognizer: UIGestureRecognizer) {
+        if(gestureRecognizer.state == UIGestureRecognizer.State.ended ||
+            gestureRecognizer.state == UIGestureRecognizer.State.changed ) {
             
             let touchPoint = gestureRecognizer.location(in: self)
             

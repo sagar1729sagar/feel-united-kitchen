@@ -12,7 +12,7 @@ open class FormSliderCell: FormTitleCell {
     
     // MARK: Cell views
     
-    open let sliderView = UISlider()
+    @objc public let sliderView = UISlider()
     
     // MARK: FormBaseCell
     

@@ -12,8 +12,8 @@ open class FormPickerCell: FormValueCell, UIPickerViewDelegate, UIPickerViewData
     
     // MARK: Properties
     
-    fileprivate let picker = UIPickerView()
-    fileprivate let hiddenTextField = UITextField(frame: CGRect.zero)
+    private let picker = UIPickerView()
+    private let hiddenTextField = UITextField(frame: CGRect.zero)
     
     // MARK: FormBaseCell
     
@@ -24,6 +24,7 @@ open class FormPickerCell: FormValueCell, UIPickerViewDelegate, UIPickerViewData
         picker.delegate = self
         picker.dataSource = self
         hiddenTextField.inputView = picker
+        hiddenTextField.isAccessibilityElement = false
         
         contentView.addSubview(hiddenTextField)
     }
@@ -37,6 +38,7 @@ open class FormPickerCell: FormValueCell, UIPickerViewDelegate, UIPickerViewData
         }
         
         titleLabel.text = rowDescriptor?.title
+        valueLabel.text = ""
         
         if let selectedValue = rowDescriptor?.value {
             valueLabel.text = rowDescriptor?.configuration.selection.optionTitleClosure?(selectedValue)

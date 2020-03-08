@@ -16,7 +16,7 @@ import UIKit
 public extension M13Checkbox {
     
     /// A proxy to set the box type compatible with interface builder.
-    @IBInspectable public var _IBStateChangeAnimation: String {
+    @IBInspectable var _IBStateChangeAnimation: String {
         get {
             return stateChangeAnimation.rawValue
         }
@@ -24,13 +24,13 @@ public extension M13Checkbox {
             if let type = Animation(rawValue: newValue) {
                 stateChangeAnimation = type
             } else {
-                stateChangeAnimation = .stroke
+                stateChangeAnimation = DefaultValues.animation
             }
         }
     }
     
     /// A proxy to set the mark type compatible with interface builder.
-    @IBInspectable public var _IBMarkType: String {
+    @IBInspectable var _IBMarkType: String {
         get {
             return markType.rawValue
         }
@@ -38,13 +38,13 @@ public extension M13Checkbox {
             if let type = MarkType(rawValue: newValue) {
                 markType = type
             } else {
-                markType = .checkmark
+                markType = DefaultValues.markType
             }
         }
     }
     
     /// A proxy to set the box type compatible with interface builder.
-    @IBInspectable public var _IBBoxType: String {
+    @IBInspectable var _IBBoxType: String {
         get {
             return boxType.rawValue
         }
@@ -52,13 +52,13 @@ public extension M13Checkbox {
             if let type = BoxType(rawValue: newValue) {
                 boxType = type
             } else {
-                boxType = .circle
+                boxType = DefaultValues.boxType
             }
         }
     }
     
     /// A proxy to set the check state compatible with interface builder.
-    @IBInspectable public var _IBCheckState: String {
+    @IBInspectable var _IBCheckState: String {
         get {
             return checkState.rawValue
         }
@@ -66,7 +66,7 @@ public extension M13Checkbox {
             if let temp = CheckState(rawValue: newValue) {
                 checkState = temp
             } else {
-                checkState = .unchecked
+                checkState = DefaultValues.checkState
             }
         }
     }

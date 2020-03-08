@@ -1,5 +1,5 @@
 
-[![Version](https://img.shields.io/badge/pod-1.7-red.svg)](http://cocoadocs.org/docsets/SwiftForms)
+[![Version](https://img.shields.io/badge/pod-1.8.2-orange.svg)](http://cocoadocs.org/docsets/SwiftForms)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 [![License](https://img.shields.io/badge/license-MIT-gray.svg)](http://cocoadocs.org/docsets/SwiftForms)
@@ -12,7 +12,7 @@ Purpose
 -------
 SwiftForms is a powerful and extremely flexible library written in Swift that allows to create forms by just defining them in a couple of lines. It also provides the ability to customize cells appearance, use custom cells and define your own selector controllers.
 
-#####Here is an screenshot from an example application using SwiftForms
+Here is an screenshot from an example application using SwiftForms
 
 ![Screenshot of Example application](SwiftFormsApplication/Example.gif)
 

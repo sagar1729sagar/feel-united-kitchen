@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "1100"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -13,11 +13,11 @@
             buildForProfiling = "YES"
             buildForArchiving = "YES">
             <BuildableReference
-               BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '58EEE310EC91550EF0ACD16BD183B4B3'
-               BlueprintName = 'DCAnimationKit'
-               ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'DCAnimationKit.framework'>
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A90887EDC2C91F2ADCF8976B92BE0795"
+               BuildableName = "DCAnimationKit.framework"
+               BlueprintName = "DCAnimationKit"
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

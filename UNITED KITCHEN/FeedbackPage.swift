@@ -143,7 +143,7 @@ class FeedbackPage: UIViewController ,UITableViewDelegate , UITableViewDataSourc
     }
     
     
-    func submitPressed(sender : UIButton ){
+    @objc func submitPressed(sender : UIButton ){
         
         let review = (feedback)()
         let profile = ProfileData().getProfile().0
@@ -166,7 +166,7 @@ class FeedbackPage: UIViewController ,UITableViewDelegate , UITableViewDataSourc
     
     }
     
-    func dismissPressed(sender:UIButton){
+    @objc func dismissPressed(sender:UIButton){
         addPRessed = false
         self.table.reloadData()
     }

@@ -8,12 +8,13 @@
 
 import UIKit
 
+@objc(FormSegmentedControlCell)
 open class FormSegmentedControlCell: FormBaseCell {
     
     // MARK: Cell views
     
-    open let titleLabel = UILabel()
-    open let segmentedControl = UISegmentedControl()
+    @objc public let titleLabel = UILabel()
+    @objc public let segmentedControl = UISegmentedControl()
     
     // MARK: Properties
     
@@ -67,7 +68,7 @@ open class FormSegmentedControlCell: FormBaseCell {
     }
     
     open override func defaultVisualConstraints() -> [String] {
-        if let text = titleLabel.text , text.characters.count > 0 {
+        if let text = titleLabel.text , text.count > 0 {
             return ["H:|-16-[titleLabel]-16-[segmentedControl]-16-|"]
         } else {
             return ["H:|-16-[segmentedControl]-16-|"]

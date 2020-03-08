@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UNUserNotificationCenter
     var window: UIWindow?
 
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    private func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         // Initialise backendless
         backendless?.initApp(APP_ID, apiKey: SECRET_KEY)
@@ -41,17 +41,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UNUserNotificationCenter
         Thread.sleep(forTimeInterval: 1)
         
         //IQKeyboard enable
-        IQKeyboardManager.sharedManager().enable = true
+      //  (IQKeyboardManager.sharedManager() as AnyObject).enable = true
+        IQKeyboardManager.shared.enable = true
        
         // DorpDown
         DropDown.startListeningToKeyboard()
         
         // Initialzing firebase
         
-        FIRApp.configure()
+        FirebaseApp.configure()
         
-        var ref : FIRDatabaseReference
-        ref = FIRDatabase.database().reference()
+        var ref : DatabaseReference
+        ref = Database.database().reference()
 
         backendless?.messaging.registerForRemoteNotifications()
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.badge,.sound]) { (accepted, error) in

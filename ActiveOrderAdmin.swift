@@ -107,7 +107,7 @@ class ActiveOrderAdmin: UIViewController, UITableViewDataSource, UITableViewDele
     }
     
 
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    private func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             //to-do delete item
             deleteOrder(order: orderDetails[indexPath.row])
@@ -185,7 +185,7 @@ class ActiveOrderAdmin: UIViewController, UITableViewDataSource, UITableViewDele
     }
     
 
-    func loadlist(notification : Notification) {
+    @objc func loadlist(notification : Notification) {
         navbarIndicator.startAnimating()
        
         let id = notification.userInfo?["orderId"] as! String
@@ -316,9 +316,9 @@ class ActiveOrderAdmin: UIViewController, UITableViewDataSource, UITableViewDele
         })
         
         
-    }
+             }
     
-    func loadlist1(notification : Notification) {
+    @objc func loadlist1(notification : Notification) {
         
         let orderId = (notification.userInfo?["orderId"])! as! String
         let status = (notification.userInfo?["status"])! as! String

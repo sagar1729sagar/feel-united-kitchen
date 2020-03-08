@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Backendless.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Cosmos.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -24,12 +29,67 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Firebase.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>FirebaseAnalytics.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>FirebaseAuthInterop.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>FirebaseCore.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>FirebaseCoreDiagnostics.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>FirebaseCoreDiagnosticsInterop.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>FirebaseDatabase.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>FirebaseInstallations.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>FlexibleSteppedProgressBar.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>GoogleToolboxForMac.xcscheme</key>
+		<key>GoogleAppMeasurement.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>GoogleDataTransport.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>GoogleDataTransportCCTSupport.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>GoogleUtilities.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -50,6 +110,11 @@
 			<false/>
 		</dict>
 		<key>Pods-UNITED KITCHEN.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>PromisesObjC.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -89,94 +154,18 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>leveldb-library.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>nanopb.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
-	<dict>
-		<key>00103D6C821BE85971C563025527BA5D</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>151CCB779575DC527DEBE0CDC7785CB7</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>20A9DD9ABBF08BC57372A26C35327BF1</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>294FF6737659A5389B5E3D08A129331E</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>3690B8E2199F1AC26E65BB5B46F94F66</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>4DC059E04CBA98AEDDB5C34E02D551E9</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>4FDC533A4360A68ABDCE852F04B30927</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>5168099F2EBFC99A707C03C9EADE01A5</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>58EEE310EC91550EF0ACD16BD183B4B3</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>7891E2B724C54EF58FB1692B34F1455C</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>7BB41E51AE7F98D34049FF93294256DD</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>820D42C64F1681B4A73CF4FE6791E197</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>878CFD6608614D017343D238F44ED042</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>A52524E727A97710A55D0EDA55BB7CFE</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>A6758A27A44D52296C8D46EA5C3DAD66</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>AD309320328263389F6694B8E809E2A0</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>B8D8C363B343A0778AE6633D70E11749</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-	</dict>
+	<dict/>
 </dict>
 </plist>

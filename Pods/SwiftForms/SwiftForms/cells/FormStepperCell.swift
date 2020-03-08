@@ -12,8 +12,8 @@ open class FormStepperCell: FormTitleCell {
     
     // MARK: Cell views
     
-    open let stepperView = UIStepper()
-    open let countLabel = UILabel()
+    public  let stepperView = UIStepper()
+    public  let countLabel = UILabel()
     
     // MARK: FormBaseCell
     

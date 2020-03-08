@@ -165,12 +165,28 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
             revGeoTV.text = "Please wait..."
             revGeoTV.isEditable = false
             cell.addSubview(revGeoTV)
-            let loc = CLLocation(latitude: cordnts.0.latitude, longitude: cordnts.0.longitude)
-            Location.getPlacemark(forLocation: loc, success: { (placemark) -> (Void) in
-                revGeoTV.text = "Placemark found \n \(placemark)"
-                }, failure: { (error) -> (Void) in
-                    revGeoTV.text = "Reverse geo coding error \(error)"
-            })
+           // let loc = CLLocation(latitude: cordnts.0.latitude, longitude: cordnts.0.longitude)
+            let loc = CLLocationCoordinate2DMake(cordnts.0.latitude, cordnts.0.longitude)
+//            Location.getPlacemark(forLocation: loc, success: { (placemark) -> (Void) in
+//                revGeoTV.text = "Placemark found \n \(placemark)"
+//                }, failure: { (error) -> (Void) in
+//                    revGeoTV.text = "Reverse geo coding error \(error)"
+//            })
+            
+            LocationManager.shared.locateFromCoordinates(loc) { (result) in
+                switch result {
+                  case .failure(let error):
+                    revGeoTV.text = "Reverse geo coding error \(error)"                    //debugPrint("An error has occurred: \(error)")
+                  case .success(let places):
+                    if (places.count != 0) {
+                        revGeoTV.text = "Placemark found \n \(places[0])"
+                    } else {
+                        revGeoTV.text = "No places found for given coordinates"
+                        
+                    }
+                   // debugDescription("Found \(places.count) places!")
+                }
+            }
             
             let setDIrectionsButton = UIButton(frame: CGRect(x: 5, y: 690, width: UIScreen.main.bounds.width, height: 30))
             setDIrectionsButton.setTitle("OPEN MAP", for: .normal)
@@ -192,7 +208,7 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
     
     
     
-    func openMaps(sender : UIButton) {
+    @objc func openMaps(sender : UIButton) {
         let tag = sender.tag
         let cords = getCoordinates(lat: orderDetails[tag].latitude!, long: orderDetails[tag].longitude!)
         let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: cords.0))
@@ -233,7 +249,7 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
 
     
     
-    func addPressed(sender : UIButton) {
+    @objc func addPressed(sender : UIButton) {
         if searchTF.text?.characters.count == 0 {
         searchTF.tada(nil)
         } else {
@@ -322,7 +338,7 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
     
     
     
-    func startNavigation(sender : UIButton) {
+    @objc func startNavigation(sender : UIButton) {
         
         timer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true, block: { (time) in
             self.getLocation()
@@ -356,34 +372,56 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
     
     func getLocation(){
         
-                Location.getLocation(accuracy: .navigation, frequency: .oneShot, timeout: nil, success: { (locReq, location) -> (Void) in
+//                Location.getLocation(accuracy: .navigation, frequency: .oneShot, timeout: nil, success: { (locReq, location) -> (Void) in
+//        
+//                    let coordinates = location.coordinate
+//                    let message = Message()
+//                    message.data = coordinates
+//                
+//                    self.backendless?.messaging.publish("C"+ProfileData().getProfile().0.phoneNumber!, message: "\(coordinates)", response: { (response) in
+//        
+//                        self.navbarIndicator.stopAnimating()
+//                        }, error: { (error) in
+//                            self.navbarIndicator.stopAnimating()
+//        
+//                    })
+//                    }) { (locReq, loc, error) -> (Void) in
+//                       
+//                        self.navbarIndicator.stopAnimating()
+//                        
+//                }
         
-                    let coordinates = location.coordinate
-                    let message = Message()
-                    message.data = coordinates
-                
-                    self.backendless?.messaging.publish("C"+ProfileData().getProfile().0.phoneNumber!, message: "\(coordinates)", response: { (response) in
-        
-                        self.navbarIndicator.stopAnimating()
-                        }, error: { (error) in
-                            self.navbarIndicator.stopAnimating()
-        
-                    })
-                    }) { (locReq, loc, error) -> (Void) in
-                       
-                        self.navbarIndicator.stopAnimating()
+        LocationManager.shared.locateFromGPS(.oneShot, accuracy: .room, distance: .none, activity: .other, timeout: nil) { (result) in
+              switch result {
+              case .failure(let error):
+                self.navbarIndicator.stopAnimating()
+               // debugPrint("Received error: \(error)")
+              case .success(let location):
+                let coordinates = location.coordinate
+                            let message = Message()
+                            message.data = coordinates
                         
-                }
+                            self.backendless?.messaging.publish("C"+ProfileData().getProfile().0.phoneNumber!, message: "\(coordinates)", response: { (response) in
+                
+                                self.navbarIndicator.stopAnimating()
+                                }, error: { (error) in
+                                    self.navbarIndicator.stopAnimating()
+                
+                            })
+               // debugPrint("Location received: \(location)")
+            }
+        }
+
         
     }
     
-    func stopNavigation(sender : UIButton){
+    @objc func stopNavigation(sender : UIButton){
         
         timer.invalidate()
     
     }
     
-    func deliveryDone(sender : UIButton) {
+    @objc func deliveryDone(sender : UIButton) {
        
     
         let order = orderDetails[sender.tag]
