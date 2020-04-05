@@ -9,10 +9,11 @@
 import UIKit
 import SwiftForms
 import SCLAlertView
+import Backendless
 
 class AddMenuItem: FormViewController {
     
-    let backendless = Backendless.sharedInstance()
+    let backendless = Backendless.shared
     let warningImage = UIImage(named: "warning.png")
     let doneImage = UIImage(named: "done.png")
 
@@ -142,26 +143,27 @@ class AddMenuItem: FormViewController {
                     //Do nothing
                 }), colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: doneImage , animationStyle: .bottomToTop)
                 
-                backendless?.data.of(Item.ofClass()).save(item, response: { (data) in
-                   
-
+                backendless.data.of(Item.self).save(entity: item, responseHandler: { (data) in
+                    
+                    
                     let publishOptions = PublishOptions()
                     let headers = ["ios-alert":"Menu updated","ios-badge":"1","ios-sound":"default","type":"menuupdate"]
-                    publishOptions.assignHeaders(headers)
-                    self.backendless?.messaging.publish("default", message: "Menu Updated", publishOptions: publishOptions, response: { (response) in
-                      
+                    //publishOptions.assignHeaders(headers)
+                    publishOptions.setHeaders(headers: headers)
+                    self.backendless.messaging.publish(channelName: "default", message: "Menu Updated", publishOptions: publishOptions, responseHandler: { (response) in
+                        
                         intr_view.close()
                         SCLAlertView().showTitle("Saved", subTitle: "Item successfully added", style: .info, closeButtonTitle: "OK", timeout: SCLAlertView.SCLTimeoutConfiguration(timeoutValue: 10, timeoutAction: {
                             //Do nothing
                         }), colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: self.doneImage , animationStyle: .bottomToTop)
-                        }, error: { (fault) in
-                           
-                            intr_view.close()
-                            SCLAlertView().showTitle("Error", subTitle: "Please check your internet connection and try again", style: .info, closeButtonTitle: "OK", timeout: SCLAlertView.SCLTimeoutConfiguration(timeoutValue: 10, timeoutAction: {
-                                //Do nothing
-                            }), colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: self.warningImage , animationStyle: .bottomToTop)
+                    }, errorHandler: { (fault) in
+                        
+                        intr_view.close()
+                        SCLAlertView().showTitle("Error", subTitle: "Please check your internet connection and try again", style: .info, closeButtonTitle: "OK", timeout: SCLAlertView.SCLTimeoutConfiguration(timeoutValue: 10, timeoutAction: {
+                            //Do nothing
+                        }), colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: self.warningImage , animationStyle: .bottomToTop)
                     })
-                    }, error: { (error) in
+                }, errorHandler: { (error) in
                         intr_view.close()
                        
                        

@@ -8,10 +8,11 @@
 
 import UIKit
 import SCLAlertView
+import Backendless
 
 class FeedbackPage: UIViewController ,UITableViewDelegate , UITableViewDataSource {
     
-    let backendless = Backendless.sharedInstance()
+    let backendless = Backendless.shared
     var addPRessed : Bool = false
     var reviews = [feedback]()
     var addCell = AddFBCell()
@@ -177,12 +178,12 @@ class FeedbackPage: UIViewController ,UITableViewDelegate , UITableViewDataSourc
       
         navbarIndicator.startAnimating()
         
-        backendless?.data.of(feedback.ofClass()).save(review, response: { (result) in
-           
+        backendless.data.of(feedback.self).save(entity: review, responseHandler: { (result) in
+            
             self.navbarIndicator.stopAnimating()
             if let saved = result as? feedback {
                 if FeedbackDB().addFeedback(fb: saved){
-                 
+                    
                     self.addCell.submitButton.isHidden = true
                     self.addCell.dismissButton.isHidden = true
                     self.addPRessed = false
@@ -192,11 +193,11 @@ class FeedbackPage: UIViewController ,UITableViewDelegate , UITableViewDataSourc
             }
             
             // send notification
-
-            }, error: { (error) in
+            
+        }, errorHandler: { (error) in
         
                 self.navbarIndicator.stopAnimating()
-                SCLAlertView().showWarning("Couldnt save", subTitle: "Couldnt save your review as the following error has occured \n \(error?.message) \n Please try again")
+            SCLAlertView().showWarning("Couldnt save", subTitle: "Couldnt save your review as the following error has occured \n \(String(describing: error.message)) \n Please try again")
             
         })
         
@@ -227,13 +228,13 @@ class FeedbackPage: UIViewController ,UITableViewDelegate , UITableViewDataSourc
         navbarIndicator.startAnimating()
 
         let queryBuilder = DataQueryBuilder()
-        queryBuilder?.setSortBy(["created ASC"])
-        backendless?.data.of(feedback.ofClass()).find(queryBuilder, response: { (data) in
+        queryBuilder.setSortBy(sortBy: ["created ASC"])
+        backendless.data.of(feedback.self).find(queryBuilder: queryBuilder, responseHandler: { (data) in
             self.navbarIndicator.stopAnimating()
             
-                if data?.count != 0 {
+            if data.count != 0 {
                     FeedbackDB().removeFB()
-                    for result in data! {
+                for result in data {
                         if let fb = result as? feedback {
                             FeedbackDB().addFeedback(fb: fb)
                         }
@@ -243,7 +244,7 @@ class FeedbackPage: UIViewController ,UITableViewDelegate , UITableViewDataSourc
                         self.table.reloadData()
             }) { (error) in
                 self.navbarIndicator.stopAnimating()
-                SCLAlertView().showWarning("Cannot fetch", subTitle: "The following error has occured while fetching reviews \(error?.message) \n Please try again")
+                SCLAlertView().showWarning("Cannot fetch", subTitle: "The following error has occured while fetching reviews \(String(describing: error.message)) \n Please try again")
         }
     }
 

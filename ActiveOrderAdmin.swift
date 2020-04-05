@@ -8,12 +8,13 @@
 
 import UIKit
 import SCLAlertView
+import Backendless
 
 class ActiveOrderAdmin: UIViewController, UITableViewDataSource, UITableViewDelegate , UISearchBarDelegate,UISearchResultsUpdating {
     
     var i = 0
 
-    let backendless = Backendless.sharedInstance()
+    let backendless = Backendless.shared
     var navbarIndicator = UIActivityIndicatorView()
     var orderDetails = [OrderDetails]()
     let searchController = UISearchController(searchResultsController: nil)
@@ -119,25 +120,43 @@ class ActiveOrderAdmin: UIViewController, UITableViewDataSource, UITableViewDele
         for item in order.items! {
         childIDs.append(item.objectId!)
         }
-        backendless?.data.of(OrderDetails.ofClass()).remove(byId: order.objectId, response: { (response) in
-            
-            if OrderData().deleteOrder(id: order.orderId!) {
-            self.orderDetails.removeAll()
-            self.viewDidAppear(true)
+//        backendless.data.of(OrderDetails()).remove(entity: order.objectId, responseHandler: { (response) in
+//            
+//            if OrderData().deleteOrder(id: order.orderId!) {
+//            self.orderDetails.removeAll()
+//            self.viewDidAppear(true)
+//            }
+//            
+//            // delete items 
+//            for id in childIDs {
+//            self.backendless?.data.of(OrderItems.ofClass()).remove(byId: id, response: { (nmbr) in
+//              
+//                }, error: { (fault) in
+//                    
+//            })
+//            }
+//            
+//            }) { (fault) in
+//                
+//                SCLAlertView().showError("Cannot delete", subTitle: "Cannot delete the order as the following error has occured.\n\(fault?.message)\nPlease try again")
+//        }
+        
+        
+        backendless.data.of(OrderDetails.self).removeById(objectId: order.objectId!, responseHandler: { (response) in
+            if OrderData().deleteOrder(id: order.orderId!){
+                self.orderDetails.removeAll()
+                self.viewDidAppear(true)
             }
-            
-            // delete items 
+            //delete items
             for id in childIDs {
-            self.backendless?.data.of(OrderItems.ofClass()).remove(byId: id, response: { (nmbr) in
-              
-                }, error: { (fault) in
+                self.backendless.data.of(OrderItems.self).removeById(objectId: id, responseHandler: { (nmbr) in
                     
-            })
+                }) { (fault) in
+                    
+                }
             }
-            
-            }) { (fault) in
-                
-                SCLAlertView().showError("Cannot delete", subTitle: "Cannot delete the order as the following error has occured.\n\(fault?.message)\nPlease try again")
+        }) { (fault) in
+            SCLAlertView().showError("Cannot delete", subTitle: "Cannot delete the order as the following error has occured.\n\(String(describing: fault.message))\nPlease try again")
         }
         
         
@@ -191,20 +210,20 @@ class ActiveOrderAdmin: UIViewController, UITableViewDataSource, UITableViewDele
         let id = notification.userInfo?["orderId"] as! String
         let whereCaluse = "orderId = "+id
         let queryBuilder = DataQueryBuilder()
-        queryBuilder?.setWhereClause(whereCaluse)
-        backendless?.data.of(OrderDetails.ofClass()).find(queryBuilder, response: { (data) in
+        queryBuilder.setWhereClause(whereClause: whereCaluse)
+        backendless.data.of(OrderDetails.self).find(queryBuilder: queryBuilder, responseHandler: { (data) in
             
-            for item in data!{
+            for item in data{
                 if let order = item as? OrderDetails {
-                
+                    
                     self.getItemsFromServer(data: order)
                 }
             }
-
-            }, error: { (error) in
+            
+        }, errorHandler: { (error) in
                 self.navbarIndicator.stopAnimating()
                
-                SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(error?.message)\n Please refresh page for new order to appear")
+            SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(String(describing: error.message))\n Please refresh page for new order to appear")
         })
         
         
@@ -215,33 +234,92 @@ class ActiveOrderAdmin: UIViewController, UITableViewDataSource, UITableViewDele
 
     @IBAction func refreshPressed(_ sender: UIBarButtonItem) {
          navbarIndicator.startAnimating()
-        // check and register for admin
-        backendless?.messaging.getRegistrationAsync({ (response) in
-            
-            if (response?.channels.contains("admin"))!{
-            self.refreshItems()
-            } else {
-                self.registerForAdmin()
-            }
-            }, error: { (fault) in
-                self.navbarIndicator.stopAnimating()
-               
-                SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(fault?.message)")
-        })
-        
-        
+        self.registerForAdmin()
     }
+        // check and register for admin
+//        backendless.messaging.getRegistrationAsync({ (response) in
+//
+//            if (response?.channels.contains("admin"))!{
+//            self.refreshItems()
+//            } else {
+//                self.registerForAdmin()
+//            }
+//            }, error: { (fault) in
+//                self.navbarIndicator.stopAnimating()
+//
+//                SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(fault?.message)")
+//        })
+        
+//
+//        backendless.messaging.getDeviceRegistrations(responseHandler: { (responses) in
+//            var is_registered_for_admin = false
+//            for response in responses {
+//                if (response.channels?.contains("admin") ?? false) {
+//                    is_registered_for_admin = true
+//                }
+//            }
+//            if (is_registered_for_admin){
+//                self.refreshItems()
+//            } else {
+//                self.registerForAdmin()
+//            }
+//        }) { (fault) in
+//            self.navbarIndicator.stopAnimating()
+//            SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(String(describing: fault.message))")
+//        }
+//
+        
+        
+        
+  //  }
     
     func registerForAdmin() {
-        backendless?.messaging.registerDevice(["admin"], response: { (response) in
+//        backendless?.messaging.registerDevice(deviceToken: ["admin"], responseHandler: { (response) in
+//
+//            self.refreshItems()
+//        }, errorHandler: { (fault) in
+//                self.navbarIndicator.stopAnimating()
+//
+//                SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(fault?.message)")
+//
+//        })
+        
+       
+        
+//        backendless.messaging.unregisterDevice(channels: ["admin"], responseHandler: { (response) in
+//            self.refreshItems()
+//        }) { (fault) in
+//            SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(String(describing: fault.message))")
+//        }
+        
+        backendless.messaging.getDeviceRegistrations(responseHandler: { (responses) in
+            var is_registered_for_admin = false
+            var device_token = ""
+            for response in responses {
+                if ((response.channels?.contains("admin"))!) {
+                    is_registered_for_admin = true
+                    device_token = response.deviceToken!
+                    break
+                }
+            }
+            if (is_registered_for_admin){
+                self.refreshItems()
+            } else {
+                //register for admin channel
             
-            self.refreshItems()
-            }, error: { (fault) in
-                self.navbarIndicator.stopAnimating()
-                
-                SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(fault?.message)")
-                
-        })
+                self.backendless.messaging.registerDevice(deviceToken: Data(device_token.utf8), channels: ["admin"], responseHandler: { (response) in
+                    self.refreshItems()
+                }) { (fault) in
+                    SCLAlertView().showError("Error", subTitle: "Cannot register this devie as admin as the following error occured : \(String(describing: fault.message))")
+                }
+            }
+        }) { (fault) in
+            self.navbarIndicator.stopAnimating()
+            SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(String(describing: fault.message))")
+        }
+        
+        
+        
     }
     
     func refreshItems() {
@@ -252,32 +330,32 @@ class ActiveOrderAdmin: UIViewController, UITableViewDataSource, UITableViewDele
         dateFormatter.dateFormat = "MM/dd/yyyy"
         let dateString = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: -1, to: Date())!)
         let queryBuilder = DataQueryBuilder()
-        queryBuilder?.setPageSize(100)
+        queryBuilder.setPageSize(pageSize: 100)
       
-        queryBuilder?.setWhereClause(String(format: "deliveryDate > %@", dateString))
+        queryBuilder.setWhereClause(whereClause: String(format: "deliveryDate > %@", dateString))
         
    
         if OrderData().deleteOrders(){
-            backendless?.data.of(OrderDetails.ofClass()).find(queryBuilder, response: { (data) in
+            backendless.data.of(OrderDetails.self).find(queryBuilder: queryBuilder, responseHandler: { (data) in
                 self.navbarIndicator.stopAnimating()
-                if data?.count == 0 {
+                if data.count == 0 {
                     
                     if OrderData().deleteOrders(){
                         self.orderDetails.removeAll()
                         
-                       self.viewDidAppear(true)
+                        self.viewDidAppear(true)
                     }
                 }
                 
-                for item in data! {
+                for item in data {
                     if let order = item as? OrderDetails {
                         self.getItemsFromServer(data: order)
                     }
                 }
-                }, error: { (fault) in
+            }, errorHandler: { (fault) in
                     self.navbarIndicator.stopAnimating()
                     
-                    SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(fault?.message)")
+                SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(String(describing: fault.message))")
             })
         }
     }
@@ -289,23 +367,23 @@ class ActiveOrderAdmin: UIViewController, UITableViewDataSource, UITableViewDele
         navbarIndicator.startAnimating()
         let whereClause = "orderId = "+data.orderId!
         let queryBuilder = DataQueryBuilder()
-        queryBuilder?.setPageSize(100)
-        queryBuilder?.setWhereClause(whereClause)
-        backendless?.data.of(OrderItems.ofClass()).find(queryBuilder, response: { (items) in
+        queryBuilder.setPageSize(pageSize: 100)
+        queryBuilder.setWhereClause(whereClause: whereClause)
+        backendless.data.of(OrderItems.self).find(queryBuilder: queryBuilder, responseHandler: { (items) in
             self.navbarIndicator.stopAnimating()
             
-            for item in items! {
+            for item in items {
                 if let orderitem = item as? OrderItems {
                     data.items?.append(orderitem)
                     
                 }
             }
             if OrderData().addOrder(orderDetails: data) {
-
+                
                 self.orderDetails.removeAll()
                 self.viewDidAppear(true)
             }
-            }, error: { (error) in
+        }, errorHandler: { (error) in
                 self.navbarIndicator.stopAnimating()
                 
                 if OrderData().addOrder(orderDetails: data) {

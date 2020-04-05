@@ -8,12 +8,13 @@
 
 import UIKit
 import SCLAlertView
+import Backendless
 
 class TodayOrders: UIViewController, UITableViewDelegate , UITableViewDataSource , UISearchBarDelegate , UISearchResultsUpdating {
     
     var i = 0
     
-    let backendless = Backendless.sharedInstance()
+    let backendless = Backendless.shared
     var navbarIndicator = UIActivityIndicatorView()
     var orderDetails = [OrderDetails]()
     let searchController = UISearchController(searchResultsController: nil)
@@ -137,20 +138,79 @@ class TodayOrders: UIViewController, UITableViewDelegate , UITableViewDataSource
 
     @IBAction func refreshPressed(_ sender: UIBarButtonItem) {
         navbarIndicator.startAnimating()
-        // check and register for admin
-        backendless?.messaging.getRegistrationAsync({ (response) in
-           
-            if (response?.channels.contains("admin"))!{
-                self.refreshItems()
-            } else {
-                self.registerForAdmin()
-            }
-            }, error: { (fault) in
-                self.navbarIndicator.stopAnimating()
-               
-                SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(fault?.message)")
-        })
+        registerForAdmin()
     }
+        // check and register for admin
+//        backendless.messaging.getRegistrationAsync({ (response) in
+//
+//            if (response?.channels.contains("admin"))!{
+//                self.refreshItems()
+//            } else {
+//                self.registerForAdmin()
+//            }
+//            }, error: { (fault) in
+//                self.navbarIndicator.stopAnimating()
+//
+//                SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(fault?.message)")
+//        })
+//
+//        backendless.messaging.getDeviceRegistrations(responseHandler: { (responses) in
+//            var is_registered_for_admin = false
+//            for response in responses {
+//                if ((response.channels?.contains("admin"))!) {
+//                    is_registered_for_admin = true
+//                }
+//            }
+//            is_registered_for_admin ? self.refreshItems() : self.registerForAdmin()
+//        }) { (fault) in
+//            self.navbarIndicator.stopAnimating()
+//
+//            SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(String(describing: fault.message))")
+//        }
+//    }
+    
+      func registerForAdmin() {
+          var is_registered_for_admin = false
+          var device_token = ""
+          backendless.messaging.getDeviceRegistrations(responseHandler: { (responses) in
+              for response in responses{
+                  if ((response.channels?.contains("admin"))!) {
+                      is_registered_for_admin = true
+                      device_token = response.deviceToken!
+                      break
+                  }
+              }
+              if(is_registered_for_admin){
+                  self.refreshItems()
+              } else {
+                  //Register for admin channel
+                  self.backendless.messaging.registerDevice(deviceToken: Data(device_token.utf8), channels: ["admin"], responseHandler: { (response) in
+                      self.refreshItems()
+                  }) { (fault) in
+                      self.navbarIndicator.stopAnimating()
+                      
+                  SCLAlertView().showError("Error", subTitle: "Cannot register as admin as the following error occured \(String(describing: fault.message))")
+                  }
+              }
+          }) { (fault) in
+              self.navbarIndicator.stopAnimating()
+              
+              SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(String(describing: fault.message))")
+          }
+      }
+//         backendless?.messaging.registerDevice(deviceToken: ["admin"], responseHandler: { (response) in
+//
+//             self.refreshItems()
+//         }, errorHandler: { (fault) in
+//                 self.navbarIndicator.stopAnimating()
+//
+//                 SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(fault?.message)")
+//
+//         })
+//
+//
+//     }
+    
     func refreshItems() {
         i = 0
         // only active orders are refreshed
@@ -161,16 +221,16 @@ class TodayOrders: UIViewController, UITableViewDelegate , UITableViewDataSource
     
        
         let queryBuilder = DataQueryBuilder()
-        queryBuilder?.setPageSize(100)
+        queryBuilder.setPageSize(pageSize: 100)
         
-        queryBuilder?.setWhereClause(String(format: "deliveryDate >= %@", dateString))
+        queryBuilder.setWhereClause(whereClause: String(format: "deliveryDate >= %@", dateString))
   
         if OrderData().deleteOrders(){
-            backendless?.data.of(OrderDetails.ofClass()).find(queryBuilder, response: { (data) in
+            backendless.data.of(OrderDetails.self).find(queryBuilder: queryBuilder, responseHandler: { (data) in
                 self.navbarIndicator.stopAnimating()
-               
-                if data?.count == 0 {
-                  
+                
+                if data.count == 0 {
+                    
                     if OrderData().deleteOrders(){
                         self.orderDetails.removeAll()
                         
@@ -178,54 +238,56 @@ class TodayOrders: UIViewController, UITableViewDelegate , UITableViewDataSource
                     }
                 }
                 
-                for item in data! {
+                for item in data {
                     if let order = item as? OrderDetails {
                         self.getItemsFromServer(data: order)
                     }
                 }
-                }, error: { (fault) in
+            }, errorHandler: { (fault) in
                     self.navbarIndicator.stopAnimating()
                    
-                    SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(fault?.message)")
+                SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(String(describing: fault.message))")
             })
         }
     }
     
-    func registerForAdmin() {
-        backendless?.messaging.registerDevice(["admin"], response: { (response) in
-          
-            self.refreshItems()
-            }, error: { (fault) in
-                self.navbarIndicator.stopAnimating()
-               
-                SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(fault?.message)")
-                
-        })
-    }
+//    func registerForAdmin() {
+//        backendless?.messaging.registerDevice(deviceToken: ["admin"], responseHandler: { (response) in
+//
+//            self.refreshItems()
+//        }, errorHandler: { (fault) in
+//                self.navbarIndicator.stopAnimating()
+//
+//                SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(fault?.message)")
+//
+//        })
+//
+//
+//    }
     
     func getItemsFromServer( data :OrderDetails) {
        
         navbarIndicator.startAnimating()
         let whereClause = "orderId = "+data.orderId!
         let queryBuilder = DataQueryBuilder()
-        queryBuilder?.setPageSize(100)
-        queryBuilder?.setWhereClause(whereClause)
-        backendless?.data.of(OrderItems.ofClass()).find(queryBuilder, response: { (items) in
+        queryBuilder.setPageSize(pageSize: 100)
+        queryBuilder.setWhereClause(whereClause: whereClause)
+        backendless.data.of(OrderItems.self).find(queryBuilder: queryBuilder, responseHandler: { (items) in
             self.navbarIndicator.stopAnimating()
-           
-            for item in items! {
+            
+            for item in items {
                 if let orderitem = item as? OrderItems {
                     data.items?.append(orderitem)
                     
                 }
             }
             if OrderData().addOrder(orderDetails: data) {
-              
-
+                
+                
                 self.orderDetails.removeAll()
                 self.viewDidAppear(true)
             }
-            }, error: { (error) in
+        }, errorHandler: { (error) in
                 self.navbarIndicator.stopAnimating()
              
                 if OrderData().addOrder(orderDetails: data) {

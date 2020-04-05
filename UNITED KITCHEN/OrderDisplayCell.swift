@@ -10,10 +10,11 @@ import UIKit
 import FlexibleSteppedProgressBar
 import SCLAlertView
 import SwiftLocation
+import Backendless
 
 class OrderDisplayCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
     
-    let backendless = Backendless.sharedInstance()
+    let backendless = Backendless.shared
     var giftedLabel = UILabel()
     var statusLabel = UILabel()
     var navInd = UIActivityIndicatorView()
@@ -222,20 +223,20 @@ class OrderDisplayCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
             order.isDelivered = "1"
         }
         statusLabel.text = getStatus(code: order.status!)
-        backendless?.data.of(OrderDetails.ofClass()).save(order, response: { (result) in
-          
+        backendless.data.of(OrderDetails.self).save(entity: order, responseHandler: { (result) in
+            
             if OrderData().updateOrder(id: self.order.orderId!, status: "\(index)") {
                 self.sendNotification(order: self.order)
             }
             
             
-            }, error: { (error) in
+        }, errorHandler: { (error) in
              self.order.status = "\(preIndex)"
              progressBar.currentIndex = preIndex
              self.statusLabel.text = self.order.status
              self.order.isDelivered = "0"
                 self.navInd.stopAnimating()
-            SCLAlertView().showError("Cannot update", subTitle: "Server entry cannot be updated because of the following error \(error?.message)")
+            SCLAlertView().showError("Cannot update", subTitle: "Server entry cannot be updated because of the following error \(String(describing: error.message))")
         })
         
         
@@ -263,7 +264,8 @@ class OrderDisplayCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
         let publishOptions = PublishOptions()
 //        let headers = ["ios-alert":" Order Update recieved","ios-badge":"1","ios-sound":"default","type":"orderupdate","orderId":order.orderId!,"status":order.status!,"android-ticker-text":" Order Update","android-content-title":order.orderId,"android-content-text":order.status]
         let headers = ["ios-alert":" Order Update recieved","ios-badge":"1","ios-sound":"default","type":"orderupdate","orderId":order.orderId!,"status":order.status!]
-        publishOptions.assignHeaders(headers)
+     //   publishOptions.assignHeaders(headers)
+        publishOptions.setHeaders(headers: headers)
 //        backendless?.messaging.publish("C"+order.phoneNumber!, message: "Any", publishOptions: publishOptions, response: { (status) in
 //           
 //            self.navInd.stopAnimating()
@@ -273,21 +275,22 @@ class OrderDisplayCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
 //        })
         
         if order.isGifted == "1" {
-            backendless?.messaging.publish("C"+order.giftedBy!, message: "ANy", publishOptions: publishOptions, response: { (resposne) in
-              
-                }, error: { (fault) in
+            backendless.messaging.publish(channelName: "C"+order.giftedBy!, message: "ANy", publishOptions: publishOptions, responseHandler: { (resposne) in
+                
+            }, errorHandler: { (fault) in
                    
             })
         }
         
         let deliveryOptions = DeliveryOptions()
-        deliveryOptions.pushBroadcast(FOR_IOS.rawValue)
+      //  deliveryOptions.pushBroadcast(FOR_IOS.rawValue)
+        deliveryOptions.setPushBroadcast(pushBroadcast: PushBroadcastEnum.FOR_IOS.rawValue)
         
-        backendless?.messaging.publish("C"+order.phoneNumber!, message: "Any", publishOptions: publishOptions, deliveryOptions: deliveryOptions, response: { (status) in
+        backendless.messaging.publish(channelName: "C"+order.phoneNumber!, message: "Any", publishOptions: publishOptions, deliveryOptions: deliveryOptions, responseHandler: { (status) in
             self.navInd.stopAnimating()
-            }, error: { (error) in
+        }, errorHandler: { (error) in
                 self.navInd.stopAnimating()
-                SCLAlertView().showWarning("Cannot notify", subTitle: "Notification couldnt be sent as the following fault occured \(error?.message)")
+            SCLAlertView().showWarning("Cannot notify", subTitle: "Notification couldnt be sent as the following fault occured \(String(describing: error.message))")
         })
         
         
@@ -295,16 +298,18 @@ class OrderDisplayCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
 //        print("sending android")
         
         
-        var publishOptions1 = PublishOptions()
+        let publishOptions1 = PublishOptions()
 //        let headers1 = ["android-ticker-text":" Order Update","android-content-title":order.orderId,"android-content-text":order.status,"orderid":order.orderId]
           let headers1 = ["android-ticker-text":" Order Update","android-content-title":order.orderId,"android-content-text":order.status,"orderid":order.orderId]
-        publishOptions1.assignHeaders(headers1)
+       // publishOptions1.assignHeaders(headers1)
+        publishOptions1.setHeaders(headers: headers1 as [String : Any])
         let deliveryOptions1 = DeliveryOptions()
-        deliveryOptions.pushBroadcast(FOR_ANDROID.rawValue)
-        backendless?.messaging.publish("C"+order.phoneNumber!, message: order.orderId!+"and"+order.status!, publishOptions: publishOptions1, deliveryOptions: deliveryOptions1, response: { (status) in
+       // deliveryOptions.pushBroadcast(FOR_ANDROID.rawValue)
+        deliveryOptions.setPushBroadcast(pushBroadcast: PushBroadcastEnum.FOR_ANDROID.rawValue)
+        backendless.messaging.publish(channelName: "C"+order.phoneNumber!, message: order.orderId!+"and"+order.status!, publishOptions: publishOptions1, deliveryOptions: deliveryOptions1, responseHandler: { (status) in
             //do nothing
-        
-            }, error: { (fault) in
+            
+        }, errorHandler: { (fault) in
                 //do nothing
             
         })
@@ -325,13 +330,13 @@ class OrderDisplayCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
         navInd.startAnimating()
         let whereClause = "orderId = "+order.orderId!
         let queryBuilder = DataQueryBuilder()
-        queryBuilder?.setPageSize(100)
-        queryBuilder?.setWhereClause(whereClause)
-        backendless?.data.of(OrderItems.ofClass()).find(queryBuilder, response: { (data) in
+        queryBuilder.setPageSize(pageSize: 100)
+        queryBuilder.setWhereClause(whereClause: whereClause)
+        backendless.data.of(OrderItems.self).find(queryBuilder: queryBuilder, responseHandler: { (data) in
             self.navInd.stopAnimating()
-        
-            if (data?.count)! > 0 {
-                for element in data! {
+            
+            if (data.count) > 0 {
+                for element in data {
                     if let item = element as? OrderItems {
                         self.order.items?.append(item)
                     }
@@ -344,10 +349,10 @@ class OrderDisplayCell: UITableViewCell , FlexibleSteppedProgressBarDelegate{
                     }
                 }
             }
-            }, error: { (error) in
+        }, errorHandler: { (error) in
                 self.navInd.stopAnimating()
                 
-                SCLAlertView().showWarning("Error", subTitle: "Cannot get items because of the error \(error?.message)")
+            SCLAlertView().showWarning("Error", subTitle: "Cannot get items because of the error \(String(describing: error.message))")
         })
         
         

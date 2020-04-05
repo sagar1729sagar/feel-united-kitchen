@@ -11,10 +11,11 @@ import SCLAlertView
 import DCAnimationKit
 import SwiftLocation
 import MapKit
+import Backendless
 
 class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableViewDataSource {
 
-    let backendless = Backendless.sharedInstance()
+    let backendless = Backendless.shared
     var navbarIndicator = UIActivityIndicatorView()
     var searchTF = UITextField()
     var addButton = UIButton()
@@ -256,22 +257,22 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
         navbarIndicator.startAnimating()
         let whereClause = "orderId = "+searchTF.text!
         let query = DataQueryBuilder()
-        query?.setWhereClause(whereClause)
-        backendless?.data.of(OrderDetails.ofClass()).find(query, response: { (data) in
-            if data?.count == 0 {
-                self.navbarIndicator.stopAnimating()
-            SCLAlertView().showWarning("Error", subTitle: "No such order exist")
-            } else {
-                if let order = data![0] as? OrderDetails {
-                    if order.status != "3" {
-                        self.navbarIndicator.stopAnimating()
-                    SCLAlertView().showWarning("Too soon", subTitle: "Order not ready for delivery")
-                    } else {
-                        self.changeLocationTackingChannel(data: order)
+            query.setWhereClause(whereClause: whereClause)
+            backendless.data.of(OrderDetails.self).find(queryBuilder: query, responseHandler: { (data) in
+                if data.count == 0 {
+                    self.navbarIndicator.stopAnimating()
+                    SCLAlertView().showWarning("Error", subTitle: "No such order exist")
+                } else {
+                    if let order = data[0] as? OrderDetails {
+                        if order.status != "3" {
+                            self.navbarIndicator.stopAnimating()
+                            SCLAlertView().showWarning("Too soon", subTitle: "Order not ready for delivery")
+                        } else {
+                            self.changeLocationTackingChannel(data: order)
+                        }
                     }
                 }
-            }
-            }, error: { (fault) in
+            }, errorHandler: { (fault) in
                 self.navbarIndicator.stopAnimating()
                 SCLAlertView().showWarning("Cannot fetch", subTitle: "Error : \(fault)")
         })
@@ -282,14 +283,14 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
     func changeLocationTackingChannel(data :OrderDetails) {
     data.status = "4"
     data.locationTrackingChannel = "C"+ProfileData().getProfile().0.phoneNumber!
-    backendless?.data.of(OrderDetails.ofClass()).save(data, response: { (result) in
-        if let returned = data as? OrderDetails {
-            if OrderData().addOrder(orderDetails: data) {
-                self.sendNotification(data : returned)
-                self.table.reloadData()
+        backendless.data.of(OrderDetails.self).save(entity: data, responseHandler: { (result) in
+            if let returned = data as? OrderDetails {
+                if OrderData().addOrder(orderDetails: data) {
+                    self.sendNotification(data : returned)
+                    self.table.reloadData()
+                }
             }
-        }
-        }, error: { (error) in
+        }, errorHandler: { (error) in
             self.navbarIndicator.stopAnimating()
             SCLAlertView().showWarning("Error", subTitle: "The following error has occured while updating order status \n\(error)\n Please try again")
     })
@@ -298,20 +299,21 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
     func sendNotification(data : OrderDetails) {
         let publishOptions = PublishOptions()
         let headers = ["ios-alert":" Order Update recieved","ios-badge":"1","ios-sound":"default","type":"orderupdate","orderId":data.orderId!,"status":data.status!]
-        publishOptions.assignHeaders(headers)
-        backendless?.messaging.publish("C"+data.phoneNumber!, message: "Any", publishOptions: publishOptions, response: { (response) in
-           
+        //publishOptions.assignHeaders(headers)
+        publishOptions.setHeaders(headers: headers)
+        backendless.messaging.publish(channelName: "C"+data.phoneNumber!, message: "Any", publishOptions: publishOptions, responseHandler: { (response) in
+            
             self.navbarIndicator.stopAnimating()
             self.sendOrderUpdatesToAdmin(data: data)
             
             if data.isGifted == "1" {
                 
                 
-                self.backendless?.messaging.publish("C"+data.giftedBy!, message: "any", publishOptions: publishOptions, response: { (response) in
+                self.backendless.messaging.publish(channelName: "C"+data.giftedBy!, message: "any", publishOptions: publishOptions, responseHandler: { (response) in
                     
-                    }, error: { (error) in
-                        
-
+                }, errorHandler: { (error) in
+                    
+                    
                 })
                 
             }
@@ -319,7 +321,7 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
             
             
             
-            }, error: { (error) in
+        }, errorHandler: { (error) in
                 self.navbarIndicator.stopAnimating()
                 
         })
@@ -398,13 +400,13 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
                // debugPrint("Received error: \(error)")
               case .success(let location):
                 let coordinates = location.coordinate
-                            let message = Message()
-                            message.data = coordinates
+//                            let message = Message()
+//                            message.data = coordinates
                         
-                            self.backendless?.messaging.publish("C"+ProfileData().getProfile().0.phoneNumber!, message: "\(coordinates)", response: { (response) in
-                
-                                self.navbarIndicator.stopAnimating()
-                                }, error: { (error) in
+                self.backendless.messaging.publish(channelName: "C"+ProfileData().getProfile().0.phoneNumber!, message: "\(coordinates)", responseHandler: { (response) in
+                    
+                    self.navbarIndicator.stopAnimating()
+                }, errorHandler: { (error) in
                                     self.navbarIndicator.stopAnimating()
                 
                             })
@@ -429,7 +431,7 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
         order.status = "5"
         order.isDelivered = "1"
         navbarIndicator.startAnimating()
-        backendless?.data.of(OrderDetails.ofClass()).save(order, response: { (response) in
+        backendless.data.of(OrderDetails.self).save(entity: order, responseHandler: { (response) in
            
             if let data = response as? OrderDetails {
                 
@@ -456,9 +458,10 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
     func sendOrderUpdatesToAdmin(data : OrderDetails) {
         let publishOptions = PublishOptions()
         let headers = ["ios-alert":" Order Update recieved","ios-badge":"1","ios-sound":"default","type":"orderupdateadmin","orderId":data.orderId!,"status":data.status!]
-        publishOptions.assignHeaders(headers)
-        backendless?.messaging.publish("admin", message: "Any", publishOptions: publishOptions, response: { (response) in
-            }, error: { (error) in
+      //  publishOptions.assignHeaders(headers)
+        publishOptions.setHeaders(headers: headers)
+        backendless.messaging.publish(channelName: "admin", message: "Any", publishOptions: publishOptions, responseHandler: { (response) in
+        }, errorHandler: { (error) in
             
         })
         

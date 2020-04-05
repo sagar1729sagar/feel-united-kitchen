@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MapKit
 
 class Misc {
     func isValidEmail(testStr:String) -> Bool {
@@ -19,6 +20,7 @@ class Misc {
     func getCoordinates( data : String) -> CLLocationCoordinate2D {
         
         let index1 = data.characters.index(of: ":")
+      //  let index1 = data.index(of: ":")
         let str1 = data.substring(from: index1!)
         let index2 = str1.index(str1.startIndex, offsetBy: 2)
         let str2 = str1.substring(from: index2)

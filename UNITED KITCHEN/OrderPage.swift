@@ -9,10 +9,11 @@
 import UIKit
 import SCLAlertView
 import BTNavigationDropdownMenu
+import Backendless
 
 
 class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource {
-    let backendless = Backendless.sharedInstance()
+    let backendless = Backendless.shared
     var navbarIndicator = UIActivityIndicatorView()
     var orders = [OrderDetails]()
     var activeOrders = [OrderDetails]()
@@ -25,6 +26,7 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
     
     @IBOutlet weak var locationUpdatingButton: UIBarButtonItem!
     @IBOutlet weak var orderTable: UITableView!
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -293,37 +295,85 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
         navbarIndicator.startAnimating()
         // check for reg
          let reqChannel = "C"+ProfileData().getProfile().0.phoneNumber!
-     // print(678)
-        backendless?.messaging.getRegistrationAsync({ (response) in
-            
-            if (response?.channels.contains(reqChannel))!{
-                self.refreshOrders()
-            } else {
-                self.registerForChennal(channel: reqChannel)
-            }
-            }, error: { (fault) in
-                self.navbarIndicator.stopAnimating()
-                
-                SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(fault?.message)")
-        })
-            
+        registerForChennal(channel: reqChannel)
         }
-        
-        
-        
     }
+     // print(678)
+//            backendless.messaging.getRegistrationAsync({ (response) in
+//            
+//            if (response?.channels.contains(reqChannel))!{
+//                self.refreshOrders()
+//            } else {
+//                self.registerForChennal(channel: reqChannel)
+//            }
+//            }, error: { (fault) in
+//                self.navbarIndicator.stopAnimating()
+//                
+//                SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(fault?.message)")
+//        })
+            
+//            backendless.messaging.getDeviceRegistrations(responseHandler: { (responses) in
+//                var is_req_channel_present = false
+//                for response in responses{
+//                    if (response.channels?.contains(reqChannel))! {
+//                        is_req_channel_present = true
+//                    }
+//                }
+//                is_req_channel_present ? self.refreshOrders() : self.registerForChennal(channel: reqChannel)
+//            }) { (fault) in
+//                self.navbarIndicator.stopAnimating()
+//
+//                SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(String(describing: fault.message))")
+//            }
+//
+//        }
+//
+//
+//
+//    }
     
     
     func registerForChennal(channel : String){
-        backendless?.messaging.registerDevice([channel], response: { (response) in
-         
-            self.refreshOrders()
-            }, error: { (fault) in
-                self.navbarIndicator.stopAnimating()
-               
-                SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(fault?.message)")
-        })
+        backendless.messaging.getDeviceRegistrations(responseHandler: { (responsnes) in
+            var is_registered_for_req_channel = false
+            var device_token = ""
+            for response in responsnes{
+                if ((response.channels?.contains(channel))!){
+                    is_registered_for_req_channel = true
+                    device_token = response.deviceToken!
+                    break
+                }
+            }
+            if(is_registered_for_req_channel){
+                self.refreshOrders()
+            } else {
+                self.backendless.messaging.registerDevice(deviceToken: Data(device_token.utf8), channels: [channel], responseHandler: { (response) in
+                    self.refreshOrders()
+                }) { (fault) in
+            SCLAlertView().showError("Error", subTitle: "Cannot register for notification channel as the following error occured \(String(describing: fault.message))")
+                }
+            }
+        }) { (fault) in
+            self.navbarIndicator.stopAnimating()
+            SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(String(describing: fault.message))")
+        }
     }
+//        backendless?.messaging.registerDevice(deviceToken: [channel], responseHandler: { (response) in
+//
+//            self.refreshOrders()
+//        }, errorHandler: { (fault) in
+//                self.navbarIndicator.stopAnimating()
+//
+//                SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(fault?.message)")
+//        })
+        
+//        backendless.messaging.unregisterDevice(channels: [channel], responseHandler: { (response) in
+//            self.refreshOrders()
+//        }) { (fault) in
+//            SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(String(describing: fault.message))")
+//        }
+//
+//    }
     
     func refreshOrders() {
         
@@ -331,34 +381,34 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
     
         let whereClause = "phoneNumber = "+ProfileData().getProfile().0.phoneNumber!+" or giftedBy = "+ProfileData().getProfile().0.phoneNumber!
         let query = DataQueryBuilder()
-        query?.setPageSize(100)
-        query?.setWhereClause(whereClause)
+        query.setPageSize(pageSize: 100)
+        query.setWhereClause(whereClause: whereClause)
         
-        backendless?.data.of(OrderDetails.ofClass()).find(query, response: { (data) in
-         // print(2)
-           // print(data)
+        backendless.data.of(OrderDetails.self).find(queryBuilder: query, responseHandler: { (data) in
+            // print(2)
+            // print(data)
             self.navbarIndicator.stopAnimating()
-            if data?.count == 0 {
+            if data.count == 0 {
                 if OrderData().deleteOrders(){
                     self.viewDidAppear(true)
                 }
             } else {
                 if OrderData().deleteOrders() {
-                for item in data! {
-                   // print(3)
-                    if let order = item as? OrderDetails {
-                      //  print(order)
-                        self.getItemsFromServer(data : order)
-                       // print(4)
+                    for item in data {
+                        // print(3)
+                        if let order = item as? OrderDetails {
+                            //  print(order)
+                            self.getItemsFromServer(data : order)
+                            // print(4)
+                        }
                     }
                 }
             }
-            }
-            }, error: { (fault) in
+        }, errorHandler: { (fault) in
                // print(fault)
                 self.navbarIndicator.stopAnimating()
                
-                SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(fault?.message)")
+            SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(String(describing: fault.message))")
         })
         
     }
@@ -370,21 +420,21 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
         data.items = [OrderItems]()
         let whereClause = "orderId = "+data.orderId!
         let queryBuilder = DataQueryBuilder()
-        queryBuilder?.setPageSize(100)
-        queryBuilder?.setWhereClause(whereClause)
+        queryBuilder.setPageSize(pageSize: 100)
+        queryBuilder.setWhereClause(whereClause: whereClause)
         
-        backendless?.data.of(OrderItems.ofClass()).find(queryBuilder, response: { (items) in
-           // print(items)
-           // print("Found objects: \(items as! [OrderItems])")
-            for item in items! {
-               // print(item)
-               // print("got items for \(data.orderId!)")
+        backendless.data.of(OrderItems.self).find(queryBuilder: queryBuilder, responseHandler: { (items) in
+            // print(items)
+            // print("Found objects: \(items as! [OrderItems])")
+            for item in items {
+                // print(item)
+                // print("got items for \(data.orderId!)")
                 if let orderItem = item as? OrderItems {
-//                   print(6)
-//                    print(orderItem.name)
-//                    print(type(of: orderItem))
+                    //                   print(6)
+                    //                    print(orderItem.name)
+                    //                    print(type(of: orderItem))
                     data.items?.append(orderItem)
-                  //  print(data.items?.count)
+                    //  print(data.items?.count)
                 }
             }
             // add to db
@@ -393,8 +443,8 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
                 self.viewDidAppear(true)
             }
             
-            }, error: { (fault) in
-                 SCLAlertView().showError("Error", subTitle: "Cannot fetch items as the following error occured \(fault?.message)")
+        }, errorHandler: { (fault) in
+            SCLAlertView().showError("Error", subTitle: "Cannot fetch items as the following error occured \(String(describing: fault.message))")
         })
     }
     
@@ -462,10 +512,10 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
      
         let whereclause = "orderId = "+ids[iterationNumber - 1]
         let query = DataQueryBuilder()
-        query?.setWhereClause(whereclause)
-        backendless?.data.of(OrderDetails.ofClass()).find(query, response: { (data) in
-            if data?.count != 0 {
-                if let obj = data?[0] as? OrderDetails {
+        query.setWhereClause(whereClause: whereclause)
+        backendless.data.of(OrderDetails.self).find(queryBuilder: query, responseHandler: { (data) in
+            if data.count != 0 {
+                if let obj = data[0] as? OrderDetails {
                     if OrderData().updateLocationTrackingChannel(id: obj.orderId!, channel: obj.locationTrackingChannel!){
                     self.channels.append(obj.locationTrackingChannel!)
                     }
@@ -478,7 +528,7 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
             }
             }) { (error) in
                 self.navbarIndicator.stopAnimating()
-                SCLAlertView().showNotice("Error", subTitle: "The following error has occured while fetching location tracking channels\n\(error?.message)\nPlease try again")
+                SCLAlertView().showNotice("Error", subTitle: "The following error has occured while fetching location tracking channels\n\(String(describing: error.message))\nPlease try again")
                 self.navbarIndicator.stopAnimating()
         }
         

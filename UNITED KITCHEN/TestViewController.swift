@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import Backendless
 
 class TestViewController: UIViewController {
     
-    let backendless = Backendless.sharedInstance()
+    let backendless = Backendless.shared
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,9 +20,9 @@ class TestViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        backendless?.messaging.publish("default", message: "Hello", response: { (status) in
+        backendless.messaging.publish(channelName: "default", message: "Hello", responseHandler: { (status) in
             
-            }, error: { (fault) in
+        }, errorHandler: { (fault) in
             
         })
     }

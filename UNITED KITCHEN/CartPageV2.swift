@@ -10,6 +10,7 @@ import UIKit
 import SCLAlertView
 import DCAnimationKit
 import Firebase
+import Backendless
 
 class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource {
     
@@ -20,7 +21,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
     @IBOutlet weak var table: UITableView!
     var navbarIndicator = UIActivityIndicatorView()
     var profileCount = 0
-    let backendless = Backendless.sharedInstance()
+    let backendless = Backendless.shared
     var itemCount = 0
     var menuItems = [Item]()
     var splCell = AddressSelectionCell()
@@ -693,7 +694,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
             allTimes.append(item.deliveryTime!)
         }
         
-        backendless?.data.of(OrderTimes.ofClass()).find({ (data) in
+        backendless.data.of(OrderTimes.self).find(responseHandler: { (data) in
             self.navigationItem.leftBarButtonItems?[0].isEnabled = true
             self.navigationItem.rightBarButtonItems?[0].isEnabled = true
             self.navbarIndicator.stopAnimating()
@@ -702,7 +703,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
             self.splCell.giftButton.isEnabled = true
             
             
-            if let fecthedTimes = data?[0] as? OrderTimes {
+            if let fecthedTimes = data[0] as? OrderTimes {
                 
                 
                 /**
@@ -710,7 +711,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
                  First check for past date
                  if its past, turn false
                  If its present or fute, check times
-                  **/
+                 **/
                 let hour = Calendar.current.component(.hour, from: Date())
                 for i in 0...(self.allDates.count - 1){
                     let ppf = DateHandler().isPastPresenFuture(date: self.allDates[i])
@@ -718,20 +719,20 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
                         // pastDate
                         self.statusArray.append(false)
                     } else if ppf == 1 {
-                        // present 
-                    
+                        // present
+                        
                         let endTimes = self.closeTimes(weekday: DateHandler().getDayofweekfor(date: self.allDates[i]), data: fecthedTimes)
                         if self.allTimes[i] == "Lunch" {
                             if hour < endTimes.0 {
-                            self.statusArray.append(true)
+                                self.statusArray.append(true)
                             } else {
-                            self.statusArray.append(false)
+                                self.statusArray.append(false)
                             }
                         } else if self.allTimes[i] == "Dinner" {
                             if hour < endTimes.1 {
-                            self.statusArray.append(true)
+                                self.statusArray.append(true)
                             } else {
-                            self.statusArray.append(false)
+                                self.statusArray.append(false)
                             }
                         }
                     } else if ppf == 2 {
@@ -740,32 +741,32 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
                         let endTimes = self.closeTimes(weekday: DateHandler().getDayofweekfor(date: self.allDates[i]), data: fecthedTimes)
                         if self.allTimes[i] == "Lunch" {
                             if endTimes.0 == 0 {
-                            self.statusArray.append(false)
+                                self.statusArray.append(false)
                             } else {
-                            self.statusArray.append(true)
+                                self.statusArray.append(true)
                             }
                         } else if self.allTimes[i] == "Dinner" {
                             if endTimes.1 == 0 {
-                            self.statusArray.append(false)
+                                self.statusArray.append(false)
                             } else {
-                            self.statusArray.append(true)
+                                self.statusArray.append(true)
                             }
                         }
                     }
-                
+                    
                 }
                 
                 
-                // 
+                //
                 
                 
                 //
                 //strings to be removed
                 for i in 0...(self.statusArray.count - 1) {
-                
+                    
                     if !self.statusArray[i] {
                         let removedString = DateHandler().dateToString(date: self.allDates[i])+" ("+self.allTimes[i]+")"
-                       
+                        
                         if !self.tobeRemovedItems.contains(removedString) {
                             
                             self.tobeRemovedItems.append(removedString)
@@ -774,26 +775,26 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
                 }
                 
                 if self.tobeRemovedItems.count == 0 {
-                
+                    
                     
                     if Double(self.getTotal())! >= Double(fecthedTimes.minAmount!)! {
-                      
+                        
                         self.placeOrder(addressType : addressType)
                         
                     } else {
                         SCLAlertView().showWarning("Min. amout required", subTitle: "The minimun amount required to place an ordr is $\(fecthedTimes.minAmount!) \n Plese add more item \n P.S You can place order for future dates also to meet the min amount requirement")
                     }
                     
-                                   } else {
+                } else {
                     // display popup
                     
                     
                     self.askForDelete(items : self.tobeRemovedItems)
                 }
                 
-            
+                
             }
-            }, error: { (error) in
+        }, errorHandler: { (error) in
             self.splCell.orderButton.isEnabled = true
             self.splCell.giftButton.isEnabled = true
             self.giftCell.proceedButton.isEnabled = true
@@ -801,7 +802,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
             self.navigationItem.leftBarButtonItems?[0].isEnabled = true
             self.navigationItem.rightBarButtonItems?[0].isEnabled = true
             self.navbarIndicator.stopAnimating()
-            SCLAlertView().showError("Cannot connect", subTitle: "Cannot connect to kitchen with error : \(error?.detail!). Please check your internet connection and try again")
+            SCLAlertView().showError("Cannot connect", subTitle: "Cannot connect to kitchen with error : \(String(describing: error.message)). Please check your internet connection and try again")
         })
    
         
@@ -846,7 +847,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
         splCell.giftButton.isEnabled = false
         orderIds.removeAll()
         ordersSaved = 0
-        for i in 0...(dates.count - 1){
+        for _ in 0...(dates.count - 1){
             
             let updatedProfile = ProfileData().incrementOrderCount().0
             orderIds.append(updatedProfile.phoneNumber!+updatedProfile.orderCount!)
@@ -856,15 +857,15 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
         // save profile in backendless
         self.navbarIndicator.startAnimating()
 
-        backendless?.data.of(Profile.ofClass()).save(ProfileData().getProfile().0, response: { (data) in
-        
+        backendless.data.of(Profile.self).save(entity: ProfileData().getProfile().0, responseHandler: { (data) in
             
-                // save items
-                // save orders
+            
+            // save items
+            // save orders
             /// relations are ignored
-           
-                        self.saveOrders(addressType: addressType, updatedProfile: ProfileData().getProfile().0)
-            }, error: { (fault) in
+            
+            self.saveOrders(addressType: addressType, updatedProfile: ProfileData().getProfile().0)
+        }, errorHandler: { (fault) in
                 self.splCell.orderButton.isEnabled = true
                 self.splCell.giftButton.isEnabled = true
                 self.giftCell.proceedButton.isEnabled = true
@@ -874,7 +875,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
                 self.navbarIndicator.stopAnimating()
                 self.navbarIndicator.stopAnimating()
             
-                SCLAlertView().showWarning("Apologies", subTitle: "Cannot place your order as the following error has occured \n\(fault?.message) \n Please try again")
+            SCLAlertView().showWarning("Apologies", subTitle: "Cannot place your order as the following error has occured \n\(String(describing: fault.message)) \n Please try again")
         })
         
         
@@ -915,8 +916,8 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
             }
             if addressType == 0 {
                 if locCell.coordinate != nil {
-                    orderDetails.longitude = "\(locCell.coordinate?.longitude)"
-                    orderDetails.latitude = "\(locCell.coordinate?.latitude)"
+                    orderDetails.longitude = "\(String(describing: locCell.coordinate?.longitude))"
+                    orderDetails.latitude = "\(String(describing: locCell.coordinate?.latitude))"
                 
                 } else {
                     orderDetails.latitude = "0"
@@ -951,14 +952,14 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
             newItem.orderId = details.orderId
             newItem.quantity = items[itemNumber - 1].itemQuantity
            
-            backendless?.data.of(OrderItems.ofClass()).save(newItem, response: { (result) in
+            backendless.data.of(OrderItems.self).save(entity: newItem, responseHandler: { (result) in
                 if let data = result as? OrderItems {
                     
                     var intr = savedOrderItems
                     intr.append(data)
-                self.initiateSave(items: items, details: details, itemNumber: itemNumber + 1, savedOrderItems: intr)
+                    self.initiateSave(items: items, details: details, itemNumber: itemNumber + 1, savedOrderItems: intr)
                 }
-                }, error: { (error) in
+            }, errorHandler: { (error) in
                     self.splCell.orderButton.isEnabled = true
                     self.splCell.giftButton.isEnabled = true
                     self.giftCell.proceedButton.isEnabled = true
@@ -967,13 +968,13 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
                     self.navigationItem.rightBarButtonItems?[0].isEnabled = true
                     self.navbarIndicator.stopAnimating()
                     self.navbarIndicator.stopAnimating()
-                    SCLAlertView().showWarning("Error", subTitle: "We cannot place the order as the following error has occured \n \(error?.message) Please try again ")
+                SCLAlertView().showWarning("Error", subTitle: "We cannot place the order as the following error has occured \n \(String(describing: error.message)) Please try again ")
                     
             })
         } else {
-            backendless?.data.of(OrderDetails.ofClass()).save(details, response: { (result) in
+            backendless.data.of(OrderDetails.self).save(entity: details, responseHandler: { (result) in
                 if let data = result as? OrderDetails {
-                   
+                    
                     self.sendNotification(data: data)
                     data.items = savedOrderItems
                     if OrderData().addOrder(orderDetails: data) {
@@ -984,16 +985,16 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
                                 self.splCell.orderButton.isEnabled = true
                                 self.splCell.giftButton.isEnabled = true
                                 self.giftCell.proceedButton.isEnabled = true
-                             
+                                
                                 self.navigationItem.leftBarButtonItems?[0].isEnabled = true
                                 self.navigationItem.rightBarButtonItems?[0].isEnabled = true
                                 self.navbarIndicator.stopAnimating()
-                        self.tabBarController?.selectedIndex = 2
+                                self.tabBarController?.selectedIndex = 2
                             }
                         } else {
                             for item in items {
                                 if CartData().deleteItem(ofName: item.itemName!, date: item.addedDate!, time: item.deliveryTime!) {
-                                // do nothing
+                                    // do nothing
                                 }
                             }
                         }
@@ -1001,7 +1002,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
                 }
                 
                 
-                }, error: { (error) in
+            }, errorHandler: { (error) in
                     self.splCell.orderButton.isEnabled = true
                     self.splCell.giftButton.isEnabled = true
                     self.giftCell.proceedButton.isEnabled = true
@@ -1010,7 +1011,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
                     self.navigationItem.rightBarButtonItems?[0].isEnabled = true
                     self.navbarIndicator.stopAnimating()
                self.navbarIndicator.stopAnimating()
-                    SCLAlertView().showWarning("Error", subTitle: "We cannot place the order as the following error has occured \n \(error?.message) Please try again ")
+                SCLAlertView().showWarning("Error", subTitle: "We cannot place the order as the following error has occured \n \(error.message) Please try again ")
             })
         }
         
@@ -1023,11 +1024,11 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
         
         let publishOptions = PublishOptions()
         let headers = ["ios-alert":"New Order recieved","ios-badge":"1","ios-sound":"default","type":"neworder","orderId":data.orderId!]
-        publishOptions.assignHeaders(headers)
-        
-        backendless?.messaging.publish("admin", message: "New order", publishOptions: publishOptions, response: { (status) in
-
-            }, error: { (error) in
+        //publishOptions.assignHeaders(headers)
+        publishOptions.setHeaders(headers: headers)
+        backendless.messaging.publish(channelName: "admin", message: "New order", publishOptions: publishOptions, responseHandler: { (status) in
+            
+        }, errorHandler: { (error) in
  
         })
     }

@@ -1,5 +1,6 @@
 PODS:
-  - Backendless (4.0b2)
+  - BackendlessSwift (5.7.7):
+    - Socket.IO-Client-Swift
   - BTNavigationDropdownMenu (0.4.1)
   - Cosmos (8.0.2)
   - DCAnimationKit (0.0.6)
@@ -86,6 +87,9 @@ PODS:
   - SDWebImage (3.8.3):
     - SDWebImage/Core (= 3.8.3)
   - SDWebImage/Core (3.8.3)
+  - Socket.IO-Client-Swift (15.2.0):
+    - Starscream (~> 3.1)
+  - Starscream (3.1.1)
   - SwiftForms (1.8.2)
   - SwiftLocation (4.2.0)
   - UIActivityIndicator-for-SDWebImage (1.2):
@@ -93,7 +97,7 @@ PODS:
   - UIDropDown (1.1.1)
 
 DEPENDENCIES:
-  - Backendless (= 4.0b2)
+  - BackendlessSwift
   - BTNavigationDropdownMenu (from `https://github.com/PhamBaTho/BTNavigationDropdownMenu.git`, branch `swift-3.0`)
   - Cosmos (~> 8.0)
   - DCAnimationKit
@@ -114,7 +118,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - Backendless
+    - BackendlessSwift
     - Cosmos
     - DCAnimationKit
     - DropDown
@@ -140,6 +144,8 @@ SPEC REPOS:
     - PromisesObjC
     - SCLAlertView
     - SDWebImage
+    - Socket.IO-Client-Swift
+    - Starscream
     - SwiftForms
     - SwiftLocation
     - UIDropDown
@@ -160,7 +166,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/useeless37/UIActivityIndicator-for-SDWebImage.git
 
 SPEC CHECKSUMS:
-  Backendless: 7ed52fcc37317f9b32a8cfc4dc754c1f0f6cebc2
+  BackendlessSwift: 851ae1b64f0804028745d2f64ebc0b55de80936a
   BTNavigationDropdownMenu: 093f3cbfad1572f2c222bdf8d17584d1e13380d4
   Cosmos: 007c0b8e33a85e5363911bdd933571bbe221f7ef
   DCAnimationKit: 7133bef877ce1aa113dcfeea1380ca67f91f7608
@@ -187,11 +193,13 @@ SPEC CHECKSUMS:
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
   SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
   SDWebImage: a72e880a8fe0f7fc31efe15aaed443c074d2a80c
+  Socket.IO-Client-Swift: 1e3e3a1f09f3312a167f0d781eb2f383d477357c
+  Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
   SwiftForms: f0d4d30401e21de87d9b7b63a4691a3d4e22bab5
   SwiftLocation: 609ac8859f2c5d48a6cadd2a58c63b1dae02dc25
   UIActivityIndicator-for-SDWebImage: 7bf7ebbf0ed1747dedc0d6e949c4603a6d0f9e0c
   UIDropDown: 22e6e3e22d419884c8f21d95ea9be36aac905ed4
 
-PODFILE CHECKSUM: a0e6f83ab0f21420b30b27006d626581dde08e8b
+PODFILE CHECKSUM: 0b7e1233dbd01c57a32e5c819ae0a4f0aebed855
 
 COCOAPODS: 1.9.0

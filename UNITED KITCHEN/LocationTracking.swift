@@ -9,13 +9,14 @@
 import UIKit
 import MapKit
 import SCLAlertView
+import Backendless
 
 class LocationTracking: UIViewController , MKMapViewDelegate  {
     
  
     var map = MKMapView()
-    let backendless = Backendless.sharedInstance()
-    var subscription = [BESubscription]()
+    let backendless = Backendless.shared
+    var subscription = [RTSubscription]()
     var points = [MKPointAnnotation]()
     var channels = [String]()
 
@@ -49,44 +50,69 @@ class LocationTracking: UIViewController , MKMapViewDelegate  {
         
         if channels.count != 0 {
         for chennel in channels {
+            
+            //            backendless?.messaging.subscribe(chennel, subscriptionResponse: { (messages) in
+            //
+            //                if messages?.count != 0 {
+            //                if   let data = messages?[0].data as? String {
+            //
+            //                    let coordinates = Misc().getCoordinates(data: data)
+            //
+            //                     let region = MKCoordinateRegion(center: coordinates, span: span)
+            //                    self.map.setRegion(region, animated: true)
+            //                    if self.points.count != 0 {
+            //
+            //                    }
+            //                     let annotation = MKPointAnnotation()
+            //                    annotation.coordinate = coordinates
+            //                    self.points.removeAll()
+            //                    self.points.append(annotation)
+            //                    self.map.addAnnotation(annotation)
+            //
+            //                }
+            //                }
+            //                }, subscriptionError: { (fault) in
+            //                    SCLAlertView().showWarning("Error", subTitle: "Cannot subscribe to location tracking channel because of the followinf error \n\(fault?.message)\nPlease try again")
+            //
+            //                }, response: { (subs) in
+            //                  //  self.subscription.append(subs!)
+            //                }, error: { (fault) in
+            //
+            //                // do nothing
+            //            })
         
-            backendless?.messaging.subscribe(chennel, subscriptionResponse: { (messages) in
-           
-                if messages?.count != 0 {
-                if   let data = messages?[0].data as? String {
+
+            
+            
+          let sub =   backendless.messaging.subscribe(channelName: chennel).addStringMessageListener(responseHandler: { (data) in
+                let coordinates = Misc().getCoordinates(data: data)
                 
-                    let coordinates = Misc().getCoordinates(data: data)
-                    
-                     let region = MKCoordinateRegion(center: coordinates, span: span)
-                    self.map.setRegion(region, animated: true)
-                    if self.points.count != 0 {
-
-                    }
-                     let annotation = MKPointAnnotation()
-                    annotation.coordinate = coordinates
-                    self.points.removeAll()
-                    self.points.append(annotation)
-                    self.map.addAnnotation(annotation)
+                 let region = MKCoordinateRegion(center: coordinates, span: span)
+                self.map.setRegion(region, animated: true)
+                if self.points.count != 0 {
 
                 }
-                }
-                }, subscriptionError: { (fault) in
-                    SCLAlertView().showWarning("Error", subTitle: "Cannot subscribe to location tracking channel because of the followinf error \n\(fault?.message)\nPlease try again")
-          
-                }, response: { (subs) in
-                    self.subscription.append(subs!)
-                }, error: { (fault) in
-                   
-                // do nothing
-            })
+                 let annotation = MKPointAnnotation()
+                annotation.coordinate = coordinates
+                self.points.removeAll()
+                self.points.append(annotation)
+                self.map.addAnnotation(annotation)
+            }) { (fault) in
+                SCLAlertView().showWarning("Error", subTitle: "Cannot subscribe to location tracking channel because of the followinf error \n\(String(describing: fault.message))\nPlease try again")
+            }!
+            
+            self.subscription.append(sub)
+            
         }
         }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         for subs in subscription {
-            subs.cancel()
+            //subs.cancel()
+            (subs as! RTSubscription).stop()
         }
+        
     }
     
 

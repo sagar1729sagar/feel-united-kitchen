@@ -9,10 +9,11 @@
 import UIKit
 import DCAnimationKit
 import SCLAlertView
+import Backendless
 
 class ProfilePage: UIViewController {
     
-    let backendless = Backendless.sharedInstance()
+    let backendless = Backendless.shared
     let indicator = UIActivityIndicatorView()
     var initialNumberGrabberTF : UITextField?
     var initialGoButton : UIButton?
@@ -148,22 +149,22 @@ class ProfilePage: UIViewController {
         let phoneNumber = initialNumberGrabberTF?.text
         let whereclause = "phoneNumber = "+phoneNumber!
         let queryBuilder = DataQueryBuilder()
-        queryBuilder!.setWhereClause(whereclause)
+        queryBuilder.setWhereClause(whereClause: whereclause)
         
-        backendless?.data.of(Profile().ofClass()).find(queryBuilder, response: { (data) in
+        backendless.data.of(Profile.self).find(queryBuilder: queryBuilder, responseHandler: { (data) in
             //Recieved Data
-            if data?.count == 0 {
+            if data.count == 0 {
                 // No profile registered with that number
                 // Display registration paramenters
                 self.navigateToRegister()
                 
             } else {
-                if let obj = data?[0] as? Profile {
+                if let obj = data[0] as? Profile {
                     self.askForLogin(profile: obj)
                 }
                 
             }
-            }, error: { (fault) in
+        }, errorHandler: { (fault) in
                 let warningImage = UIImage(named: "warning.png")
                 SCLAlertView().showTitle("Error", subTitle: "Please check your internet connection and try again", style: .info, closeButtonTitle: "OK", timeout: SCLAlertView.SCLTimeoutConfiguration(timeoutValue: 30, timeoutAction: {
                     //Do nothing
@@ -223,28 +224,41 @@ class ProfilePage: UIViewController {
         forgotPasswordButton?.addSubview(indicator)
         
         
-        
-        
-        backendless?.userService.restorePassword(prof_intr?.emailAddress, response: { (response) in
+        backendless.userService.restorePassword(identity: prof_intr!.emailAddress!, responseHandler: {
+             self.indicator.stopAnimating()
+                       
+                       SCLAlertView().showInfo("Password Recovery", subTitle: "Please check your email \(Misc().emailModify(data: (self.prof_intr?.emailAddress)!)) to reset your password", closeButtonTitle: "OK", timeout: SCLAlertView.SCLTimeoutConfiguration(timeoutValue: 30, timeoutAction: {
+                           //Do nothing
+                       }), colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: warningImage, animationStyle: .topToBottom)
+        }) { (fault) in
+            BackendlessErrorHandler().backendlessPasswordRecoveryErrorhandler(code: "\(fault.faultCode)")
             self.indicator.stopAnimating()
-           
-            SCLAlertView().showInfo("Password Recovery", subTitle: "Please check your email \(Misc().emailModify(data: (self.prof_intr?.emailAddress)!)) to reset your password", closeButtonTitle: "OK", timeout: SCLAlertView.SCLTimeoutConfiguration(timeoutValue: 30, timeoutAction: {
-                //Do nothing
-            }), colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: warningImage, animationStyle: .topToBottom)
-
-            }, error: { (fault) in
-                BackendlessErrorHandler().backendlessPasswordRecoveryErrorhandler(code: (fault?.faultCode)!)
-                self.indicator.stopAnimating()
-                self.forgotPasswordButton?.isEnabled = true
-                self.forgotPasswordButton?.setTitle("Forgot password?", for: .normal)
-                
-                
-                
-        })
-        
-        
+            self.forgotPasswordButton?.isEnabled = true
+            self.forgotPasswordButton?.setTitle("Forgot password?", for: .normal)
+        }
     }
-    
+        
+        
+//        backendless.userService.restorePassword(identity: prof_intr!.emailAddress!, responseHandler: { (response) in
+//            self.indicator.stopAnimating()
+//
+//            SCLAlertView().showInfo("Password Recovery", subTitle: "Please check your email \(Misc().emailModify(data: (self.prof_intr?.emailAddress)!)) to reset your password", closeButtonTitle: "OK", timeout: SCLAlertView.SCLTimeoutConfiguration(timeoutValue: 30, timeoutAction: {
+//                //Do nothing
+//            }), colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: warningImage, animationStyle: .topToBottom)
+//
+//        }, errorHandler: { (fault) in
+//                BackendlessErrorHandler().backendlessPasswordRecoveryErrorhandler(code: (fault?.faultCode)!)
+//                self.indicator.stopAnimating()
+//                self.forgotPasswordButton?.isEnabled = true
+//                self.forgotPasswordButton?.setTitle("Forgot password?", for: .normal)
+//
+//
+//
+//        })
+        
+        
+//    }
+//
     @objc func backendlesslogin(sender : UIButton){
         
         if passwordLabel?.text?.characters.count == 0 {
@@ -258,38 +272,38 @@ class ProfilePage: UIViewController {
         loginButton?.setTitle("", for: .disabled)
         loginButton?.addSubview(indicator)
         
-        backendless?.userService.login(prof_intr?.emailAddress, password: passwordLabel?.text, response: { (user) in
-           
-            
-            self.navigationItem.leftBarButtonItem?.image = UIImage(named: "edit.png")
-            
-            if ProfileData().removeProfiles(){
-                if ProfileData().addProfile(profile: self.prof_intr!) {
-                    UIView.animate(withDuration: 2, animations: {
-                        self.initialNumberGrabberTF?.center = CGPoint(x: (self.initialNumberGrabberTF?.center.x)! - (2 * UIScreen.main.bounds.width) , y: (self.initialNumberGrabberTF?.center.y)!)
-                        self.passwordLabel?.center = CGPoint(x: (self.passwordLabel?.center.x)! - (2 * UIScreen.main.bounds.width) , y: (self.passwordLabel?.center.y)!)
-                        self.loginButton?.center = CGPoint(x: (self.loginButton?.center.x)! - (2 * UIScreen.main.bounds.width) , y: (self.loginButton?.center.y)!)
-                        self.forgotPasswordButton?.center = CGPoint(x: (self.forgotPasswordButton?.center.x)! - (2 * UIScreen.main.bounds.width) , y: (self.forgotPasswordButton?.center.y)!)
+            backendless.userService.login(identity: prof_intr!.emailAddress!, password: passwordLabel!.text!, responseHandler: { (user) in
+                
+                
+                self.navigationItem.leftBarButtonItem?.image = UIImage(named: "edit.png")
+                
+                if ProfileData().removeProfiles(){
+                    if ProfileData().addProfile(profile: self.prof_intr!) {
+                        UIView.animate(withDuration: 2, animations: {
+                            self.initialNumberGrabberTF?.center = CGPoint(x: (self.initialNumberGrabberTF?.center.x)! - (2 * UIScreen.main.bounds.width) , y: (self.initialNumberGrabberTF?.center.y)!)
+                            self.passwordLabel?.center = CGPoint(x: (self.passwordLabel?.center.x)! - (2 * UIScreen.main.bounds.width) , y: (self.passwordLabel?.center.y)!)
+                            self.loginButton?.center = CGPoint(x: (self.loginButton?.center.x)! - (2 * UIScreen.main.bounds.width) , y: (self.loginButton?.center.y)!)
+                            self.forgotPasswordButton?.center = CGPoint(x: (self.forgotPasswordButton?.center.x)! - (2 * UIScreen.main.bounds.width) , y: (self.forgotPasswordButton?.center.y)!)
                         }, completion: { (done) in
                             self.displayProfileDetails(profile: self.prof_intr!)
                             if self.prof_intr?.accountType == "normal" {
                                 self.registerForPushNotifications(channel: "C"+(self.prof_intr?.phoneNumber!)!)
                             }else if self.prof_intr?.accountType == "admin" {
-                               
+                                
                                 self.registerForPushNotifications(channel: "admin")
                             }
-                    })
+                        })
+                    }
                 }
-            }
-            
-
-            
-           
-            
-            }, error: { (error) in
+                
+                
+                
+                
+                
+            }, errorHandler: { (error) in
                
                 
-                BackendlessErrorHandler().backendlessLoginErrorHandler(code: (error?.faultCode)!)
+                BackendlessErrorHandler().backendlessLoginErrorHandler(code: "\(error.faultCode)")
                 self.loginButton?.isEnabled = true
                 self.indicator.stopAnimating()
                 self.loginButton?.setTitle("LOGIN", for: .normal)
@@ -389,63 +403,118 @@ class ProfilePage: UIViewController {
     
     func createBackendAccount(){
         let newUser = BackendlessUser()
-        newUser.email = emailTF?.text as NSString!
-        newUser.password = passwordTF?.text as NSString!
+        newUser.email = emailTF?.text as NSString! as String?
+        newUser.password = passwordTF?.text as NSString! as String?
         
-        backendless?.userService.register(newUser, response: { (user) in
-           
-            let profile = Profile()
-            profile.accountType = "normal"
-            profile.address = self.addressTV?.text
-            profile.emailAddress = self.emailTF?.text
-            profile.orderCount = "0"
-            profile.personName = self.nameTF?.text
-            profile.phoneNumber = self.initialNumberGrabberTF?.text
-            self.backendless?.data.of(Profile.ofClass()).save(profile, response: { (data) in
-              
+//        backendless.userService.register(newUser, response: { (user) in
+//
+//            let profile = Profile()
+//            profile.accountType = "normal"
+//            profile.address = self.addressTV?.text
+//            profile.emailAddress = self.emailTF?.text
+//            profile.orderCount = "0"
+//            profile.personName = self.nameTF?.text
+//            profile.phoneNumber = self.initialNumberGrabberTF?.text
+//            self.backendless?.data.of(Profile.ofClass()).save(profile, response: { (data) in
+//
+//                let obj = data as! Profile
+//                if ProfileData().removeProfiles() {
+//
+//                    if ProfileData().addProfile(profile: obj) {
+//
+//                        self.navigationItem.leftBarButtonItem?.image = UIImage(named: "edit.png")
+//                        //register for push notificatiosn channel
+//
+//                       self.registerForPushNotifications(channel: "C"+obj.phoneNumber!)
+//                        // Remove TextFields
+//                    UIView.animate(withDuration: 1, animations: {
+//                        self.initialNumberGrabberTF?.center = CGPoint(x: (self.initialNumberGrabberTF?.center.x)! - (2 * UIScreen.main.bounds.width) , y: (self.initialNumberGrabberTF?.center.y)!)
+//                        self.passwordTF?.center = CGPoint(x: (self.passwordTF?.center.x)! - (2 * UIScreen.main.bounds.width) , y: (self.passwordTF?.center.y)!)
+//                        self.nameTF?.center = CGPoint(x: (self.nameTF?.center.x)! - (2 * UIScreen.main.bounds.width) , y: (self.nameTF?.center.y)!)
+//                        self.emailTF?.center = CGPoint(x: (self.emailTF?.center.x)! - (2 * UIScreen.main.bounds.width) , y: (self.emailTF?.center.y)!)
+//                        self.addressTV?.center = CGPoint(x: (self.addressTV?.center.x)! - (2 * UIScreen.main.bounds.width) , y: (self.addressTV?.center.y)!)
+//                        self.createAccountButton?.center = CGPoint(x: (self.createAccountButton?.center.x)! - (2 * UIScreen.main.bounds.width) , y: (self.createAccountButton?.center.y)!)
+//                        }, completion: { (done) in
+//
+//                            //Bring in the labels
+//                            let getProfile = ProfileData().getProfile()
+//                            if  getProfile.1 {
+//                                self.displayProfileDetails(profile: getProfile.0)
+//                            }
+//
+//                    })
+//                    }
+//                }
+//                }, error: { (fault) in
+//            let warningImage = UIImage(named: "warning.png")
+//                    SCLAlertView().showTitle("Error", subTitle: "Please check your internet connection and try again", style: .info, closeButtonTitle: "OK", timeout: SCLAlertView.SCLTimeoutConfiguration(timeoutValue: 30, timeoutAction: {
+//                        //Do nothing
+//                    }), colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: warningImage , animationStyle: .bottomToTop)
+//            // Here account is registered but profile is not saved. So it will be taken to first screen
+//            self.viewDidLoad()
+//            })
+//            }, error: { (fault) in
+//                let code = fault?.faultCode
+//                BackendlessErrorHandler().backendUserRegistrationErrorHandler(code: code!)
+//                self.indicator.stopAnimating()
+//                self.createAccountButton?.isEnabled = true
+//                self.createAccountButton?.setTitle("Create my account", for: .normal)
+//        })
+        
+        backendless.userService.registerUser(user: newUser, responseHandler: { (user) in
+              let profile = Profile()
+                         profile.accountType = "normal"
+                         profile.address = self.addressTV?.text
+                         profile.emailAddress = self.emailTF?.text
+                         profile.orderCount = "0"
+                         profile.personName = self.nameTF?.text
+                         profile.phoneNumber = self.initialNumberGrabberTF?.text
+            self.backendless.data.of(Profile.self).save(entity: profile, responseHandler: { (data) in
+                
                 let obj = data as! Profile
                 if ProfileData().removeProfiles() {
-                 
+                    
                     if ProfileData().addProfile(profile: obj) {
-                      
+                        
                         self.navigationItem.leftBarButtonItem?.image = UIImage(named: "edit.png")
                         //register for push notificatiosn channel
                         
-                       self.registerForPushNotifications(channel: "C"+obj.phoneNumber!)
+                        self.registerForPushNotifications(channel: "C"+obj.phoneNumber!)
                         // Remove TextFields
-                    UIView.animate(withDuration: 1, animations: {
-                        self.initialNumberGrabberTF?.center = CGPoint(x: (self.initialNumberGrabberTF?.center.x)! - (2 * UIScreen.main.bounds.width) , y: (self.initialNumberGrabberTF?.center.y)!)
-                        self.passwordTF?.center = CGPoint(x: (self.passwordTF?.center.x)! - (2 * UIScreen.main.bounds.width) , y: (self.passwordTF?.center.y)!)
-                        self.nameTF?.center = CGPoint(x: (self.nameTF?.center.x)! - (2 * UIScreen.main.bounds.width) , y: (self.nameTF?.center.y)!)
-                        self.emailTF?.center = CGPoint(x: (self.emailTF?.center.x)! - (2 * UIScreen.main.bounds.width) , y: (self.emailTF?.center.y)!)
-                        self.addressTV?.center = CGPoint(x: (self.addressTV?.center.x)! - (2 * UIScreen.main.bounds.width) , y: (self.addressTV?.center.y)!)
-                        self.createAccountButton?.center = CGPoint(x: (self.createAccountButton?.center.x)! - (2 * UIScreen.main.bounds.width) , y: (self.createAccountButton?.center.y)!)
+                        UIView.animate(withDuration: 1, animations: {
+                            self.initialNumberGrabberTF?.center = CGPoint(x: (self.initialNumberGrabberTF?.center.x)! - (2 * UIScreen.main.bounds.width) , y: (self.initialNumberGrabberTF?.center.y)!)
+                            self.passwordTF?.center = CGPoint(x: (self.passwordTF?.center.x)! - (2 * UIScreen.main.bounds.width) , y: (self.passwordTF?.center.y)!)
+                            self.nameTF?.center = CGPoint(x: (self.nameTF?.center.x)! - (2 * UIScreen.main.bounds.width) , y: (self.nameTF?.center.y)!)
+                            self.emailTF?.center = CGPoint(x: (self.emailTF?.center.x)! - (2 * UIScreen.main.bounds.width) , y: (self.emailTF?.center.y)!)
+                            self.addressTV?.center = CGPoint(x: (self.addressTV?.center.x)! - (2 * UIScreen.main.bounds.width) , y: (self.addressTV?.center.y)!)
+                            self.createAccountButton?.center = CGPoint(x: (self.createAccountButton?.center.x)! - (2 * UIScreen.main.bounds.width) , y: (self.createAccountButton?.center.y)!)
                         }, completion: { (done) in
-                          
+                            
                             //Bring in the labels
                             let getProfile = ProfileData().getProfile()
                             if  getProfile.1 {
                                 self.displayProfileDetails(profile: getProfile.0)
                             }
                             
-                    })
+                        })
                     }
                 }
-                }, error: { (fault) in
-            let warningImage = UIImage(named: "warning.png")
-                    SCLAlertView().showTitle("Error", subTitle: "Please check your internet connection and try again", style: .info, closeButtonTitle: "OK", timeout: SCLAlertView.SCLTimeoutConfiguration(timeoutValue: 30, timeoutAction: {
-                        //Do nothing
-                    }), colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: warningImage , animationStyle: .bottomToTop)
-            // Here account is registered but profile is not saved. So it will be taken to first screen
-            self.viewDidLoad()
-            })
-            }, error: { (fault) in
-                let code = fault?.faultCode
-                BackendlessErrorHandler().backendUserRegistrationErrorHandler(code: code!)
-                self.indicator.stopAnimating()
-                self.createAccountButton?.isEnabled = true
-                self.createAccountButton?.setTitle("Create my account", for: .normal)
-        })
+            }, errorHandler: { (fault) in
+                         let warningImage = UIImage(named: "warning.png")
+                                 SCLAlertView().showTitle("Error", subTitle: "Please check your internet connection and try again", style: .info, closeButtonTitle: "OK", timeout: SCLAlertView.SCLTimeoutConfiguration(timeoutValue: 30, timeoutAction: {
+                                     //Do nothing
+                                 }), colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: warningImage , animationStyle: .bottomToTop)
+                         // Here account is registered but profile is not saved. So it will be taken to first screen
+                         self.viewDidLoad()
+                         })
+        }) { (fault) in
+            let code = fault.faultCode
+            //BackendlessErrorHandler().backendUserRegistrationErrorHandler(code: code)
+            BackendlessErrorHandler().backendlessLoginErrorHandler(code: "\(code)")
+            self.indicator.stopAnimating()
+            self.createAccountButton?.isEnabled = true
+            self.createAccountButton?.setTitle("Create my account", for: .normal)
+        }
     }
     
     func displayProfileDetails(profile : Profile) {
@@ -531,23 +600,40 @@ class ProfilePage: UIViewController {
         let warningImage = UIImage(named: "warning.png")
         navbarIndicator.startAnimating()
         left?.isEnabled = false
-        backendless?.userService.logout({ (done) in
-            left?.isEnabled = true
-            //unregister from notification channels
-            self.unregisterForPushNotifications()
-            self.navbarIndicator.stopAnimating()
-            if ProfileData().removeProfiles() && OrderData().deleteOrders() {
-                self.removeLabels()
-                self.viewDidLoad()
-            }
+//            backendless.userService.logout(responseHandler: { (done) in
+//                left?.isEnabled = true
+//                //unregister from notification channels
+//                self.unregisterForPushNotifications()
+//                self.navbarIndicator.stopAnimating()
+//                if ProfileData().removeProfiles() && OrderData().deleteOrders() {
+//                    self.removeLabels()
+//                    self.viewDidLoad()
+//                }
+//
+//            }, errorHandler: { (fault) in
+//                left?.isEnabled = true
+//                self.navbarIndicator.stopAnimating()
+//                SCLAlertView().showTitle("Error", subTitle: " Please check your internet connectiona nd try again", style: .info, closeButtonTitle: "OK", timeout: SCLAlertView.SCLTimeoutConfiguration(timeoutValue: 30, timeoutAction: {
+//                    //Do nothing
+//                }), colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: warningImage , animationStyle: .bottomToTop)
+//        })
             
-            }, error: { (fault) in
+            backendless.userService.logout(responseHandler: {
+                left?.isEnabled = true
+                //unregister from notification channels
+                self.unregisterForPushNotifications()
+                self.navbarIndicator.stopAnimating()
+                if ProfileData().removeProfiles() && OrderData().deleteOrders() {
+                    self.removeLabels()
+                    self.viewDidLoad()
+                }
+            }) { (fault) in
                 left?.isEnabled = true
                 self.navbarIndicator.stopAnimating()
                 SCLAlertView().showTitle("Error", subTitle: " Please check your internet connectiona nd try again", style: .info, closeButtonTitle: "OK", timeout: SCLAlertView.SCLTimeoutConfiguration(timeoutValue: 30, timeoutAction: {
                     //Do nothing
                 }), colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: warningImage , animationStyle: .bottomToTop)
-        })
+            }
         
         }
        
@@ -593,7 +679,7 @@ class ProfilePage: UIViewController {
                 nameLabel?.isEnabled = false
                 addressTV1?.isEditable = false
                 navbarIndicator.startAnimating()
-                backendless?.data.of(Profile.ofClass()).save(profile.0, response: { (data) in
+                backendless.data.of(Profile.self).save(entity: profile.0, responseHandler: { (data) in
                     let obj = data as! Profile
                     if ProfileData().removeProfiles() {
                         if ProfileData().addProfile(profile: obj) {
@@ -604,7 +690,7 @@ class ProfilePage: UIViewController {
                             right?.isEnabled = true
                         }
                     }
-                    }, error: { (fault) in
+                }, errorHandler: { (fault) in
                         SCLAlertView().showTitle("Error", subTitle: " Please check your internet connectiona nd try again", style: .info, closeButtonTitle: "OK", timeout: SCLAlertView.SCLTimeoutConfiguration(timeoutValue: 30, timeoutAction: {
                             //Do nothing
                         }), colorStyle: 0xCC9900, colorTextButton: 0xFFFFFF, circleIconImage: warningImage , animationStyle: .bottomToTop)
@@ -623,21 +709,53 @@ class ProfilePage: UIViewController {
     }
     
     func registerForPushNotifications(channel : String) {
-       
-        backendless?.messaging.registerDevice([channel], response: { (response) in
-         
-            }, error: { (fault) in
+        backendless.messaging.getDeviceRegistrations(responseHandler: { (responses) in
+            var is_registered_for_req_channel = false
+            var device_token = ""
+            for response in responses {
+                if((response.channels?.contains(channel))!){
+                    is_registered_for_req_channel =  true
+                    device_token = response.deviceToken!
+                    break
+                }
+            }
+            if(!is_registered_for_req_channel){
+                self.backendless.messaging.registerDevice(deviceToken: Data(device_token.utf8), channels: [channel], responseHandler: { (response) in
+                    
+                }) { (fault) in
+                            
+                }
+            }
+        }) { (fault) in
             
-        })
-        
+        }
     }
+       
+//        backendless?.messaging.registerDevice(deviceToken: [channel], responseHandler: { (response) in
+//
+//        }, errorHandler: { (fault) in
+//
+//        })
+        
+//        backendless.messaging.unregisterDevice(channels: [channel], responseHandler: { (response) in
+//
+//        }) { (fault) in
+//
+//        }
+//
+//    }
     
     func unregisterForPushNotifications() {
-        backendless?.messaging.unregisterDeviceAsync({ (response) in
-         
-            }, error: { (fault) in
-                
-        })
+//        backendless.messaging.unregisterDeviceAsync({ (response) in
+//
+//            }, error: { (fault) in
+//
+//        })
+        backendless.messaging.unregisterDevice(responseHandler: { (response) in
+            
+        }) { (fault) in
+            
+        }
     }
     
     

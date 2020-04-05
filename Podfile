@@ -8,7 +8,8 @@ target 'UNITED KITCHEN' do
   # Pods for UNITED KITCHEN
 pod 'DCAnimationKit’
 pod 'IQKeyboardManagerSwift'
-pod 'Backendless', '4.0b2'
+#pod 'Backendless', '4.0b2'
+pod 'BackendlessSwift'
 pod 'SCLAlertView’
 pod 'BTNavigationDropdownMenu', :git => 'https://github.com/PhamBaTho/BTNavigationDropdownMenu.git', :branch => 'swift-3.0'
 pod 'SDWebImage', '~>3.8’

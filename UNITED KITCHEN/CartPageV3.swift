@@ -11,6 +11,7 @@ import SCLAlertView
 import DCAnimationKit
 import Firebase
 import UIDropDown
+import Backendless
 //import DropDown
 
 class CartPageV3: UIViewController , UITableViewDelegate , UITableViewDataSource {
@@ -22,7 +23,7 @@ class CartPageV3: UIViewController , UITableViewDelegate , UITableViewDataSource
     @IBOutlet weak var table: UITableView!
     var navbarIndicator = UIActivityIndicatorView()
     var profileCount = 0
-    let backendless = Backendless.sharedInstance()
+    let backendless = Backendless.shared
     var itemCount = 0
     var menuItems = [Item]()
     var splCell = AddressSelectionCell()
@@ -1097,7 +1098,7 @@ class CartPageV3: UIViewController , UITableViewDelegate , UITableViewDataSource
         // save profile in backendless
         self.navbarIndicator.startAnimating()
         
-        backendless?.data.of(Profile.ofClass()).save(ProfileData().getProfile().0, response: { (data) in
+        backendless.data.of(Profile.self).save(entity: ProfileData().getProfile().0, responseHandler: { (data) in
             
             
             // save items
@@ -1105,7 +1106,7 @@ class CartPageV3: UIViewController , UITableViewDelegate , UITableViewDataSource
             /// relations are ignored
             
             self.saveOrders(addressType: addressType, updatedProfile: ProfileData().getProfile().0)
-            }, error: { (fault) in
+        }, errorHandler: { (fault) in
                 self.splCell.orderButton.isEnabled = true
                 self.splCell.giftButton.isEnabled = true
                 self.giftCell.proceedButton.isEnabled = true
@@ -1115,7 +1116,7 @@ class CartPageV3: UIViewController , UITableViewDelegate , UITableViewDataSource
                 self.navbarIndicator.stopAnimating()
                 self.navbarIndicator.stopAnimating()
                 
-                SCLAlertView().showWarning("Apologies", subTitle: "Cannot place your order as the following error has occured \n\(fault?.message) \n Please try again")
+            SCLAlertView().showWarning("Apologies", subTitle: "Cannot place your order as the following error has occured \n\(String(describing: fault.message)) \n Please try again")
         })
         
         
@@ -1159,8 +1160,8 @@ class CartPageV3: UIViewController , UITableViewDelegate , UITableViewDataSource
             }
             if addressType == 0 {
                 if locCell.coordinate != nil {
-                    orderDetails.longitude = "\(locCell.coordinate?.longitude)"
-                    orderDetails.latitude = "\(locCell.coordinate?.latitude)"
+                    orderDetails.longitude = "\(String(describing: locCell.coordinate?.longitude))"
+                    orderDetails.latitude = "\(String(describing: locCell.coordinate?.latitude))"
                     
                 } else {
                     orderDetails.latitude = "0"
@@ -1195,14 +1196,14 @@ class CartPageV3: UIViewController , UITableViewDelegate , UITableViewDataSource
             newItem.orderId = details.orderId
             newItem.quantity = items[itemNumber - 1].itemQuantity
             
-            backendless?.data.of(OrderItems.ofClass()).save(newItem, response: { (result) in
+            backendless.data.of(OrderItems.self).save(entity: newItem, responseHandler: { (result) in
                 if let data = result as? OrderItems {
                     
                     var intr = savedOrderItems
                     intr.append(data)
                     self.initiateSave(items: items, details: details, itemNumber: itemNumber + 1, savedOrderItems: intr)
                 }
-                }, error: { (error) in
+            }, errorHandler: { (error) in
                     self.splCell.orderButton.isEnabled = true
                     self.splCell.giftButton.isEnabled = true
                     self.giftCell.proceedButton.isEnabled = true
@@ -1211,11 +1212,11 @@ class CartPageV3: UIViewController , UITableViewDelegate , UITableViewDataSource
                     self.navigationItem.rightBarButtonItems?[0].isEnabled = true
                     self.navbarIndicator.stopAnimating()
                     self.navbarIndicator.stopAnimating()
-                    SCLAlertView().showWarning("Error", subTitle: "We cannot place the order as the following error has occured \n \(error?.message) Please try again ")
+                SCLAlertView().showWarning("Error", subTitle: "We cannot place the order as the following error has occured \n \(String(describing: error.message)) Please try again ")
                     
             })
         } else {
-            backendless?.data.of(OrderDetails.ofClass()).save(details, response: { (result) in
+            backendless.data.of(OrderDetails.self).save(entity: details, responseHandler: { (result) in
                 if let data = result as? OrderDetails {
                     
                     self.sendNotification(data: data)
@@ -1245,7 +1246,7 @@ class CartPageV3: UIViewController , UITableViewDelegate , UITableViewDataSource
                 }
                 
                 
-                }, error: { (error) in
+            }, errorHandler: { (error) in
                     self.splCell.orderButton.isEnabled = true
                     self.splCell.giftButton.isEnabled = true
                     self.giftCell.proceedButton.isEnabled = true
@@ -1254,7 +1255,7 @@ class CartPageV3: UIViewController , UITableViewDelegate , UITableViewDataSource
                     self.navigationItem.rightBarButtonItems?[0].isEnabled = true
                     self.navbarIndicator.stopAnimating()
                     self.navbarIndicator.stopAnimating()
-                    SCLAlertView().showWarning("Error", subTitle: "We cannot place the order as the following error has occured \n \(error?.message) Please try again ")
+                SCLAlertView().showWarning("Error", subTitle: "We cannot place the order as the following error has occured \n \(String(describing: error.message)) Please try again ")
             })
         }
         
@@ -1267,11 +1268,11 @@ class CartPageV3: UIViewController , UITableViewDelegate , UITableViewDataSource
         
         let publishOptions = PublishOptions()
         let headers = ["ios-alert":"New Order recieved","ios-badge":"1","ios-sound":"default","type":"neworder","orderId":data.orderId!]
-        publishOptions.assignHeaders(headers)
-        
-        backendless?.messaging.publish("admin", message: "New order", publishOptions: publishOptions, response: { (status) in
+        //publishOptions.assignHeaders(headers)
+        publishOptions.setHeaders(headers: headers)
+        backendless.messaging.publish(channelName: "admin", message: "New order", publishOptions: publishOptions, responseHandler: { (status) in
             
-            }, error: { (error) in
+        }, errorHandler: { (error) in
                 
         })
     }

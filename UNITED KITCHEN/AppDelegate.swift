@@ -12,6 +12,7 @@ import IQKeyboardManagerSwift
 import UserNotifications
 import Firebase
 import DropDown
+import Backendless
 
 
 @available(iOS 10.0, *)
@@ -28,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UNUserNotificationCenter
     let APP_ID = "970E86A5-60F0-F1BB-FFFD-96025990B900"
     let SECRET_KEY = "6B446BB0-8FAA-48F2-8EFD-1AE259826EE4"
     
-    var backendless = Backendless.sharedInstance()
+    var backendless = Backendless.shared
 
     var window: UIWindow?
 
@@ -36,7 +37,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UNUserNotificationCenter
     private func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         // Initialise backendless
-        backendless?.initApp(APP_ID, apiKey: SECRET_KEY)
+        backendless.initApp(applicationId: APP_ID, apiKey: SECRET_KEY)
+       // Backendless.shared.initApp(applicationId: APP_ID, apiKey: SECRET_KEY);
         // LaunchImage display time
         Thread.sleep(forTimeInterval: 1)
         
@@ -53,15 +55,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UNUserNotificationCenter
         
         var ref : DatabaseReference
         ref = Database.database().reference()
-
-        backendless?.messaging.registerForRemoteNotifications()
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.badge,.sound]) { (accepted, error) in
-            if accepted {
-            } else {
-              
-            }
-            
+        
+        //Notification registration
+        
+        let center = UNUserNotificationCenter.current()
+        center.delegate = self
+        center.requestAuthorization(options: [.alert,.badge,.sound]) { (granted, error) in
+            UIApplication.shared.registerForRemoteNotifications()
         }
+
+//        backendless.messaging.registerForRemoteNotifications()
+//        UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.badge,.sound]) { (accepted, error) in
+//            if accepted {
+//            } else {
+//
+//            }
+//
+//        }
         
         
         
@@ -86,16 +96,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UNUserNotificationCenter
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
       
 
-        backendless?.messaging.registerDeviceToken(deviceToken, response: { (response) in
-            
-            }, error: { (error) in
-                
-        })
+//        backendless?.messaging.registerDeviceToken(deviceToken, response: { (response) in
+//
+//            }, error: { (error) in
+//
+//        })
+        
+        backendless.messaging.registerDevice(deviceToken: deviceToken, responseHandler: { (registrationId) in
+            print("Device has been registered with backendless")
+        }) { (fault) in
+            print("Device registration error : \(String(describing: fault.message))")
+        }
         
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-       
+        print("Device failed:\(error.localizedDescription)")
     }
     
     
