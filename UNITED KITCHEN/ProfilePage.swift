@@ -165,6 +165,7 @@ class ProfilePage: UIViewController {
                 
             }
         }, errorHandler: { (fault) in
+            print(fault)
                 let warningImage = UIImage(named: "warning.png")
                 SCLAlertView().showTitle("Error", subTitle: "Please check your internet connection and try again", style: .info, closeButtonTitle: "OK", timeout: SCLAlertView.SCLTimeoutConfiguration(timeoutValue: 30, timeoutAction: {
                     //Do nothing
@@ -402,6 +403,7 @@ class ProfilePage: UIViewController {
     }
     
     func createBackendAccount(){
+        print("account creation initialised")
         let newUser = BackendlessUser()
         newUser.email = emailTF?.text as NSString! as String?
         newUser.password = passwordTF?.text as NSString! as String?
@@ -462,6 +464,8 @@ class ProfilePage: UIViewController {
 //        })
         
         backendless.userService.registerUser(user: newUser, responseHandler: { (user) in
+            print("user registered")
+            print(user)
               let profile = Profile()
                          profile.accountType = "normal"
                          profile.address = self.addressTV?.text
@@ -469,8 +473,10 @@ class ProfilePage: UIViewController {
                          profile.orderCount = "0"
                          profile.personName = self.nameTF?.text
                          profile.phoneNumber = self.initialNumberGrabberTF?.text
+            profile.objectId = self.initialNumberGrabberTF?.text
+            print("save started")
             self.backendless.data.of(Profile.self).save(entity: profile, responseHandler: { (data) in
-                
+                print("profile saved")
                 let obj = data as! Profile
                 if ProfileData().removeProfiles() {
                     
@@ -500,6 +506,8 @@ class ProfilePage: UIViewController {
                     }
                 }
             }, errorHandler: { (fault) in
+                print("profile save error")
+                print(fault)
                          let warningImage = UIImage(named: "warning.png")
                                  SCLAlertView().showTitle("Error", subTitle: "Please check your internet connection and try again", style: .info, closeButtonTitle: "OK", timeout: SCLAlertView.SCLTimeoutConfiguration(timeoutValue: 30, timeoutAction: {
                                      //Do nothing
@@ -508,6 +516,8 @@ class ProfilePage: UIViewController {
                          self.viewDidLoad()
                          })
         }) { (fault) in
+            print("register user error")
+            print(fault)
             let code = fault.faultCode
             //BackendlessErrorHandler().backendUserRegistrationErrorHandler(code: code)
             BackendlessErrorHandler().backendlessLoginErrorHandler(code: "\(code)")

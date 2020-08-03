@@ -37,10 +37,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UNUserNotificationCenter
     var window: UIWindow?
 
 
-    private func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    private func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        print("App delegate called")
         // Override point for customization after application launch.
         // Initialise backendless
         backendless.initApp(applicationId: APP_ID, apiKey: SECRET_KEY)
+        print("Backendless initialised");
+    
        // Backendless.shared.initApp(applicationId: APP_ID, apiKey: SECRET_KEY);
         // LaunchImage display time
         Thread.sleep(forTimeInterval: 1)

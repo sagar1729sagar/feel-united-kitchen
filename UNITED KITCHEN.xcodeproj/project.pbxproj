@@ -62,6 +62,7 @@
 		1BFE3EDF1EC331F800356D34 /* DeliveryOrderAdmin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFE3EDE1EC331F700356D34 /* DeliveryOrderAdmin.swift */; };
 		1BFE3EE11EC371BD00356D34 /* TodayOrders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFE3EE01EC371BD00356D34 /* TodayOrders.swift */; };
 		1BFE3EE31EC3795A00356D34 /* ItemsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFE3EE21EC3795A00356D34 /* ItemsList.swift */; };
+		C95E870124D8A44900AD5594 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95E870024D8A44900AD5594 /* SceneDelegate.swift */; };
 		F7D82CA99C97083CF962F57F /* Pods_UNITED_KITCHEN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21B9DBA3427797215032AEB1 /* Pods_UNITED_KITCHEN.framework */; };
 /* End PBXBuildFile section */
 
@@ -129,6 +130,7 @@
 		1BFE3EE21EC3795A00356D34 /* ItemsList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemsList.swift; sourceTree = "<group>"; };
 		21B9DBA3427797215032AEB1 /* Pods_UNITED_KITCHEN.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UNITED_KITCHEN.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A63FDEFF8D858C8D79E8AE0 /* Pods-UNITED KITCHEN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UNITED KITCHEN.release.xcconfig"; path = "Pods/Target Support Files/Pods-UNITED KITCHEN/Pods-UNITED KITCHEN.release.xcconfig"; sourceTree = "<group>"; };
+		C95E870024D8A44900AD5594 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,6 +214,7 @@
 				1B09E2331EB2291F00786BD7 /* TableCells */,
 				1BF128521EA38A2700DD2AA5 /* UNITED KITCHEN.entitlements */,
 				1BA6D0A31E96880A000CBDF5 /* AppDelegate.swift */,
+				C95E870024D8A44900AD5594 /* SceneDelegate.swift */,
 				1BA6D0A51E96880A000CBDF5 /* ViewController.swift */,
 				1BA6D0A71E96880A000CBDF5 /* Main.storyboard */,
 				1BA6D0AF1E96880A000CBDF5 /* LaunchScreen.storyboard */,
@@ -480,6 +483,7 @@
 				1BA47D861EAC9BC700EB781E /* Misc.swift in Sources */,
 				1B08198A1EBB992800436BF0 /* Order.swift in Sources */,
 				1BFE3EE31EC3795A00356D34 /* ItemsList.swift in Sources */,
+				C95E870124D8A44900AD5594 /* SceneDelegate.swift in Sources */,
 				1B3F2F871EC0F2AC009C62FE /* OrderMainCell.swift in Sources */,
 				1BA6D0AC1E96880A000CBDF5 /* UNITED_KITCHEN.xcdatamodeld in Sources */,
 				1BD80C3E1EB131B00069F8E1 /* UIBarButtonItem+Badge.swift in Sources */,
