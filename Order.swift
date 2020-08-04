@@ -8,7 +8,7 @@
 
 import Foundation
 
-class OrderDetails : NSObject {
+@objcMembers class OrderDetails : NSObject {
     
     
     var orderId : String?
@@ -35,7 +35,7 @@ class OrderDetails : NSObject {
 }
 
 
-class OrderItems : NSObject {
+@objcMembers class OrderItems : NSObject {
     
     var name : String?
     var price : String?

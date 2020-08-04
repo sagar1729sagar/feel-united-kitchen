@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Item : NSObject {
+@objcMembers class Item : NSObject {
     
     var itemId : String?
     var itemName : String?

@@ -7,9 +7,13 @@
 //
 
 import UIKit
+import IQKeyboardManagerSwift
+import UserNotifications
+import Firebase
+import DropDown
 import Backendless
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+class SceneDelegate: UIResponder, UIWindowSceneDelegate, UNUserNotificationCenterDelegate {
     
     let APP_ID = "63FED898-919F-F19E-FFF0-5F965EE6C800"
     let SECRET_KEY = "8A032987-9442-4E61-A42A-1CF9006C8D12"
@@ -30,6 +34,45 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         backendless.initApp(applicationId: APP_ID, apiKey: SECRET_KEY)
         print("Backendless initialised");
+        
+        IQKeyboardManager.shared.enable = true
+        
+  //      DropDown.startListeningToKeyboard()
+        
+        // DorpDown
+              DropDown.startListeningToKeyboard()
+              
+              // Initialzing firebase
+              
+              FirebaseApp.configure()
+              
+              var ref : DatabaseReference
+              ref = Database.database().reference()
+              
+              //Notification registration
+              
+              let center = UNUserNotificationCenter.current()
+              center.delegate = self
+              center.requestAuthorization(options: [.alert,.badge,.sound]) { (granted, error) in
+                  UIApplication.shared.registerForRemoteNotifications()
+              }
+        
+        // Storyboard selection
+              
+              let profile = ProfileData().getProfile()
+              if profile.1 {
+                  if profile.0.accountType == "normal"{
+                      self.window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
+                  } else if profile.0.accountType == "admin" {
+                      self.window?.rootViewController = UIStoryboard(name: "Admin", bundle: nil).instantiateInitialViewController()
+                  } else if profile.0.accountType == "delivery" {
+                      self.window?.rootViewController = UIStoryboard(name: "Delivery", bundle: nil).instantiateInitialViewController()
+                  }
+              } else {
+                  self.window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
+              }
+        
+        
         guard let _ = (scene as? UIWindowScene) else { return }
     }
 

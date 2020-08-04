@@ -8,7 +8,7 @@
 
 import Foundation
 
-class feedback : NSObject {
+@objcMembers class feedback : NSObject {
 
     var feedbackText : String?
     var rating : String?

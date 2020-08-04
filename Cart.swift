@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Cart : NSObject {
+@objcMembers class Cart : NSObject {
 
     var itemName : String?
     var addedDate : Date?

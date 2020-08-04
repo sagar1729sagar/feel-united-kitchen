@@ -8,7 +8,7 @@
 
 import Foundation
 
-class OrderTimes : NSObject {
+@objcMembers class OrderTimes : NSObject {
     var objectId : String?
     var created : Date?
     var updated : Date?
