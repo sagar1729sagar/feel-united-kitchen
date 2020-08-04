@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Profile : NSObject {
+@objcMembers class Profile : NSObject {
 
     var phoneNumber : String?
     var personName : String?

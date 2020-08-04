@@ -473,7 +473,7 @@ class ProfilePage: UIViewController {
                          profile.orderCount = "0"
                          profile.personName = self.nameTF?.text
                          profile.phoneNumber = self.initialNumberGrabberTF?.text
-            profile.objectId = self.initialNumberGrabberTF?.text
+           // profile.objectId = self.initialNumberGrabberTF?.text
             print("save started")
             self.backendless.data.of(Profile.self).save(entity: profile, responseHandler: { (data) in
                 print("profile saved")
