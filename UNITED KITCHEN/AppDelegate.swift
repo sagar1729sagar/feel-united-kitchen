@@ -100,7 +100,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UNUserNotificationCenter
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-      
+      print("trying to register")
 
 //        backendless?.messaging.registerDeviceToken(deviceToken, response: { (response) in
 //

@@ -311,11 +311,13 @@ class ActiveOrderAdmin: UIViewController, UITableViewDataSource, UITableViewDele
                     self.refreshItems()
                 }) { (fault) in
                     SCLAlertView().showError("Error", subTitle: "Cannot register this devie as admin as the following error occured : \(String(describing: fault.message))")
+                    self.refreshItems()
                 }
             }
         }) { (fault) in
             self.navbarIndicator.stopAnimating()
             SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(String(describing: fault.message))")
+            self.refreshItems()
         }
         
         

@@ -40,7 +40,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
     var priceLabel2 = UILabel()
     var scrollView = UIView()
     var scrollLabel = UILabel()
-   // var ref : DatabaseReference!
+    var ref : DatabaseReference!
     
     
     
@@ -51,7 +51,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadlist(notification:)), name: Notification.Name("menuupdate"), object: nil)
         
-      //  ref = Database.database().reference()
+        ref = Database.database().reference()
         
         
         if let firstOpen = UserDefaults.standard.object(forKey: "firstOpen") as? Bool {
@@ -153,20 +153,20 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
        
         //set scroll text
         
-//        ref.child("text").observeSingleEvent(of: .value, with: { (snapshot) in
-//
-//
-//            self.scrollView.backgroundColor = UIColor.white
-//            self.scrollLabel.text = snapshot.value as? String
-//            UIView.animate(withDuration: 15.0, delay: 1, options: ([.curveLinear, .repeat]), animations: {() -> Void in
-//                self.scrollLabel.center = CGPoint(x: 0 - self.scrollLabel.bounds.width/2, y: self.scrollLabel.center.y)
-//                }, completion:  { _ in })
-//
-//
-//        }) { (error) in
-//
-//
-//        }
+        ref.child("text").observeSingleEvent(of: .value, with: { (snapshot) in
+
+
+            self.scrollView.backgroundColor = UIColor.white
+            self.scrollLabel.text = snapshot.value as? String
+            UIView.animate(withDuration: 15.0, delay: 1, options: ([.curveLinear, .repeat]), animations: {() -> Void in
+                self.scrollLabel.center = CGPoint(x: 0 - self.scrollLabel.bounds.width/2, y: self.scrollLabel.center.y)
+                }, completion:  { _ in })
+
+
+        }) { (error) in
+
+
+        }
         
         
         if DateHandler().dateToString(date: Date()) == DateHandler().dateToString(date: MiscData().getRefreshDate()) {

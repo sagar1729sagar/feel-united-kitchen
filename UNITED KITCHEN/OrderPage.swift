@@ -351,11 +351,13 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
                     self.refreshOrders()
                 }) { (fault) in
             SCLAlertView().showError("Error", subTitle: "Cannot register for notification channel as the following error occured \(String(describing: fault.message))")
+                    self.refreshOrders()
                 }
             }
         }) { (fault) in
             self.navbarIndicator.stopAnimating()
             SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(String(describing: fault.message))")
+            self.refreshOrders()
         }
     }
 //        backendless?.messaging.registerDevice(deviceToken: [channel], responseHandler: { (response) in
