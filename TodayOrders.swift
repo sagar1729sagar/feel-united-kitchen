@@ -190,12 +190,14 @@ class TodayOrders: UIViewController, UITableViewDelegate , UITableViewDataSource
                       self.navbarIndicator.stopAnimating()
                       
                   SCLAlertView().showError("Error", subTitle: "Cannot register as admin as the following error occured \(String(describing: fault.message))")
+                    self.refreshItems()
                   }
               }
           }) { (fault) in
               self.navbarIndicator.stopAnimating()
               
               SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(String(describing: fault.message))")
+            self.refreshItems()
           }
       }
 //         backendless?.messaging.registerDevice(deviceToken: ["admin"], responseHandler: { (response) in
@@ -223,7 +225,7 @@ class TodayOrders: UIViewController, UITableViewDelegate , UITableViewDataSource
         let queryBuilder = DataQueryBuilder()
         queryBuilder.setPageSize(pageSize: 100)
         
-        queryBuilder.setWhereClause(whereClause: String(format: "deliveryDate >= %@", dateString))
+        queryBuilder.setWhereClause(whereClause: String(format: "deliveryDate >= '%@'", dateString))
   
         if OrderData().deleteOrders(){
             backendless.data.of(OrderDetails.self).find(queryBuilder: queryBuilder, responseHandler: { (data) in
@@ -272,6 +274,7 @@ class TodayOrders: UIViewController, UITableViewDelegate , UITableViewDataSource
         let queryBuilder = DataQueryBuilder()
         queryBuilder.setPageSize(pageSize: 100)
         queryBuilder.setWhereClause(whereClause: whereClause)
+        data.items = [OrderItems]()
         backendless.data.of(OrderItems.self).find(queryBuilder: queryBuilder, responseHandler: { (items) in
             self.navbarIndicator.stopAnimating()
             
