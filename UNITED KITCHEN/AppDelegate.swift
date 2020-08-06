@@ -38,11 +38,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UNUserNotificationCenter
 
 
     private func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-        print("App delegate called")
+       // print("App delegate called")
         // Override point for customization after application launch.
         // Initialise backendless
         backendless.initApp(applicationId: APP_ID, apiKey: SECRET_KEY)
-        print("Backendless initialised");
+     //   print("Backendless initialised");
     
        // Backendless.shared.initApp(applicationId: APP_ID, apiKey: SECRET_KEY);
         // LaunchImage display time
@@ -100,7 +100,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UNUserNotificationCenter
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-      print("trying to register")
+     // print("trying to register")
 
 //        backendless?.messaging.registerDeviceToken(deviceToken, response: { (response) in
 //
@@ -109,15 +109,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UNUserNotificationCenter
 //        })
         
         backendless.messaging.registerDevice(deviceToken: deviceToken, responseHandler: { (registrationId) in
-            print("Device has been registered with backendless")
+          //  print("Device has been registered with backendless")
         }) { (fault) in
-            print("Device registration error : \(String(describing: fault.message))")
+           // print("Device registration error : \(String(describing: fault.message))")
         }
         
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        print("Device failed:\(error.localizedDescription)")
+      //  print("Device failed:\(error.localizedDescription)")
     }
     
     

@@ -30,10 +30,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UNUserNotificationCente
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        print("Scene delegate will connect to ")
+      //  print("Scene delegate will connect to ")
         
         backendless.initApp(applicationId: APP_ID, apiKey: SECRET_KEY)
-        print("Backendless initialised");
+      //  print("Backendless initialised");
         
         IQKeyboardManager.shared.enable = true
         
@@ -82,14 +82,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UNUserNotificationCente
         // This occurs shortly after the scene enters the background, or when its session is discarded.
         // Release any resources associated with this scene that can be re-created the next time the scene connects.
         // The scene may re-connect later, as its session was not neccessarily discarded (see `application:didDiscardSceneSessions` instead).
-        print("Scene disconnect")
+       // print("Scene disconnect")
     }
 
     @available(iOS 13.0, *)
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
-        print("SCENE ACTIVE")
+       // print("SCENE ACTIVE")
     }
 
     @available(iOS 13.0, *)

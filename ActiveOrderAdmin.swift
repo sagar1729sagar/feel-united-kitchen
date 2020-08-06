@@ -333,7 +333,7 @@ class ActiveOrderAdmin: UIViewController, UITableViewDataSource, UITableViewDele
 //        dateFormatter.dateFormat = "YYYYMMDDHHMMSS"
 //        let dateString = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: -1, to: Date())!)
         let dateString = dateFormatter.string(from:NSDate() as Date)
-        print(dateString)
+      //  print(dateString)
         let queryBuilder = DataQueryBuilder()
         queryBuilder.setPageSize(pageSize: 100)
       
@@ -344,9 +344,9 @@ class ActiveOrderAdmin: UIViewController, UITableViewDataSource, UITableViewDele
         if OrderData().deleteOrders(){
             backendless.data.of(OrderDetails.self).find(queryBuilder: queryBuilder, responseHandler: { (data) in
                 self.navbarIndicator.stopAnimating()
-                print("orders recieved")
+             //   print("orders recieved")
                 if data.count == 0 {
-                    print("Order count 0")
+                 //   print("Order count 0")
                     if OrderData().deleteOrders(){
                         self.orderDetails.removeAll()
                         
@@ -362,7 +362,7 @@ class ActiveOrderAdmin: UIViewController, UITableViewDataSource, UITableViewDele
                 }
             }, errorHandler: { (fault) in
                     self.navbarIndicator.stopAnimating()
-                    print(fault)
+                 //   print(fault)
                 SCLAlertView().showError("Error", subTitle: "Cannot fetch details as the following error occured \(String(describing: fault.message))")
             })
         }
@@ -371,7 +371,7 @@ class ActiveOrderAdmin: UIViewController, UITableViewDataSource, UITableViewDele
     
     
     func getItemsFromServer( data :OrderDetails) {
-        print("getting items for \(String(describing: data.orderId))")
+       // print("getting items for \(String(describing: data.orderId))")
         navbarIndicator.startAnimating()
         data.items = [OrderItems]()
         let whereClause = "orderId = "+data.orderId!
@@ -380,7 +380,7 @@ class ActiveOrderAdmin: UIViewController, UITableViewDataSource, UITableViewDele
         queryBuilder.setWhereClause(whereClause: whereClause)
         backendless.data.of(OrderItems.self).find(queryBuilder: queryBuilder, responseHandler: { (items) in
             self.navbarIndicator.stopAnimating()
-            print(items.count)
+          //  print(items.count)
             for item in items {
                 if let orderitem = item as? OrderItems {
                     data.items?.append(orderitem)

@@ -263,7 +263,7 @@ class ToBeDeliveredOrdersPage: UIViewController , UITableViewDelegate , UITableV
                     self.navbarIndicator.stopAnimating()
                     SCLAlertView().showWarning("Error", subTitle: "No such order exist")
                 } else {
-                    print("I am here")
+                   // print("I am here")
                     if let order = data[0] as? OrderDetails {
                         order.items = [OrderItems]()
                         if order.status != "3" {

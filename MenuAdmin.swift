@@ -798,9 +798,9 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
     navbarIndicator.startAnimating()
     let queryBuilder = DataQueryBuilder()
     queryBuilder.setPageSize(pageSize: 100)
-    print("ask for data");
+  //  print("ask for data");
     backendless.data.of(Item.self).find(queryBuilder: queryBuilder, responseHandler: { (data) in
-        print(data)
+       // print(data)
         self.navbarIndicator.stopAnimating()
         
         if (data.count) > 0 {
@@ -826,7 +826,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         
         self.viewDidAppear(true)
     }, errorHandler: { (fault) in
-            print(fault)
+           // print(fault)
             self.navbarIndicator.stopAnimating()
          
     })
