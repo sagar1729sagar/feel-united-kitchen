@@ -63,6 +63,7 @@
 		1BFE3EE11EC371BD00356D34 /* TodayOrders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFE3EE01EC371BD00356D34 /* TodayOrders.swift */; };
 		1BFE3EE31EC3795A00356D34 /* ItemsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFE3EE21EC3795A00356D34 /* ItemsList.swift */; };
 		C95E870124D8A44900AD5594 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95E870024D8A44900AD5594 /* SceneDelegate.swift */; };
+		C98B1E6924E995C5004EAD85 /* UITextViewPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98B1E6824E995C5004EAD85 /* UITextViewPlaceholder.swift */; };
 		F7D82CA99C97083CF962F57F /* Pods_UNITED_KITCHEN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21B9DBA3427797215032AEB1 /* Pods_UNITED_KITCHEN.framework */; };
 /* End PBXBuildFile section */
 
@@ -131,6 +132,7 @@
 		21B9DBA3427797215032AEB1 /* Pods_UNITED_KITCHEN.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UNITED_KITCHEN.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A63FDEFF8D858C8D79E8AE0 /* Pods-UNITED KITCHEN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UNITED KITCHEN.release.xcconfig"; path = "Pods/Target Support Files/Pods-UNITED KITCHEN/Pods-UNITED KITCHEN.release.xcconfig"; sourceTree = "<group>"; };
 		C95E870024D8A44900AD5594 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		C98B1E6824E995C5004EAD85 /* UITextViewPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextViewPlaceholder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -231,6 +233,7 @@
 				1B9EFA8F1EC78026000F4160 /* CartPageV2.swift */,
 				1B2D6E401F87B1930072F46C /* MenuViewController.swift */,
 				1B398E8A1FB9993500457883 /* CartPageV3.swift */,
+				C98B1E6824E995C5004EAD85 /* UITextViewPlaceholder.swift */,
 			);
 			path = "UNITED KITCHEN";
 			sourceTree = "<group>";
@@ -476,6 +479,7 @@
 				1B0AC48D1EBE452F00A05270 /* OrderPage.swift in Sources */,
 				1B7C4AF91EB66E9400A9D6BF /* LocationCell.swift in Sources */,
 				1BE315531E9EA4C9008EB2B2 /* Profile.swift in Sources */,
+				C98B1E6924E995C5004EAD85 /* UITextViewPlaceholder.swift in Sources */,
 				1BE2C5751EC1D6FD0047C70F /* LocationTracking.swift in Sources */,
 				1B1AB54C1EAA7C1600FE3A8E /* TestViewController.swift in Sources */,
 				1B0BD8601EBB2A3A00213CB9 /* GiftedPersonDetailsCell.swift in Sources */,

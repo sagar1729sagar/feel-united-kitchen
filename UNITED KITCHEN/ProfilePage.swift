@@ -351,6 +351,8 @@ class ProfilePage: UIViewController {
         addressTV?.textAlignment = .center
         addressTV?.textColor = UIColor.blue
         addressTV?.backgroundColor = UIColor.white
+        addressTV?.placeholder = "Please enter your address"
+        
         
         createAccountButton = UIButton(frame: CGRect(x: 10, y: (addressTV?.frame.origin.y)! + 90, width: UIScreen.main.bounds.width - 20, height: 40))
         createAccountButton?.layer.cornerRadius = 8
