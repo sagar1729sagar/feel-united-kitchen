@@ -40,6 +40,7 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
     var segItems = [Cart]()
     var itemsSaved = [[OrderItems]]()
     var orderCount = 0
+    var rowCount = 0;
     
     var allDates = [Date]()
     var allTimes = [String]()
@@ -456,12 +457,20 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
     }
     
     @objc func giftitPressed(sender : UIButton) {
+        //todo scroll table to bottom
+        print("Goft pressed")
         if isGifted {
             isGifted = false
+            print("here 1")
             table.reloadData()
+            
+//            let indexPath = NSIndexPath(item: getAllRowCount(), section: numberOfSections(in: table))
+//            table.scrollToRow(at: indexPath as IndexPath, at: UITableView.ScrollPosition.bottom, animated: true)
         } else if !isGifted {
             isGifted = true
+            print("Here 2")
             table.reloadData()
+            
         }
     
     }
@@ -1116,6 +1125,14 @@ class CartPageV2: UIViewController , UITableViewDelegate , UITableViewDataSource
         }
     }
     
+    
+    func getAllRowCount()->Int{
+        var rowCount = 0
+        for index in 0...table.numberOfSections-1{
+            rowCount += self.table.numberOfRows(inSection: index)
+        }
+        return rowCount
+    }
     
 
 }

@@ -487,12 +487,31 @@ class CartPageV3: UIViewController , UITableViewDelegate , UITableViewDataSource
         if isGifted {
             isGifted = false
             table.reloadData()
+            print("Here 1")
+           
         } else if !isGifted {
             isGifted = true
             table.reloadData()
+            print("Here 2")
+             scrollToBottom()
         }
         
     }
+    
+ func scrollToBottom(){
+    
+   
+
+       DispatchQueue.main.async {
+           let indexPath = IndexPath(
+            row: self.table.numberOfRows(inSection:  self.table.numberOfSections-1) - 1,
+            section: self.table.numberOfSections - 1)
+
+            self.table.scrollToRow(at: indexPath, at: .bottom, animated: true)
+
+       }
+   }
+
     
     @objc func proceedPressed ( sender : UIButton) {
         
