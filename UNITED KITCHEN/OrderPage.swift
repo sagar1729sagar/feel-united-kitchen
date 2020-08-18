@@ -265,12 +265,31 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
             
             alertView.addButton(times[i], backgroundColor: UIColor.white, textColor: UIColor.blue, showTimeout: nil) {
                 self.selectionForReorder.1 = times[i]
-                 
-                  for cartItem in self.cartItems {
-                      cartItem.addedDate = self.selectionForReorder.0
-                      cartItem.deliveryTime = self.selectionForReorder.1
-                      CartData().addItem(item: cartItem)
-                  }
+                var nonAvailableItems = [String]();
+                
+                for cartItem in self.cartItems{
+                    if(!MenuItemsData().check(forItem: cartItem.itemName!)){
+                        nonAvailableItems.append(cartItem.itemName!)
+                        self.cartItems.removeAll { $0 == cartItem }
+                    } else if(true) {
+                        print("I am here")
+                    }
+                }
+                
+                
+                print(nonAvailableItems.count)
+                print(self.cartItems.count)
+//                  for cartItem in self.cartItems {
+//                    //todo
+////                    if (!MenuItemsData().check(forItem: cartItem.itemName!)){
+////                        nonAvailableItems.append(cartItem.itemName!);
+////                        cartItems.remove
+////                    }
+//
+////                      cartItem.addedDate = self.selectionForReorder.0
+////                      cartItem.deliveryTime = self.selectionForReorder.1
+////                      CartData().addItem(item: cartItem)
+//                  }
                   
                 self.tabBarController?.selectedIndex = 1
             }
@@ -283,6 +302,20 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
         
         
     }
+    
+//    func checkForItem(name : String , items : [Item]) -> Bool{
+//
+//           for item in items {
+//
+//               if item.itemName == name {
+//                   return true
+//               }
+//
+//           }
+//
+//           return false
+//
+//       }
 
     
 
