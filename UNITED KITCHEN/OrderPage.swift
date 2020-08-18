@@ -271,16 +271,73 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
                     if(!MenuItemsData().check(forItem: cartItem.itemName!)){
                         nonAvailableItems.append(cartItem.itemName!)
                         self.cartItems.removeAll { $0 == cartItem }
-                    } else if(true) {
-                        print("I am here")
+                    } else if (!MenuItemsData().checkItemAvailability(name: cartItem.itemName!, dayOfWeek: DateHandler().getDayofweekfor(date: self.selectionForReorder.0)))  {
+                  
+                        nonAvailableItems.append(cartItem.itemName!)
+                        self.cartItems.removeAll { $0 == cartItem }
                     }
                 }
+                
+                if self.cartItems.count == 0 {
+                    SCLAlertView().showInfo("Sorry", subTitle: "Items in this order are not available for delivery for your selected date ")
+                } else if nonAvailableItems.count != 0{
+                  //  print("Am I Heere")
+                    var subtitle = "Items in this order are not available for delivery for your selected date \n"
+                    for name in nonAvailableItems {
+                        subtitle += name + "\n"
+                    }
+                    subtitle += "Would like to proceed with remaining items?"
+                    
+                    let appearance = SCLAlertView.SCLAppearance(
+                        showCloseButton : false
+                    )
+                    let alertView = SCLAlertView(appearance: appearance)
+                    alertView.addButton("Proceed", backgroundColor: UIColor.blue, textColor: UIColor.white, showTimeout: nil) {
+                        for cartItem in self.cartItems {
+                            cartItem.addedDate = self.selectionForReorder.0
+                            cartItem.deliveryTime = self.selectionForReorder.1
+                            CartData().addItem(item: cartItem)
+                        }
+                        self.tabBarController?.selectedIndex = 1
+                    }
+                    
+                    alertView.addButton("Cancel", backgroundColor: UIColor.red, textColor: UIColor.white, showTimeout: nil) {
+                        alertView.dismiss(animated: true) {
+                            //none
+                        }
+                    }
+                    
+                    alertView.showInfo("Attention!!", subTitle: subtitle)
+                } else {
+                    for cartItem in self.cartItems {
+                        cartItem.addedDate = self.selectionForReorder.0
+                        cartItem.deliveryTime = self.selectionForReorder.1
+                        CartData().addItem(item: cartItem)
+                    }
+                    self.tabBarController?.selectedIndex = 1
+                }
+                //ToDO check when adding items to cart, that if items already exists for same date or not and then if exists, just increase quantity
+            
+                
+//                if( nonAvailableItems.count != 0){
+//                    let appearance = SCLAlertView.SCLAppearance(
+//                        showCloseButton : false
+//                    )
+//                    let alertView = SCLAlertView(appearance: appearance)
+//                    alertView.addButton("Continue", backgroundColor: UIColor.yellow, textColor: UIColor.white, showTimeout: nil) {
+//                         cartItem.addedDate = self.selectionForReorder.0
+//                        cartItem.deliveryTime = self.selectionForReorder.1
+//                        CartData().addItem(item: cartItem)
+//                        self.tabBarController?.selectedIndex = 1
+//                    }
+//                }
                 
                 
                 print(nonAvailableItems.count)
                 print(self.cartItems.count)
 //                  for cartItem in self.cartItems {
-//                    //todo
+//
+                
 ////                    if (!MenuItemsData().check(forItem: cartItem.itemName!)){
 ////                        nonAvailableItems.append(cartItem.itemName!);
 ////                        cartItems.remove
@@ -291,7 +348,7 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
 ////                      CartData().addItem(item: cartItem)
 //                  }
                   
-                self.tabBarController?.selectedIndex = 1
+            //    self.tabBarController?.selectedIndex = 1
             }
         }
         alertView.addButton("CANCEL") {

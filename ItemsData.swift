@@ -49,6 +49,91 @@ class MenuItemsData{
     return true
     }
     
+    func checkItemAvailability(name : String, dayOfWeek : Int) -> Bool{
+        let context = appDelegate.persistentContainer.viewContext
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName : "MenuItems")
+        request.returnsObjectsAsFaults = false
+        request.predicate = NSPredicate(format: "itemName == %@", name)
+        do {
+            let results = try context.fetch(request)
+            if (results.count == 0){
+                return false
+            }
+            
+            if let fetchedItem = results[0] as? NSManagedObject {
+                switch dayOfWeek {
+                case 1:
+                    if let availableSunday = fetchedItem.value(forKey: "availableSunday") as? String {
+                        return (availableSunday == "1") ? true : false ;
+                    } else {
+                        return false
+                    }
+                    break
+                    
+                case 2:
+                    if let availableMonday = fetchedItem.value(forKey: "availableMonday") as? String {
+                        return (availableMonday == "1") ? true : false ;
+                    } else {
+                        return false
+                    }
+                    break
+                    
+                case 3:
+                    if let availableTuesday = fetchedItem.value(forKey: "availableTuesday") as? String {
+                        return (availableTuesday == "1") ? true : false ;
+                    } else {
+                        return false
+                    }
+                    break
+                    
+                case 4:
+                    if let availableWednesday = fetchedItem.value(forKey: "availableWednesday") as? String {
+                        return (availableWednesday == "1") ? true : false ;
+                    } else {
+                        return false
+                    }
+                    break
+                    
+                case 5:
+                    if let availableThrusday = fetchedItem.value(forKey: "availableThrusday") as? String {
+                        return (availableThrusday == "1") ? true : false ;
+                    } else {
+                        return false
+                    }
+                    break
+                    
+                case 6:
+                    if let availableFriday = fetchedItem.value(forKey: "availableFriday") as? String {
+                        return (availableFriday == "1") ? true : false ;
+                    } else {
+                        return false
+                    }
+                    break
+                    
+                case 7:
+                    if let availableSaturday = fetchedItem.value(forKey: "availableSaturday") as? String {
+                        return (availableSaturday == "1") ? true : false ;
+                    } else {
+                        return false
+                    }
+                    break
+                    
+                
+                    
+                
+                default:
+                    return false;
+                }
+            } else {
+                return false;
+            }
+            
+        } catch  {
+            return false;
+        }
+        return false;
+    }
+    
     func getMenu() -> ([Item],Int,Bool) {
         var items = [Item]()
         var count = 0
