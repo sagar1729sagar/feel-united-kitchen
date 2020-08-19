@@ -312,6 +312,7 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
                     
                     alertView.showInfo("Attention!!", subTitle: subtitle)
                 } else {
+                    print("I am called")
                     self.addItemsToCart()
 //                    for cartItem in self.cartItems {
 //                        cartItem.addedDate = self.selectionForReorder.0
@@ -382,17 +383,32 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
         for cartItem in self.cartItems {
             if CartData().checkCartForItem(itemName: cartItem.itemName!, date: self.selectionForReorder.0, time: self.selectionForReorder.1) {
                 print("here 1")
-                CartData().incrementQuantityfor(itemName: cartItem.itemName!, date: self.selectionForReorder.0, time: self.selectionForReorder.1)
+                let appearance = SCLAlertView.SCLAppearance(
+                    showCloseButton : false
+                )
+                let alertView = SCLAlertView(appearance: appearance)
+                let subtitle = "The following item is already in your cart for your selected date and time : \n \(cartItem.itemName!) \n Would like to add increase the quantity?"
+                alertView.addButton("Proceed", backgroundColor: UIColor.blue, textColor: UIColor.white, showTimeout: nil) {
+                    CartData().incrementQuantityfor(itemName: cartItem.itemName!, date: self.selectionForReorder.0, time: self.selectionForReorder.1)
+                }
+                alertView.addButton("No", backgroundColor: UIColor.red, textColor: UIColor.blue, showTimeout: nil) {
+                    alertView.dismiss(animated: true, completion: nil)
+                }
+                
+                alertView.showInfo("Attention!!", subTitle: subtitle)
+                
             } else {
                 print("Here 2")
             cartItem.addedDate = self.selectionForReorder.0
             cartItem.deliveryTime = self.selectionForReorder.1
             CartData().addItem(item: cartItem)
+                
         }
-             self.tabBarController?.selectedIndex = 1
+             
         }
+        self.tabBarController?.selectedIndex = 1
     }
-
+    //todo fix redirect to cart page
 
     @IBAction func refresh(_ sender: UIBarButtonItem) {
         
