@@ -312,7 +312,7 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
                     
                     alertView.showInfo("Attention!!", subTitle: subtitle)
                 } else {
-                    print("I am called")
+                   // print("I am called")
                     self.addItemsToCart()
 //                    for cartItem in self.cartItems {
 //                        cartItem.addedDate = self.selectionForReorder.0
