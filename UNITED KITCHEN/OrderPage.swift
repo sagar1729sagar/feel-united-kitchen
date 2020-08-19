@@ -338,8 +338,8 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
 //                }
                 
                 
-                print(nonAvailableItems.count)
-                print(self.cartItems.count)
+            //    print(nonAvailableItems.count)
+              //  print(self.cartItems.count)
 //                  for cartItem in self.cartItems {
 //
                 
@@ -380,9 +380,12 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
 //       }
 
     func addItemsToCart(){
+        var i = 0
         for cartItem in self.cartItems {
+            i += 1
+            print(i)
             if CartData().checkCartForItem(itemName: cartItem.itemName!, date: self.selectionForReorder.0, time: self.selectionForReorder.1) {
-                print("here 1")
+              //  print("here 1")
                 let appearance = SCLAlertView.SCLAppearance(
                     showCloseButton : false
                 )
@@ -390,25 +393,33 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
                 let subtitle = "The following item is already in your cart for your selected date and time : \n \(cartItem.itemName!) \n Would like to add increase the quantity?"
                 alertView.addButton("Proceed", backgroundColor: UIColor.blue, textColor: UIColor.white, showTimeout: nil) {
                     CartData().incrementQuantityfor(itemName: cartItem.itemName!, date: self.selectionForReorder.0, time: self.selectionForReorder.1)
+                    if i == self.cartItems.count {
+                        self.tabBarController?.selectedIndex = 1
+                    }
                 }
                 alertView.addButton("No", backgroundColor: UIColor.red, textColor: UIColor.blue, showTimeout: nil) {
-                    alertView.dismiss(animated: true, completion: nil)
+                    alertView.dismiss(animated: true) {
+                         if i == self.cartItems.count {
+                                self.tabBarController?.selectedIndex = 1
+                                }
+                    }
                 }
                 
-                alertView.showInfo("Attention!!", subTitle: subtitle)
                 
             } else {
-                print("Here 2")
+              //  print("Here 2")
             cartItem.addedDate = self.selectionForReorder.0
             cartItem.deliveryTime = self.selectionForReorder.1
             CartData().addItem(item: cartItem)
-                
+                if i == self.cartItems.count {
+                                       self.tabBarController?.selectedIndex = 1
+                                   }
         }
              
         }
-        self.tabBarController?.selectedIndex = 1
+      //  self.tabBarController?.selectedIndex = 1
     }
-    //todo fix redirect to cart page
+    //todo fix redirect to cart page . stop adding alertviews to for loop. figure out another way
 
     @IBAction func refresh(_ sender: UIBarButtonItem) {
         
