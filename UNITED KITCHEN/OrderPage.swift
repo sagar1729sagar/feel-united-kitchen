@@ -569,6 +569,7 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
         let query = DataQueryBuilder()
         query.setPageSize(pageSize: 100)
         query.setWhereClause(whereClause: whereClause)
+        query.setSortBy(sortBy: ["deliveryDate ASC"])
         
         backendless.data.of(OrderDetails.self).find(queryBuilder: query, responseHandler: { (data) in
             // print(2)
