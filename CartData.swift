@@ -69,6 +69,61 @@ class CartData {
         return (cartItems,count,true)
     }
     
+//    func checkCartForItem(itemName : String, date : Date , time : String) -> Bool {
+//                let context = appDelegate.persistentContainer.viewContext
+//                let request = NSFetchRequest<NSFetchRequestResult>(entityName : "Cart")
+//                request.returnsObjectsAsFaults = false
+//                request.predicate = NSPredicate(format: "itemName == %@", itemName)
+//                var doesExist = false
+//
+//        do {
+//            let results = try context.fetch(request)
+//            if results.count > 0 {
+//                doesExist = true
+//            }
+//        } catch  {
+//            return false
+//        }
+//        return doesExist
+//    }
+    
+    func checkCartForItem(itemName : String , date : Date , time : String) -> Bool {
+        let context = appDelegate.persistentContainer.viewContext
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName : "Cart")
+        request.returnsObjectsAsFaults = false
+        request.predicate = NSPredicate(format: "itemName == %@", itemName)
+        var doesExist = false
+        do {
+            let results = try context.fetch(request)
+            if results.count > 0 {
+              // print(1)
+                for result in results {
+                 //   print(2)
+                    if let item = result as? NSManagedObject {
+                       // print(3)
+                    if let addedDate = item.value(forKey: "addedDate") as? Date {
+                       // print(4)
+                        if DateHandler().dateToString(date: date) == DateHandler().dateToString(date: addedDate) {
+                          //  print(5)
+                            if let deliveryTime = item.value(forKey: "deliveryTime") as? String {
+                               // print(6)
+                                if time == deliveryTime {
+                                  //  print(7)
+                                    doesExist = true
+                                }
+                            } else {return false}
+                        }
+                    } else {return false}
+                    } else {return false}
+                }//for loop
+            } else {
+                return false
+            }
+        } catch  {
+            return false
+        }
+        return doesExist
+    }
     
     func incrementQuantityfor(itemName : String , date : Date , time : String) -> Bool {
         let context = appDelegate.persistentContainer.viewContext

@@ -293,12 +293,15 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
                     )
                     let alertView = SCLAlertView(appearance: appearance)
                     alertView.addButton("Proceed", backgroundColor: UIColor.blue, textColor: UIColor.white, showTimeout: nil) {
-                        for cartItem in self.cartItems {
-                            cartItem.addedDate = self.selectionForReorder.0
-                            cartItem.deliveryTime = self.selectionForReorder.1
-                            CartData().addItem(item: cartItem)
-                        }
-                        self.tabBarController?.selectedIndex = 1
+                        self.addItemsToCart()
+//                        for cartItem in self.cartItems {
+//                            cartItem.addedDate = self.selectionForReorder.0
+//                            cartItem.deliveryTime = self.selectionForReorder.1
+//                            CartData().addItem(item: cartItem)
+//
+//
+//                        }
+ //                       self.tabBarController?.selectedIndex = 1
                     }
                     
                     alertView.addButton("Cancel", backgroundColor: UIColor.red, textColor: UIColor.white, showTimeout: nil) {
@@ -309,12 +312,13 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
                     
                     alertView.showInfo("Attention!!", subTitle: subtitle)
                 } else {
-                    for cartItem in self.cartItems {
-                        cartItem.addedDate = self.selectionForReorder.0
-                        cartItem.deliveryTime = self.selectionForReorder.1
-                        CartData().addItem(item: cartItem)
-                    }
-                    self.tabBarController?.selectedIndex = 1
+                    self.addItemsToCart()
+//                    for cartItem in self.cartItems {
+//                        cartItem.addedDate = self.selectionForReorder.0
+//                        cartItem.deliveryTime = self.selectionForReorder.1
+//                        CartData().addItem(item: cartItem)
+//                    }
+//                    self.tabBarController?.selectedIndex = 1
                 }
                 //ToDO check when adding items to cart, that if items already exists for same date or not and then if exists, just increase quantity
             
@@ -374,7 +378,20 @@ class OrderPage: UIViewController , UITableViewDelegate , UITableViewDataSource 
 //
 //       }
 
-    
+    func addItemsToCart(){
+        for cartItem in self.cartItems {
+            if CartData().checkCartForItem(itemName: cartItem.itemName!, date: self.selectionForReorder.0, time: self.selectionForReorder.1) {
+                print("here 1")
+                CartData().incrementQuantityfor(itemName: cartItem.itemName!, date: self.selectionForReorder.0, time: self.selectionForReorder.1)
+            } else {
+                print("Here 2")
+            cartItem.addedDate = self.selectionForReorder.0
+            cartItem.deliveryTime = self.selectionForReorder.1
+            CartData().addItem(item: cartItem)
+        }
+             self.tabBarController?.selectedIndex = 1
+        }
+    }
 
 
     @IBAction func refresh(_ sender: UIBarButtonItem) {
