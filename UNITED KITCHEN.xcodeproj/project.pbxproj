@@ -651,7 +651,7 @@
 				INFOPLIST_FILE = "UNITED KITCHEN/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 5.0;
+				MARKETING_VERSION = 6.0;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -Onone";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ssapps.UNITED-KITCHEN";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -676,7 +676,7 @@
 				INFOPLIST_FILE = "UNITED KITCHEN/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 5.0;
+				MARKETING_VERSION = 6.0;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -Onone";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ssapps.UNITED-KITCHEN";
 				PRODUCT_NAME = "$(TARGET_NAME)";
