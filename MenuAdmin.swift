@@ -150,6 +150,8 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         scrollLabel.textAlignment = .right
         
         scrollView.addSubview(scrollLabel)
+        self.view.sendSubviewToBack(scrollView)
+        
        
         //set scroll text
         
@@ -335,9 +337,32 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
 //                mainVIew.addSubview("itemPicture")
         
         let itemPicture = UIImageView(frame: CGRect(x: 7, y: 7, width: itemView.bounds.width - 14, height: itemView.bounds.width - 14))
+//        itemPicture.translatesAutoresizingMaskIntoConstraints = false
         let pictureUrl = URL(string: menuItems[index].itemUrl!)
         itemPicture.setImageWith(pictureUrl, usingActivityIndicatorStyle: .gray)
+        itemPicture.clipsToBounds = true
+        
+        
         itemView.addSubview(itemPicture)
+        
+//        itemPicture.centerXAnchor.constraint(equalTo: view!.centerXAnchor).isActive = true
+//        itemPicture.centerYAnchor.constraint(equalTo: view!.centerYAnchor).isActive = true
+//        itemPicture.widthAnchor.constraint(equalTo: view!.widthAnchor, multiplier: 0.4).isActive = true
+//        itemPicture.heightAnchor.constraint(equalTo: itemPicture.widthAnchor, multiplier: 1).isActive = true
+//
+        
+        itemPicture.centerXAnchor.constraint(equalTo: itemView.centerXAnchor).isActive = true
+        itemPicture.centerYAnchor.constraint(equalTo: itemView.centerYAnchor).isActive = true
+        itemPicture.widthAnchor.constraint(equalTo: itemView.widthAnchor, multiplier: 0.4).isActive = true
+        itemPicture.heightAnchor.constraint(equalTo: itemPicture.widthAnchor, multiplier: 1).isActive = true
+        
+        
+        //Add long press gesture to picute
+        var longPressGesture = UILongPressGestureRecognizer()
+        longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressGestureHandler(recognizer:)))
+        itemPicture.isUserInteractionEnabled = true
+        itemPicture.addGestureRecognizer(longPressGesture)
+      
         
         
         let type = UIImageView(frame: CGRect(x: itemPicture.frame.origin.x + itemPicture.bounds.width - 40, y: itemPicture.frame.origin.y + itemPicture.bounds.height - 40, width: 30, height: 30))
@@ -496,6 +521,30 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         
         
         return itemView
+    }
+    
+    
+    
+    @objc func longPressGestureHandler(recognizer:UIPinchGestureRecognizer){
+        
+        switch recognizer.state{
+        case .began:
+            print("began")
+            UIView.animate(withDuration: 0.05) {
+                recognizer.view?.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+            }
+            break
+            
+        case .ended:
+            print("ended")
+            UIView.animate(withDuration: 0.05) {
+                recognizer.view?.transform = CGAffineTransform.identity
+            }
+            break
+            
+        default: break
+       
+        }
     }
     
     
