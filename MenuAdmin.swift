@@ -530,8 +530,9 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
         switch recognizer.state{
         case .began:
             print("began")
+            self.carousel.currentItemView?.bringSubviewToFront(recognizer.view!)
             UIView.animate(withDuration: 0.05) {
-                recognizer.view?.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+                recognizer.view?.transform = CGAffineTransform(scaleX: 2, y: 2)
             }
             break
             
@@ -540,6 +541,7 @@ class MenuAdmin: UIViewController , iCarouselDataSource , iCarouselDelegate{
             UIView.animate(withDuration: 0.05) {
                 recognizer.view?.transform = CGAffineTransform.identity
             }
+            self.carousel.currentItemView?.sendSubviewToBack(recognizer.view!)
             break
             
         default: break
